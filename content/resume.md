@@ -1,6 +1,5 @@
 ---
 title: ""
-date: ""
 ---
 
 <center>
