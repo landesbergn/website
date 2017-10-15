@@ -6,9 +6,8 @@
     <description>Recent content in Tags on Noah Landesberg</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    
-	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
-    
+    <copyright>&amp;copy; 2017 Noah Landesberg</copyright>
+    <atom:link href="/tags/" rel="self" type="application/rss+xml" />
     
   </channel>
 </rss>
