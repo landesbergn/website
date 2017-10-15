@@ -6,18 +6,29 @@
     <description>Recent content in Posts on Noah Landesberg</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 17 Sep 2017 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
-    
+    <copyright>&amp;copy; 2017 Noah Landesberg</copyright>
+    <lastBuildDate>Sun, 15 Oct 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/post/" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Test Post</title>
-      <link>/2017/09/17/test-post/</link>
-      <pubDate>Sun, 17 Sep 2017 00:00:00 +0000</pubDate>
+      <title>Building my website with Blogdown</title>
+      <link>/post/building-my-website-with-blogdown/</link>
+      <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/09/17/test-post/</guid>
-      <description>HEYO</description>
+      <guid>/post/building-my-website-with-blogdown/</guid>
+      <description>&lt;p&gt;I used to have a website on Squarespace. It was nice, but it cost ~$90 a year, and I wasn&amp;rsquo;t really using it for much. So&amp;hellip; enter &lt;code&gt;blogdown&lt;/code&gt;!&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;blogdown&lt;/code&gt; is an R package that allows you to make websites using a bunch of technologies in concert. This site uses &lt;code&gt;R&lt;/code&gt; and &lt;code&gt;Markdown&lt;/code&gt; and &lt;code&gt;R Markdown&lt;/code&gt; and &lt;code&gt;Hugo&lt;/code&gt; and &lt;code&gt;Netlify&lt;/code&gt; and &lt;code&gt;Git&lt;/code&gt; and &lt;code&gt;Github&lt;/code&gt; and on and on. If this seems overwhelming, don&amp;rsquo;t worry, there are plenty of resources out there to help.&lt;/p&gt;
+
+&lt;p&gt;When building this site, the two resources I consulted were:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://apreshill.rbind.io/post/up-and-running-with-blogdown/&#34; target=&#34;_blank&#34;&gt;This wonderful guide&lt;/a&gt; from Alison Presmanes Hill&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://bookdown.org/yihui/blogdown/&#34; target=&#34;_blank&#34;&gt;The &lt;code&gt;blogdown&lt;/code&gt; documentation&lt;/a&gt; from Yihui Xie, Amber Thomas, and Alison Presmanes Hill&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It might seem complicated, but with some coffee and tenacity whole thing can be done in an afternoon!&lt;/p&gt;
+</description>
     </item>
     
   </channel>
