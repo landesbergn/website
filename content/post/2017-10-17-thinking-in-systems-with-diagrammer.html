@@ -1,0 +1,33 @@
+---
+title: Thinking in Systems with DiagrammeR
+author: Noah Landesberg
+date: '2017-10-17'
+slug: thinking-in-systems-with-diagrammer
+categories: []
+tags: []
+---
+
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/viz/viz.js"></script>
+<link href="/rmarkdown-libs/DiagrammeR-styles/styles.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/grViz-binding/grViz.js"></script>
+
+
+<p>I recently read Thinking in Systems yada yada</p>
+<p>First we need to install <code>DiagrammeR</code>.</p>
+<pre class="r"><code>install.packages(&quot;DiagrammeR&quot;)</code></pre>
+<p>I actually had a minor snafu trying to install this on my Mac. Trying to compile a dependency package <code>tidyr</code> required opening up Xcode and accepting the user agreement. But after that we were all set.</p>
+<pre class="r"><code>library(DiagrammeR)</code></pre>
+<pre class="r"><code>grViz(&quot;
+ 
+digraph boxes_and_cirles {
+
+  # add shapes
+  node [shape = box]
+  Water
+  Air
+
+}      
+&quot;)</code></pre>
+<div id="htmlwidget-1" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"diagram":"\n \ndigraph boxes_and_cirles {\n\n  # add shapes\n  node [shape = box]\n  Water\n  Air\n\n}      \n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>

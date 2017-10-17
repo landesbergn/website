@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>/post/thinking-in-systems-with-diagrammer/</loc>
+      <lastmod>2017-10-17T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/post/building-my-website-with-blogdown/</loc>
       <lastmod>2017-10-15T00:00:00+00:00</lastmod>
     </url>
@@ -34,7 +43,7 @@
     <url>
     
       <loc>/post/</loc>
-      <lastmod>2017-10-15T00:00:00+00:00</lastmod>
+      <lastmod>2017-10-17T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     

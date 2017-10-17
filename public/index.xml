@@ -11,6 +11,39 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Thinking in Systems with DiagrammeR</title>
+      <link>/post/thinking-in-systems-with-diagrammer/</link>
+      <pubDate>Tue, 17 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/thinking-in-systems-with-diagrammer/</guid>
+      <description>&lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;/rmarkdown-libs/viz/viz.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;/rmarkdown-libs/DiagrammeR-styles/styles.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;/rmarkdown-libs/grViz-binding/grViz.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;I recently read Thinking in Systems yada yada&lt;/p&gt;
+&lt;p&gt;First we need to install &lt;code&gt;DiagrammeR&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;install.packages(&amp;quot;DiagrammeR&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I actually had a minor snafu trying to install this on my Mac. Trying to compile a dependency package &lt;code&gt;tidyr&lt;/code&gt; required opening up Xcode and accepting the user agreement. But after that we were all set.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(DiagrammeR)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;grViz(&amp;quot;
+ 
+digraph boxes_and_cirles {
+
+  # add shapes
+  node [shape = box]
+  Water
+  Air
+
+}      
+&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;\n \ndigraph boxes_and_cirles {\n\n  # add shapes\n  node [shape = box]\n  Water\n  Air\n\n}      \n&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Building my website with Blogdown</title>
       <link>/post/building-my-website-with-blogdown/</link>
       <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>

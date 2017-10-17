@@ -1,0 +1,36 @@
+---
+title: Thinking in Systems with DiagrammeR
+author: Noah Landesberg
+date: '2017-10-17'
+slug: thinking-in-systems-with-diagrammer
+categories: []
+tags: []
+---
+
+I recently read Thinking in Systems yada yada
+  
+First we need to install `DiagrammeR`. 
+```{r eval = FALSE}
+install.packages("DiagrammeR")
+```
+
+I actually had a minor snafu trying to install this on my Mac. Trying to compile a dependency package `tidyr` required opening up Xcode and accepting the user agreement. But after that we were all set.
+
+```{r}
+library(DiagrammeR)
+```
+
+```{r}
+grViz("
+ 
+digraph boxes_and_cirles {
+
+  # add shapes
+  node [shape = box]
+  Water
+  Air
+
+}      
+")
+```
+
