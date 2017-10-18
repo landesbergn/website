@@ -22,24 +22,132 @@
 &lt;script src=&#34;/rmarkdown-libs/grViz-binding/grViz.js&#34;&gt;&lt;/script&gt;
 
 
-&lt;p&gt;I recently read Thinking in Systems yada yada&lt;/p&gt;
+&lt;p&gt;I recently read &lt;a href=&#34;https://www.goodreads.com/book/show/3828902-thinking-in-systems&#34;&gt;&lt;strong&gt;Thinking in Systems: A Primer&lt;/strong&gt;&lt;/a&gt; by Donella H. Meadows (2008) for a book club. The book offers a great little primer on systems thinking and its application to problems big and small. It’s a quick read (&amp;lt; 200 pages, not counting the appendix), and it has many great tidbits on how to perceive and influence the systems around us.&lt;/p&gt;
+&lt;p&gt;One of the concepts introduced in the book is stock and flow diagrams that represent basic systems. The first diagram in the book shows a basic stock with an inflow and outflow.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/basic-stock-flow.jpg&#34; /&gt; &lt;em&gt;Thinking in Systems, pg. 18&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Meadows goes on to describe the stock-and-flow diagram:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;stocks are shown as boxes, and flows as arrow-headed “pipes” leading into or out of the stocks. The small T on each flow signifies a “faucet;” it can be turned higher or lower, on or off. The “clouds” stand for wherever the flows come from and go to–the sources and sinks that are being ignored for the purposes of the present discussion.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Cool! The drawings become increasingly complex as we add in additional stocks and flows and feedback loops. But looking back at our simple example got me thinking… could we replicate a stock-and-flow diagram in &lt;code&gt;R&lt;/code&gt;?&lt;/p&gt;
+&lt;p&gt;Browing the web, it seems like &lt;code&gt;DiagrammeR&lt;/code&gt; is our best bet for a package that aids in the creation of diagrams and flowcharts. So, off we go!&lt;/p&gt;
 &lt;p&gt;First we need to install &lt;code&gt;DiagrammeR&lt;/code&gt;.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;install.packages(&amp;quot;DiagrammeR&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;I actually had a minor snafu trying to install this on my Mac. Trying to compile a dependency package &lt;code&gt;tidyr&lt;/code&gt; required opening up Xcode and accepting the user agreement. But after that we were all set.&lt;/p&gt;
+&lt;p&gt;Let’s load the &lt;code&gt;DiagrammeR&lt;/code&gt; package:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(DiagrammeR)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So judging from the &lt;a href=&#34;http://rich-iannone.github.io/DiagrammeR/&#34;&gt;DiagrammeR website&lt;/a&gt;, I wasn’t too sure where to start. So I watched the embedded video, which showed the quick creation of a graph using the &lt;code&gt;grVis&lt;/code&gt; function. It looks like this function will interpret some &lt;em&gt;DOT&lt;/em&gt; syntax, which the web tells me is a ‘plain text graph description language.’ That seems cool, Let’s give it a go!&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;grViz(&amp;quot;
  
 digraph boxes_and_cirles {
 
-  # add shapes
+  # add nodes
   node [shape = box]
-  Water
-  Air
+  stock
+  
+}
+&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;\n \ndigraph boxes_and_cirles {\n\n  # add nodes\n  node [shape = box]\n  stock\n  \n}\n&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;Not bad! We’ve got a stock! The other basic elements we will want to include would be: clouds at either end (representing sources and sinks), pipes, and faucets. Let’s try to get all of the elements together in one go.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;grViz(&amp;quot;
+ 
+digraph boxes_and_cirles {
+
+  # add nodes
+  node [shape = box]
+  stock
+  cloud1
+  cloud2
+  inflow_faucet
+  outflow_faucet
+
+}
+&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-2&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-2&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;\n \ndigraph boxes_and_cirles {\n\n  # add nodes\n  node [shape = box]\n  stock\n  cloud1\n  cloud2\n  inflow_faucet\n  outflow_faucet\n\n}\n&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;And then let’s connect the elements&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;grViz(&amp;quot;
+ 
+digraph boxes_and_cirles {
+
+  # add nodes
+  node [shape = box]
+  stock
+  cloud1
+  cloud2
+  inflow_faucet
+  outflow_faucet
+
+  # edge statments
+  cloud1 -&amp;gt; inflow_faucet -&amp;gt; stock -&amp;gt; outflow_faucet -&amp;gt; outflow -&amp;gt; cloud2
+
+}
+&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;div id=&#34;htmlwidget-3&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-3&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;\n \ndigraph boxes_and_cirles {\n\n  # add nodes\n  node [shape = box]\n  stock\n  cloud1\n  cloud2\n  inflow_faucet\n  outflow_faucet\n\n  # edge statments\n  cloud1 -&gt; inflow_faucet -&gt; stock -&gt; outflow_faucet -&gt; outflow -&gt; cloud2\n\n}\n&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt; &lt;br&gt;&lt;/p&gt;
+&lt;p&gt;Nice! Let’s try to flip this thing around. I did some googleing and landed on some additional &lt;code&gt;DiagrammeR&lt;/code&gt; documentation &lt;a href=&#34;http://rich-iannone.github.io/DiagrammeR/graphviz_and_mermaid.html#graphviz-layouts&#34;&gt;here&lt;/a&gt;. It seems like adding some settings to the graph object using &lt;code&gt;graph [layout = dot, rankdir = LR]&lt;/code&gt; will do the trick&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;grViz(&amp;quot;
+ 
+digraph boxes_and_cirles {
+
+  graph [layout = dot, rankdir = LR]
+
+  # add nodes
+  node [shape = box]
+  stock
+  cloud1
+  cloud2
+  inflow_faucet
+  outflow_faucet
+
+  # edge statments
+  cloud1 -&amp;gt; inflow_faucet -&amp;gt; stock -&amp;gt; outflow_faucet -&amp;gt; outflow -&amp;gt; cloud2
+
+}
+&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-4&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-4&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;\n \ndigraph boxes_and_cirles {\n\n  graph [layout = dot, rankdir = LR]\n\n  # add nodes\n  node [shape = box]\n  stock\n  cloud1\n  cloud2\n  inflow_faucet\n  outflow_faucet\n\n  # edge statments\n  cloud1 -&gt; inflow_faucet -&gt; stock -&gt; outflow_faucet -&gt; outflow -&gt; cloud2\n\n}\n&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;Wow this off to a blazing start. Now comes the tough part: formatting everything to look nice, like the picture above. I couldn’t find a &lt;em&gt;cloud&lt;/em&gt; shape from the &lt;a href=&#34;http://www.graphviz.org/content/node-shapes#epsf&#34;&gt;list of shapes on the graphviz website&lt;/a&gt;, so I settled for the &lt;code&gt;tripleoctagon&lt;/code&gt;. There also wasn’t a &lt;em&gt;faucet&lt;/em&gt; shape off the shelf, so I settled for the frighteningly-named &lt;code&gt;terminator&lt;/code&gt; shape. I added some labels, altered some sizes, and &lt;em&gt;voilà&lt;/em&gt;:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;grViz(&amp;quot;
+ 
+digraph boxes_and_cirles {
+
+  graph [layout = dot, rankdir = LR]
+
+  # add clouds
+  node [shape = tripleoctagon]
+  cloud1 [label = &amp;#39;&amp;#39;]
+  cloud2 [label = &amp;#39;&amp;#39;]
+
+  # add stock
+  node [shape = box]
+  stock [height = 1.2, width = 1.5]
+
+  # add faucets
+  node [shape = terminator, 
+        style = filled,
+        fillcolor = black]
+  inflow [label = &amp;#39;\n\ninflow&amp;#39;, penwidth = 3]
+  outflow [label = &amp;#39;\n\noutflow&amp;#39;, penwidth = 3]
+
+  # add pipes (edges)
+  cloud1 -&amp;gt; inflow [arrowhead = none, penwidth = 2, color = DimGray]
+  inflow -&amp;gt; stock [penwidth = 2, color = DimGray]
+  stock -&amp;gt; outflow [arrowhead = none, penwidth = 2, color = DimGray]
+  outflow -&amp;gt; cloud2 [penwidth = 2, color = DimGray]
 
 }      
 &amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;\n \ndigraph boxes_and_cirles {\n\n  # add shapes\n  node [shape = box]\n  Water\n  Air\n\n}      \n&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;div id=&#34;htmlwidget-5&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-5&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;\n \ndigraph boxes_and_cirles {\n\n  graph [layout = dot, rankdir = LR]\n\n  # add clouds\n  node [shape = tripleoctagon]\n  cloud1 [label = \&#34;\&#34;]\n  cloud2 [label = \&#34;\&#34;]\n\n  # add stock\n  node [shape = box]\n  stock [height = 1.2, width = 1.5]\n\n  # add faucets\n  node [shape = terminator, \n        style = filled,\n        fillcolor = black]\n  inflow [label = \&#34;\n\ninflow\&#34;, penwidth = 3]\n  outflow [label = \&#34;\n\noutflow\&#34;, penwidth = 3]\n\n  # add pipes (edges)\n  cloud1 -&gt; inflow [arrowhead = none, penwidth = 2, color = DimGray]\n  inflow -&gt; stock [penwidth = 2, color = DimGray]\n  stock -&gt; outflow [arrowhead = none, penwidth = 2, color = DimGray]\n  outflow -&gt; cloud2 [penwidth = 2, color = DimGray]\n\n}      \n&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;Not bad right!&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;/img/basic-stock-flow.jpg&#34; /&gt;
+
+&lt;/div&gt;
+&lt;p&gt;Thanks to &lt;code&gt;DiagrammeR&lt;/code&gt; creator Richard Iannone (&lt;a href=&#34;www.twitter.com/riannone&#34;&gt;@riannone&lt;/a&gt;) and contributors by Kent Russell (&lt;a href=&#34;www.twitter.com/timelyportfolio&#34;&gt;@timelyportfolio&lt;/a&gt;), JJ Allaire (&lt;a href=&#34;www.twitter.com/rstudio&#34;&gt;@rstudio&lt;/a&gt;), and Michaël Benesty (&lt;a href=&#34;www.twitter.com/pommedeterre33&#34;&gt;@pommedeterre33&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Thanks to Donella Meadows for an interesting book and some new perspectives on systems. Cheers!&lt;/p&gt;
 </description>
     </item>
     
