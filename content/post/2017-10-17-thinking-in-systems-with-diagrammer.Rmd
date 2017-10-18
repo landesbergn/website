@@ -157,6 +157,6 @@ Not bad right!
 
 ![](/img/basic-stock-flow.jpg)
 
-Thanks to `DiagrammeR` creator Richard Iannone ([\@riannone](www.twitter.com/riannone)) and contributors by Kent Russell ([\@timelyportfolio](www.twitter.com/timelyportfolio)), JJ Allaire ([\@rstudio](www.twitter.com/rstudio)), and Michaël Benesty ([\@pommedeterre33](www.twitter.com/pommedeterre33)).
+Thanks to `DiagrammeR` creator Richard Iannone ([\@riannone](www.twitter.com/riannone)) and contributors Kent Russell ([\@timelyportfolio](www.twitter.com/timelyportfolio)), JJ Allaire ([\@rstudio](www.twitter.com/rstudio)), and Michaël Benesty ([\@pommedeterre33](www.twitter.com/pommedeterre33)).
 
 Thanks to Donella Meadows for an interesting book and some new perspectives on systems. Cheers!
