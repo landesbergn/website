@@ -36,11 +36,11 @@ get_rhyme(&amp;quot;R&amp;quot;, return_type = &amp;quot;vector&amp;quot;, limit
   And Jill came tumbling {get_rhyme(&amp;#39;water&amp;#39;, &amp;#39;rand&amp;#39;)}&amp;quot;
 )&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## Jack and Jill 
-## Went up the till 
+## Went up the shill 
 ## To fetch a pail of water. 
 ## Jack fell down 
-## And split his rundown,
-## And Jill came tumbling alma mater&lt;/code&gt;&lt;/pre&gt;
+## And split his breakdown,
+## And Jill came tumbling daughter&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The package includes additional functions to find other related words, including:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;get_means_like()&lt;/code&gt; to find words of similar meaning&lt;br /&gt;
@@ -52,11 +52,11 @@ get_rhyme(&amp;quot;R&amp;quot;, return_type = &amp;quot;vector&amp;quot;, limit
 &lt;p&gt;I’m looking forward to seeing what you come up with as an interesting use case for &lt;code&gt;rhymer&lt;/code&gt;! Please submit all issues or feature requests on &lt;a href=&#34;https://github.com/landesbergn/rhymer/issues&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;And of course, much thanks to:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Hadley Wickham&lt;/strong&gt; for the &lt;a href=&#34;http://httr.r-lib.org&#34;&gt;&lt;code&gt;httr&lt;/code&gt;&lt;/a&gt; package that made API requests a breeze, &lt;a href=&#34;http://testthat.r-lib.org&#34;&gt;&lt;code&gt;testthtat&lt;/code&gt;&lt;/a&gt; which made writing tests genuinly enjoyable, &lt;a href=&#34;https://github.com/hadley/devtools&#34;&gt;&lt;code&gt;devtools&lt;/code&gt;&lt;/a&gt; which made first-time package deveopment a pain-free experience, and &lt;a href=&#34;http://pkgdown.r-lib.org&#34;&gt;&lt;code&gt;pkgdown&lt;/code&gt;&lt;/a&gt; for turning all the package documentation into a beutiful website.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hadley Wickham&lt;/strong&gt; for the &lt;a href=&#34;http://httr.r-lib.org&#34;&gt;&lt;code&gt;httr&lt;/code&gt;&lt;/a&gt; package that made API requests a breeze, &lt;a href=&#34;http://testthat.r-lib.org&#34;&gt;&lt;code&gt;testthtat&lt;/code&gt;&lt;/a&gt; which made writing tests genuinely enjoyable, &lt;a href=&#34;https://github.com/hadley/devtools&#34;&gt;&lt;code&gt;devtools&lt;/code&gt;&lt;/a&gt; which made first-time package development a pain-free experience, and &lt;a href=&#34;http://pkgdown.r-lib.org&#34;&gt;&lt;code&gt;pkgdown&lt;/code&gt;&lt;/a&gt; for turning all the package documentation into a beautiful website.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Jeroen Ooms&lt;/strong&gt;, &lt;strong&gt;Duncan Temple Lang&lt;/strong&gt;, and &lt;strong&gt;Lloyd Hilaiel&lt;/strong&gt; for the &lt;a href=&#34;https://arxiv.org/abs/1403.2805&#34;&gt;&lt;code&gt;jsonlite&lt;/code&gt;&lt;/a&gt; package which helped to parse the JSON responses from the API.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.datamuse.com/api/&#34;&gt;&lt;strong&gt;Datamuse&lt;/strong&gt;&lt;/a&gt; for provideing an awesome and free API with great documentation and examples.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.datamuse.com/api/&#34;&gt;&lt;strong&gt;Datamuse&lt;/strong&gt;&lt;/a&gt; for providing an awesome and free API with great documentation and examples.&lt;/li&gt;
 &lt;li&gt;The internet for providing countless tips and tricks when it felt like I had reached an insurmountable problem.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Henry Willis&lt;/strong&gt;, &lt;strong&gt;Tim Helbig&lt;/strong&gt;, and &lt;strong&gt;Alex McManus&lt;/strong&gt; for teaching me a ton about package and software development and for doing some initial testing.
+&lt;li&gt;&lt;strong&gt;Henry Willis&lt;/strong&gt;, &lt;strong&gt;Tim Helbig&lt;/strong&gt;, &lt;strong&gt;Alex McManus&lt;/strong&gt;, and &lt;strong&gt;Benjamin Ackerman&lt;/strong&gt; for teaching me a ton about package and software development and for doing some initial testing.
 &lt;hr&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
