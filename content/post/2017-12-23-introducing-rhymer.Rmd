@@ -54,5 +54,5 @@ And of course, much thanks to:
 * **Jeroen Ooms**, **Duncan Temple Lang**, and **Lloyd Hilaiel** for the [`jsonlite`](https://arxiv.org/abs/1403.2805) package which helped to parse the JSON responses from the API.
 * [**Datamuse**](http://www.datamuse.com/api/) for provideing an awesome and free API with great documentation and examples.
 * The internet for providing countless tips and tricks when it felt like I had reached an insurmountable problem.
-* **Henry Willis**, **Tim Helbig**, and **Alex McManus** for teaching me a ton about package and software development and for doing some initial testing.
+* **Henry Willis**, **Tim Helbig**, **Alex McManus**, and **Benjamin Ackerman** for teaching me a ton about package and software development and for doing some initial testing.
 <hr>

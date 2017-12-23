@@ -39,8 +39,8 @@ get_rhyme(&amp;quot;R&amp;quot;, return_type = &amp;quot;vector&amp;quot;, limit
 ## Went up the till 
 ## To fetch a pail of water. 
 ## Jack fell down 
-## And split his rundown,
-## And Jill came tumbling alma mater&lt;/code&gt;&lt;/pre&gt;
+## And split his gown,
+## And Jill came tumbling slaughter&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The package includes additional functions to find other related words, including:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;get_means_like()&lt;/code&gt; to find words of similar meaning&lt;br /&gt;
@@ -56,7 +56,7 @@ get_rhyme(&amp;quot;R&amp;quot;, return_type = &amp;quot;vector&amp;quot;, limit
 &lt;li&gt;&lt;strong&gt;Jeroen Ooms&lt;/strong&gt;, &lt;strong&gt;Duncan Temple Lang&lt;/strong&gt;, and &lt;strong&gt;Lloyd Hilaiel&lt;/strong&gt; for the &lt;a href=&#34;https://arxiv.org/abs/1403.2805&#34;&gt;&lt;code&gt;jsonlite&lt;/code&gt;&lt;/a&gt; package which helped to parse the JSON responses from the API.&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://www.datamuse.com/api/&#34;&gt;&lt;strong&gt;Datamuse&lt;/strong&gt;&lt;/a&gt; for provideing an awesome and free API with great documentation and examples.&lt;/li&gt;
 &lt;li&gt;The internet for providing countless tips and tricks when it felt like I had reached an insurmountable problem.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Henry Willis&lt;/strong&gt;, &lt;strong&gt;Tim Helbig&lt;/strong&gt;, and &lt;strong&gt;Alex McManus&lt;/strong&gt; for teaching me a ton about package and software development and for doing some initial testing.
+&lt;li&gt;&lt;strong&gt;Henry Willis&lt;/strong&gt;, &lt;strong&gt;Tim Helbig&lt;/strong&gt;, &lt;strong&gt;Alex McManus&lt;/strong&gt;, and &lt;strong&gt;Benjamin Ackerman&lt;/strong&gt; for teaching me a ton about package and software development and for doing some initial testing.
 &lt;hr&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
