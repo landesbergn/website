@@ -32,7 +32,7 @@ defaultContentLanguageInSubdir = false
 
   # Your details.
   name = "Noah Landesberg"
-  role = "Data Person"
+  role = ""
 
   # Organizations/Affiliations.
   #   Separate multiple entries with a comma, using the form: `[ {name="Org1", url=""}, {name="Org2", url=""} ]`.
@@ -167,7 +167,7 @@ defaultContentLanguageInSubdir = false
 
 [[menu.main]]
   name = "Home"
-  url = "#about"
+  url = "#home"
   weight = 1
 
 [[menu.main]]
@@ -175,6 +175,10 @@ defaultContentLanguageInSubdir = false
   url = "#posts"
   weight = 2
 
+[[menu.main]]
+  name = "rhymer"
+  url = "https://landesbergn.github.io/rhymer/"
+  weight = 3
 
 # [[menu.main]]
   # name = "Projects"

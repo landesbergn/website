@@ -24,6 +24,5 @@ weight = 1
  
 +++
 
-# Biography
-
-Noah is an aspiring data scientist, based in Cambridge, MA. His interests include exploratory data analysis, visualization, and R. He currently works on an analytics team for athenahealth, helping to build internal dashboards and tools.
+## About me
+Noah is a data scientist, based in Cambridge, MA. His interests include exploratory data analysis, visualization, and data communication. He currently works on the Product Analytics team for [athenahealth](http://athenahealth.com), helping to track the sucess of R&D initiatives and provide data driven insights to product teams.

@@ -7,8 +7,60 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2017 Noah Landesberg</copyright>
-    <lastBuildDate>Tue, 17 Oct 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 Dec 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="/post/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Introducing rhymer</title>
+      <link>/post/introducing-rhymer/</link>
+      <pubDate>Sat, 23 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/introducing-rhymer/</guid>
+      <description>&lt;hr&gt;
+I’m proud announce that I have published my first R package, &lt;code&gt;rhymer&lt;/code&gt;!&lt;br /&gt;
+Version 1.0 is now available on &lt;a href=&#34;https://CRAN.R-project.org/package=rhymer&#34;&gt;CRAN&lt;/a&gt;. You can view the source code on &lt;a href=&#34;http://github.com/landesbergn/rhymer&#34;&gt;github&lt;/a&gt;, and see the website for the package &lt;a href=&#34;https://landesbergn.github.io/rhymer/&#34;&gt;here&lt;/a&gt;.
+&lt;hr&gt;
+&lt;p&gt;The goal of &lt;code&gt;rhymer&lt;/code&gt; is to provide an R interface to the &lt;a href=&#34;https://www.datamuse.com/api&#34;&gt;Datamuse API&lt;/a&gt; in order to find rhyming words. The core function of &lt;code&gt;rhymer&lt;/code&gt; is &lt;code&gt;get_rhyme()&lt;/code&gt;, which can be used in a variety of ways.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(rhymer)
+
+# get rhymes for &amp;quot;R&amp;quot; and return a 5 word vector
+get_rhyme(&amp;quot;R&amp;quot;, return_type = &amp;quot;vector&amp;quot;, limit = 5)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;bar&amp;quot;    &amp;quot;car&amp;quot;    &amp;quot;star&amp;quot;   &amp;quot;avatar&amp;quot; &amp;quot;spar&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For example, I’ve been enjoying rewriting nursery rhymes:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;glue::glue(&amp;quot;
+  Jack and Jill 
+  Went up the {get_rhyme(&amp;#39;Jill&amp;#39;, return_type = &amp;#39;rand&amp;#39;)} 
+  To fetch a pail of water. 
+  Jack fell down 
+  And split his {get_rhyme(&amp;#39;down&amp;#39;, &amp;#39;rand&amp;#39;)},
+  And Jill came tumbling {get_rhyme(&amp;#39;water&amp;#39;, &amp;#39;rand&amp;#39;)}&amp;quot;
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Jack and Jill 
+## Went up the till 
+## To fetch a pail of water. 
+## Jack fell down 
+## And split his rundown,
+## And Jill came tumbling alma mater&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The package includes additional functions to find other related words, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;get_means_like()&lt;/code&gt; to find words of similar meaning&lt;br /&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;get_sounds_like()&lt;/code&gt; to find words that sound similar&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;get_spelled_like()&lt;/code&gt; to find words that are spelled similarly&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;There are some more examples on the &lt;a href=&#34;https://landesbergn.github.io/rhymer/&#34;&gt;rhymer website&lt;/a&gt; as well as in the package vignette &lt;a href=&#34;https://landesbergn.github.io/rhymer/articles/intro-to-rhymer.html&#34;&gt;“Intro to rhymer”&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I’m looking forward to seeing what you come up with as an interesting use case for &lt;code&gt;rhymer&lt;/code&gt;! Please submit all issues or feature requests on &lt;a href=&#34;https://github.com/landesbergn/rhymer/issues&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;And of course, much thanks to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hadley Wickham&lt;/strong&gt; for the &lt;a href=&#34;http://httr.r-lib.org&#34;&gt;&lt;code&gt;httr&lt;/code&gt;&lt;/a&gt; package that made API requests a breeze, &lt;a href=&#34;http://testthat.r-lib.org&#34;&gt;&lt;code&gt;testthtat&lt;/code&gt;&lt;/a&gt; which made writing tests genuinly enjoyable, &lt;a href=&#34;https://github.com/hadley/devtools&#34;&gt;&lt;code&gt;devtools&lt;/code&gt;&lt;/a&gt; which made first-time package deveopment a pain-free experience, and &lt;a href=&#34;http://pkgdown.r-lib.org&#34;&gt;&lt;code&gt;pkgdown&lt;/code&gt;&lt;/a&gt; for turning all the package documentation into a beutiful website.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Jeroen Ooms&lt;/strong&gt;, &lt;strong&gt;Duncan Temple Lang&lt;/strong&gt;, and &lt;strong&gt;Lloyd Hilaiel&lt;/strong&gt; for the &lt;a href=&#34;https://arxiv.org/abs/1403.2805&#34;&gt;&lt;code&gt;jsonlite&lt;/code&gt;&lt;/a&gt; package which helped to parse the JSON responses from the API.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.datamuse.com/api/&#34;&gt;&lt;strong&gt;Datamuse&lt;/strong&gt;&lt;/a&gt; for provideing an awesome and free API with great documentation and examples.&lt;/li&gt;
+&lt;li&gt;The internet for providing countless tips and tricks when it felt like I had reached an insurmountable problem.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Henry Willis&lt;/strong&gt;, &lt;strong&gt;Tim Helbig&lt;/strong&gt;, and &lt;strong&gt;Alex McManus&lt;/strong&gt; for teaching me a ton about package and software development and for doing some initial testing.
+&lt;hr&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Thinking in Systems with DiagrammeR</title>
@@ -142,10 +194,7 @@ digraph boxes_and_cirles {
 &lt;div id=&#34;htmlwidget-5&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
 &lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-5&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;\n \ndigraph boxes_and_cirles {\n\n  graph [layout = dot, rankdir = LR]\n\n  # add clouds\n  node [shape = tripleoctagon]\n  cloud1 [label = \&#34;\&#34;]\n  cloud2 [label = \&#34;\&#34;]\n\n  # add stock\n  node [shape = box]\n  stock [height = 1.2, width = 1.5]\n\n  # add faucets\n  node [shape = terminator, \n        style = filled,\n        fillcolor = black]\n  inflow [label = \&#34;\n\ninflow\&#34;, penwidth = 3]\n  outflow [label = \&#34;\n\noutflow\&#34;, penwidth = 3]\n\n  # add pipes (edges)\n  cloud1 -&gt; inflow [arrowhead = none, penwidth = 2, color = DimGray]\n  inflow -&gt; stock [penwidth = 2, color = DimGray]\n  stock -&gt; outflow [arrowhead = none, penwidth = 2, color = DimGray]\n  outflow -&gt; cloud2 [penwidth = 2, color = DimGray]\n\n}      \n&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
 &lt;p&gt;Not bad right!&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/img/basic-stock-flow.jpg&#34; /&gt;
-
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;/img/basic-stock-flow.jpg&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Thanks to &lt;code&gt;DiagrammeR&lt;/code&gt; creator Richard Iannone (&lt;a href=&#34;www.twitter.com/riannone&#34;&gt;@riannone&lt;/a&gt;) and contributors Kent Russell (&lt;a href=&#34;www.twitter.com/timelyportfolio&#34;&gt;@timelyportfolio&lt;/a&gt;), JJ Allaire (&lt;a href=&#34;www.twitter.com/rstudio&#34;&gt;@rstudio&lt;/a&gt;), and Michaël Benesty (&lt;a href=&#34;www.twitter.com/pommedeterre33&#34;&gt;@pommedeterre33&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;Thanks to Donella Meadows for an interesting book and some new perspectives on systems. Cheers!&lt;/p&gt;
 </description>

@@ -133,9 +133,6 @@ digraph boxes_and_cirles {
 <div id="htmlwidget-5" style="width:672px;height:480px;" class="grViz html-widget"></div>
 <script type="application/json" data-for="htmlwidget-5">{"x":{"diagram":"\n \ndigraph boxes_and_cirles {\n\n  graph [layout = dot, rankdir = LR]\n\n  # add clouds\n  node [shape = tripleoctagon]\n  cloud1 [label = \"\"]\n  cloud2 [label = \"\"]\n\n  # add stock\n  node [shape = box]\n  stock [height = 1.2, width = 1.5]\n\n  # add faucets\n  node [shape = terminator, \n        style = filled,\n        fillcolor = black]\n  inflow [label = \"\n\ninflow\", penwidth = 3]\n  outflow [label = \"\n\noutflow\", penwidth = 3]\n\n  # add pipes (edges)\n  cloud1 -> inflow [arrowhead = none, penwidth = 2, color = DimGray]\n  inflow -> stock [penwidth = 2, color = DimGray]\n  stock -> outflow [arrowhead = none, penwidth = 2, color = DimGray]\n  outflow -> cloud2 [penwidth = 2, color = DimGray]\n\n}      \n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>Not bad right!</p>
-<div class="figure">
-<img src="/img/basic-stock-flow.jpg" />
-
-</div>
+<p><img src="/img/basic-stock-flow.jpg" /></p>
 <p>Thanks to <code>DiagrammeR</code> creator Richard Iannone (<a href="www.twitter.com/riannone">@riannone</a>) and contributors Kent Russell (<a href="www.twitter.com/timelyportfolio">@timelyportfolio</a>), JJ Allaire (<a href="www.twitter.com/rstudio">@rstudio</a>), and Michaël Benesty (<a href="www.twitter.com/pommedeterre33">@pommedeterre33</a>).</p>
 <p>Thanks to Donella Meadows for an interesting book and some new perspectives on systems. Cheers!</p>
