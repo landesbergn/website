@@ -36,10 +36,10 @@ get_rhyme(&amp;quot;R&amp;quot;, return_type = &amp;quot;vector&amp;quot;, limit
   And Jill came tumbling {get_rhyme(&amp;#39;water&amp;#39;, &amp;#39;rand&amp;#39;)}&amp;quot;
 )&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## Jack and Jill 
-## Went up the shill 
+## Went up the fulfill 
 ## To fetch a pail of water. 
 ## Jack fell down 
-## And split his breakdown,
+## And split his frown,
 ## And Jill came tumbling daughter&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The package includes additional functions to find other related words, including:&lt;/p&gt;
 &lt;ul&gt;
