@@ -17,7 +17,7 @@
       
       <guid>/post/introducing-rhymer/</guid>
       <description>&lt;hr&gt;
-I’m proud announce that I have published my first R package, &lt;code&gt;rhymer&lt;/code&gt;!&lt;br /&gt;
+I’m proud to announce that I have published my first R package, &lt;code&gt;rhymer&lt;/code&gt;!&lt;br /&gt;
 Version 1.0 is now available on &lt;a href=&#34;https://CRAN.R-project.org/package=rhymer&#34;&gt;CRAN&lt;/a&gt;. You can view the source code on &lt;a href=&#34;http://github.com/landesbergn/rhymer&#34;&gt;github&lt;/a&gt;, and see the website for the package &lt;a href=&#34;https://landesbergn.github.io/rhymer/&#34;&gt;here&lt;/a&gt;.
 &lt;hr&gt;
 &lt;p&gt;The goal of &lt;code&gt;rhymer&lt;/code&gt; is to provide an R interface to the &lt;a href=&#34;https://www.datamuse.com/api&#34;&gt;Datamuse API&lt;/a&gt; in order to find rhyming words. The core function of &lt;code&gt;rhymer&lt;/code&gt; is &lt;code&gt;get_rhyme()&lt;/code&gt;, which can be used in a variety of ways.&lt;/p&gt;
@@ -36,11 +36,11 @@ get_rhyme(&amp;quot;R&amp;quot;, return_type = &amp;quot;vector&amp;quot;, limit
   And Jill came tumbling {get_rhyme(&amp;#39;water&amp;#39;, &amp;#39;rand&amp;#39;)}&amp;quot;
 )&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## Jack and Jill 
-## Went up the fulfill 
+## Went up the still 
 ## To fetch a pail of water. 
 ## Jack fell down 
-## And split his frown,
-## And Jill came tumbling daughter&lt;/code&gt;&lt;/pre&gt;
+## And split his town,
+## And Jill came tumbling potter&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The package includes additional functions to find other related words, including:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;get_means_like()&lt;/code&gt; to find words of similar meaning&lt;br /&gt;

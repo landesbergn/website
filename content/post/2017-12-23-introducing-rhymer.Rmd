@@ -10,7 +10,7 @@ tags:
   - rhymer
 ---
 <hr>
-I'm proud announce that I have published my first R package, `rhymer`!  
+I'm proud to announce that I have published my first R package, `rhymer`!  
 Version 1.0 is now available on
 [CRAN](https://CRAN.R-project.org/package=rhymer). You can view the source code on [github](http://github.com/landesbergn/rhymer), 
 and see the website for the package [here](https://landesbergn.github.io/rhymer/).
