@@ -21,7 +21,7 @@ Version 1.0 is now available on <a href="https://CRAN.R-project.org/package=rhym
 
 # get rhymes for &quot;R&quot; and return a 5 word vector
 get_rhyme(&quot;R&quot;, return_type = &quot;vector&quot;, limit = 5)</code></pre>
-<pre><code>## [1] &quot;bar&quot;    &quot;car&quot;    &quot;star&quot;   &quot;avatar&quot; &quot;spar&quot;</code></pre>
+<pre><code>## [1] &quot;bar&quot;    &quot;car&quot;    &quot;star&quot;   &quot;avatar&quot; &quot;far&quot;</code></pre>
 <p>For example, I’ve been enjoying rewriting nursery rhymes:</p>
 <pre class="r"><code>glue::glue(&quot;
   Jack and Jill 
@@ -32,11 +32,11 @@ get_rhyme(&quot;R&quot;, return_type = &quot;vector&quot;, limit = 5)</code></pr
   And Jill came tumbling {get_rhyme(&#39;water&#39;, &#39;rand&#39;)}&quot;
 )</code></pre>
 <pre><code>## Jack and Jill 
-## Went up the still 
+## Went up the till 
 ## To fetch a pail of water. 
 ## Jack fell down 
-## And split his town,
-## And Jill came tumbling potter</code></pre>
+## And split his gown,
+## And Jill came tumbling otter</code></pre>
 <p>The package includes additional functions to find other related words, including:</p>
 <ul>
 <li><code>get_means_like()</code> to find words of similar meaning<br />

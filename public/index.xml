@@ -11,6 +11,154 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>8 Analytics Books I Read in 2017</title>
+      <link>/post/8-analytics-books-i-read-in-2017/</link>
+      <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/8-analytics-books-i-read-in-2017/</guid>
+      <description>
+
+&lt;p&gt;This year I made a concerted effort to read more books related to my interests in analytics, math, and data science. I had the pleasure of reading most of these books with a group of people at work, and we met on a regular basis to discuss and gab. These books are casual, and not meant to be as strictly educational (or tedious) as reading a textbook.&lt;/p&gt;
+
+&lt;p&gt;Without further ado&amp;hellip; here are 8 analytics books I read this year:
+&lt;hr&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;the-undoing-project-by-michael-lewis&#34;&gt;&lt;strong&gt;The Undoing Project&lt;/strong&gt; by Michael Lewis&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/books_2017/undoing.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Lewis follows the careers of Amos Tversky and Daniel Kahneman, two Israeli psychologists notable for their work in the foundations of behavioral economics. Like &lt;em&gt;Moneyball&lt;/em&gt; or &lt;em&gt;The Big Short&lt;/em&gt;, Lewis uses the stories of fascinating people to explore more complicated subjects. &lt;em&gt;Moneyball&lt;/em&gt; is very much the story of Billy Bean, but along the way, you learn a lot about advanced metrics in baseball. Likewise, &lt;em&gt;The Undoing Project&lt;/em&gt; is very much the story of Tversky and Kahneman, but along they way you will learn a lot about the way humans interpret numbers and probability, and the theories that underlie behavioral economics.
+&lt;hr&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;dataclysm-love-sex-race-and-identity-what-our-online-lives-tell-us-about-our-offline-selves-by-christian-rudder&#34;&gt;&lt;strong&gt;Dataclysm: Love, Sex, Race, and Identity – What our Online Lives Tell Us about Our Offline Selves&lt;/strong&gt; by Christian Rudder&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/books_2017/dataclysm.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Dataclysm explores the data underlying human connections and romance. The book, written by Christian Rudder the founder and former CEO of OkCupid, has taken some of the popular posts and ideas behind Rudder&amp;rsquo;s OkCupid data blog and expanded on them. This book generated some great discussion around the use of data in our personal lives and how our understanding of data doesn&amp;rsquo;t necessarily change our behavior in dating or relationships.
+&lt;hr&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;hidden-figures-the-american-dream-and-the-untold-story-of-the-black-women-mathematicians-who-helped-win-the-space-race-by-margot-shetterly&#34;&gt;&lt;strong&gt;Hidden Figures: The American Dream and the Untold Story of the Black Women Mathematicians Who Helped Win the Space Race&lt;/strong&gt; by Margot Shetterly&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/books_2017/hidden.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now a major motion picture, Hidden Figures was a quick read that explored the stories of the black women working as &amp;lsquo;calculators&amp;rsquo; at NASA during the space race of the early 20th century. The book was not as thrilling as the movie, but provided nice insight into the world of mathematics and early computing, and shed a light on many of the difficulties these women overcame to have successful careers at NASA.
+&lt;hr&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;the-most-human-human-what-artificial-intelligence-teaches-us-about-being-alive-by-brian-christian&#34;&gt;&lt;strong&gt;The Most Human Human: What Artificial Intelligence Teaches Us About Being Alive&lt;/strong&gt; by Brian Christian&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/books_2017/human.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Every year, the AI community gathers to hold a competition of chat bots to see if they can pass the Turing Test. As a part of the competition, human confederates are put in place so that a judge could be speaking to a computer or to a human. At the end of the competition, awards are given to the computer the judges determine to be most human, but also to the human most frequently identified as a human (aka The Most Human Human). Christian write about his experience as a human confederate, and divulges into the methodology behind leading chat bots, as well as some more philosophical writing about what it means to be human.
+&lt;hr&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;algorithms-to-live-by-the-computer-science-of-human-decisions-by-brian-christian-and-tom-griffiths&#34;&gt;&lt;strong&gt;Algorithms to Live By: The Computer Science of Human Decisions&lt;/strong&gt; by Brian Christian and Tom Griffiths&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/books_2017/algos.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This book explores basic computer algorithms and attempts to connect and apply them to practical every day problems. Problems include: how many candidates should you interview before making an offer, how to best organize your desk, or how to best manage your time.
+&lt;hr&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;superforecasting-the-art-and-science-of-prediction-by-philip-e-tetlock&#34;&gt;&lt;strong&gt;Superforecasting: The Art and Science of Prediction&lt;/strong&gt; by Philip E. Tetlock&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/books_2017/super.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Superforecasting looks into a longitudinal study conducted on the ability of individuals to forecast and predict geopolitical events. From that study, a group of individuals were identified as &amp;lsquo;superforecasters&amp;rsquo; who had the ability to consistently and accurately predict the future better than most. Tetlock dives into the reasons behind their success (incorporate additional information, precise estimates, etc.) as well as the methodology behind measuring predictions of future events.
+&lt;hr&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;thinking-in-systems-a-primer-by-donella-h-meadows&#34;&gt;&lt;strong&gt;Thinking in Systems: A Primer&lt;/strong&gt; by Donella H. Meadows&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/books_2017/systems.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This book introduces basic concepts around systems, including stocks, flows, and feedback loops. Meadows provides a good foundation for understanding how a small change in a system can have major impacts. The book even inspired a &lt;a href=&#34;https://www.noahlandesberg.com/post/thinking-in-systems-with-diagrammer/&#34; target=&#34;_blank&#34;&gt;blog post&lt;/a&gt; on how to replicate basic systems diagrams in R!
+&lt;hr&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;the-visual-display-of-quantitative-information-by-edward-r-tufte&#34;&gt;&lt;strong&gt;The Visual Display of Quantitative Information&lt;/strong&gt; by Edward R. Tufte&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/books_2017/tufte.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Closed the year with some good ole Tufte, as gifted to me by my sister! Tufte is a pioneer in the field of data visualization, and although he has a mixed reputation in recent years, I really enjoyed his compilation of historical data graphics and visuals.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Well, that&amp;rsquo;s all! 2017 was a great year for reading, here&amp;rsquo;s to &lt;em&gt;9&lt;/em&gt; analytics books in 2018!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>8 Analytics Books I Read in 2017</title>
+      <link>/post/8-analytics-books-i-read-in-2017/</link>
+      <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/8-analytics-books-i-read-in-2017/</guid>
+      <description>
+
+&lt;p&gt;This year I made a concerted effort to read more books related to my interests in analytics, math, and data science. I had the pleasure of reading most of these books with a group of people at work, and we met on a regular basis to discuss and gab. These books are casual, and not meant to be as strictly educational (or tedious) as reading a textbook.&lt;/p&gt;
+
+&lt;p&gt;Without further ado&amp;hellip; here are 8 analytics books I read this year:
+&lt;hr&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;the-undoing-project-by-michael-lewis&#34;&gt;&lt;strong&gt;The Undoing Project&lt;/strong&gt; by Michael Lewis&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/books_2017/undoing.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Lewis follows the careers of Amos Tversky and Daniel Kahneman, two Israeli psychologists notable for their work in the foundations of behavioral economics. Like &lt;em&gt;Moneyball&lt;/em&gt; or &lt;em&gt;The Big Short&lt;/em&gt;, Lewis uses the stories of fascinating people to explore more complicated subjects. &lt;em&gt;Moneyball&lt;/em&gt; is very much the story of Billy Bean, but along the way, you learn a lot about advanced metrics in baseball. Likewise, &lt;em&gt;The Undoing Project&lt;/em&gt; is very much the story of Tversky and Kahneman, but along they way you will learn a lot about the way humans interpret numbers and probability, and the theories that underlie behavioral economics.
+&lt;hr&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;dataclysm-love-sex-race-and-identity-what-our-online-lives-tell-us-about-our-offline-selves-by-christian-rudder&#34;&gt;&lt;strong&gt;Dataclysm: Love, Sex, Race, and Identity – What our Online Lives Tell Us about Our Offline Selves&lt;/strong&gt; by Christian Rudder&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/books_2017/dataclysm.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Dataclysm explores the data underlying human connections and romance. The book, written by Christian Rudder the founder and former CEO of OkCupid, has taken some of the popular posts and ideas behind Rudder&amp;rsquo;s OkCupid data blog and expanded on them. This book generated some great discussion around the use of data in our personal lives and how our understanding of data doesn&amp;rsquo;t necessarily change our behavior in dating or relationships.
+&lt;hr&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;hidden-figures-the-american-dream-and-the-untold-story-of-the-black-women-mathematicians-who-helped-win-the-space-race-by-margot-shetterly&#34;&gt;&lt;strong&gt;Hidden Figures: The American Dream and the Untold Story of the Black Women Mathematicians Who Helped Win the Space Race&lt;/strong&gt; by Margot Shetterly&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/books_2017/hidden.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now a major motion picture, Hidden Figures was a quick read that explored the stories of the black women working as &amp;lsquo;calculators&amp;rsquo; at NASA during the space race of the early 20th century. The book was not as thrilling as the movie, but provided nice insight into the world of mathematics and early computing, and shed a light on many of the difficulties these women overcame to have successful careers at NASA.
+&lt;hr&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;the-most-human-human-what-artificial-intelligence-teaches-us-about-being-alive-by-brian-christian&#34;&gt;&lt;strong&gt;The Most Human Human: What Artificial Intelligence Teaches Us About Being Alive&lt;/strong&gt; by Brian Christian&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/books_2017/human.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Every year, the AI community gathers to hold a competition of chat bots to see if they can pass the Turing Test. As a part of the competition, human confederates are put in place so that a judge could be speaking to a computer or to a human. At the end of the competition, awards are given to the computer the judges determine to be most human, but also to the human most frequently identified as a human (aka The Most Human Human). Christian write about his experience as a human confederate, and divulges into the methodology behind leading chat bots, as well as some more philosophical writing about what it means to be human.
+&lt;hr&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;algorithms-to-live-by-the-computer-science-of-human-decisions-by-brian-christian-and-tom-griffiths&#34;&gt;&lt;strong&gt;Algorithms to Live By: The Computer Science of Human Decisions&lt;/strong&gt; by Brian Christian and Tom Griffiths&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/books_2017/algos.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This book explores basic computer algorithms and attempts to connect and apply them to practical every day problems. Problems include: how many candidates should you interview before making an offer, how to best organize your desk, or how to best manage your time.
+&lt;hr&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;superforecasting-the-art-and-science-of-prediction-by-philip-e-tetlock&#34;&gt;&lt;strong&gt;Superforecasting: The Art and Science of Prediction&lt;/strong&gt; by Philip E. Tetlock&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/books_2017/super.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Superforecasting looks into a longitudinal study conducted on the ability of individuals to forecast and predict geopolitical events. From that study, a group of individuals were identified as &amp;lsquo;superforecasters&amp;rsquo; who had the ability to consistently and accurately predict the future better than most. Tetlock dives into the reasons behind their success (incorporate additional information, precise estimates, etc.) as well as the methodology behind measuring predictions of future events.
+&lt;hr&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;thinking-in-systems-a-primer-by-donella-h-meadows&#34;&gt;&lt;strong&gt;Thinking in Systems: A Primer&lt;/strong&gt; by Donella H. Meadows&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/books_2017/systems.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This book introduces basic concepts around systems, including stocks, flows, and feedback loops. Meadows provides a good foundation for understanding how a small change in a system can have major impacts. The book even inspired a &lt;a href=&#34;https://www.noahlandesberg.com/post/thinking-in-systems-with-diagrammer/&#34; target=&#34;_blank&#34;&gt;blog post&lt;/a&gt; on how to replicate basic systems diagrams in R!
+&lt;hr&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;the-visual-display-of-quantitative-information-by-edward-r-tufte&#34;&gt;&lt;strong&gt;The Visual Display of Quantitative Information&lt;/strong&gt; by Edward R. Tufte&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/books_2017/tufte.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Closed the year with some good ole Tufte, as gifted to me by my sister! Tufte is a pioneer in the field of data visualization, and although he has a mixed reputation in recent years, I really enjoyed his compilation of historical data graphics and visuals.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Well, that&amp;rsquo;s all! 2017 was a great year for reading, here&amp;rsquo;s to &lt;em&gt;9&lt;/em&gt; analytics books in 2018!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Introducing rhymer</title>
       <link>/post/introducing-rhymer/</link>
       <pubDate>Sat, 23 Dec 2017 00:00:00 +0000</pubDate>
@@ -25,7 +173,7 @@ Version 1.0 is now available on &lt;a href=&#34;https://CRAN.R-project.org/packa
 
 # get rhymes for &amp;quot;R&amp;quot; and return a 5 word vector
 get_rhyme(&amp;quot;R&amp;quot;, return_type = &amp;quot;vector&amp;quot;, limit = 5)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;bar&amp;quot;    &amp;quot;car&amp;quot;    &amp;quot;star&amp;quot;   &amp;quot;avatar&amp;quot; &amp;quot;spar&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;bar&amp;quot;    &amp;quot;car&amp;quot;    &amp;quot;star&amp;quot;   &amp;quot;avatar&amp;quot; &amp;quot;far&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For example, I’ve been enjoying rewriting nursery rhymes:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;glue::glue(&amp;quot;
   Jack and Jill 
@@ -36,11 +184,11 @@ get_rhyme(&amp;quot;R&amp;quot;, return_type = &amp;quot;vector&amp;quot;, limit
   And Jill came tumbling {get_rhyme(&amp;#39;water&amp;#39;, &amp;#39;rand&amp;#39;)}&amp;quot;
 )&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## Jack and Jill 
-## Went up the still 
+## Went up the till 
 ## To fetch a pail of water. 
 ## Jack fell down 
-## And split his town,
-## And Jill came tumbling potter&lt;/code&gt;&lt;/pre&gt;
+## And split his gown,
+## And Jill came tumbling otter&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The package includes additional functions to find other related words, including:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;get_means_like()&lt;/code&gt; to find words of similar meaning&lt;br /&gt;
