@@ -22,7 +22,7 @@ slug: thinking-in-systems-with-diagrammer
 <p>stocks are shown as boxes, and flows as arrow-headed “pipes” leading into or out of the stocks. The small T on each flow signifies a “faucet;” it can be turned higher or lower, on or off. The “clouds” stand for wherever the flows come from and go to–the sources and sinks that are being ignored for the purposes of the present discussion.</p>
 </blockquote>
 <p>Cool! The drawings become increasingly complex as we add in additional stocks and flows and feedback loops. But looking back at our simple example got me thinking… could we replicate a stock-and-flow diagram in <code>R</code>?</p>
-<p>Browing the web, it seems like <code>DiagrammeR</code> is our best bet for a package that aids in the creation of diagrams and flowcharts. So, off we go!</p>
+<p>Browsing the web, it seems like <code>DiagrammeR</code> is our best bet for a package that aids in the creation of diagrams and flowcharts. So, off we go!</p>
 <p>First we need to install <code>DiagrammeR</code>.</p>
 <pre class="r"><code>install.packages(&quot;DiagrammeR&quot;)</code></pre>
 <p>I actually had a minor snafu trying to install this on my Mac. Trying to compile a dependency package <code>tidyr</code> required opening up Xcode and accepting the user agreement. But after that we were all set.</p>

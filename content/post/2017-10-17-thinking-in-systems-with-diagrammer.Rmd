@@ -22,7 +22,7 @@ Meadows goes on to describe the stock-and-flow diagram:
 
 Cool! The drawings become increasingly complex as we add in additional stocks and flows and feedback loops. But looking back at our simple example got me thinking... could we replicate a stock-and-flow diagram in `R`?
 
-Browing the web, it seems like `DiagrammeR` is our best bet for a package that aids in the creation of diagrams and flowcharts. So, off we go!
+Browsing the web, it seems like `DiagrammeR` is our best bet for a package that aids in the creation of diagrams and flowcharts. So, off we go!
 
 First we need to install `DiagrammeR`. 
 ```{r eval = FALSE}
