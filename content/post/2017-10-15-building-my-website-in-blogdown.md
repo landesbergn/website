@@ -2,9 +2,9 @@
 title: Building my website with Blogdown
 author: Noah Landesberg
 date: '2017-10-15'
+tags:
+  - R
 slug: building-my-website-with-blogdown
-categories: []
-tags: []
 header:
   caption: ''
   image: ''

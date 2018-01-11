@@ -2,12 +2,13 @@
 title: Introducing rhymer
 author: Noah Landesberg
 date: '2017-12-23'
-slug: introducing-rhymer
 categories:
-  - rhymer
   - R
+  - rhymer
 tags:
   - rhymer
+  - R
+slug: introducing-rhymer
 ---
 <hr>
 I'm proud to announce that I have published my first R package, `rhymer`!  

@@ -2,9 +2,10 @@
 title: Thinking in Systems with DiagrammeR
 author: Noah Landesberg
 date: '2017-10-17'
+tags:
+  - books
+  - R
 slug: thinking-in-systems-with-diagrammer
-categories: []
-tags: []
 ---
 
 I recently read [__Thinking in Systems: A Primer__](https://www.goodreads.com/book/show/3828902-thinking-in-systems) by Donella H. Meadows (2008) for a book club. The book offers a great little primer on systems thinking and its application to problems big and small. It's a quick read (< 200 pages, not counting the appendix), and it has many great tidbits on how to perceive and influence the systems around us.
