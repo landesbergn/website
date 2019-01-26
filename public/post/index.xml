@@ -5,10 +5,12 @@
     <link>/post/</link>
     <description>Recent content in Posts on Noah Landesberg</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>&amp;copy; 2017 Noah Landesberg</copyright>
+    <language>en</language>
+    <copyright>© 2019 Noah Landesberg</copyright>
     <lastBuildDate>Wed, 10 Jan 2018 00:00:00 +0000</lastBuildDate>
-    <atom:link href="/post/" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>8 Analytics Books I Read in 2017</title>
@@ -16,72 +18,8 @@
       <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/8-analytics-books-i-read-in-2017/</guid>
-      <description>
-
-&lt;p&gt;This year I made a concerted effort to read more books related to my interests in analytics, math, and data science. I had the pleasure of reading most of these books with a group of people at work, and we met on a regular basis to discuss and gab. These books are casual, and not meant to be as strictly educational (or tedious) as reading a textbook.&lt;/p&gt;
-
-&lt;p&gt;Without further ado&amp;hellip; here are 8 analytics books I read this year:
-&lt;hr&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;the-undoing-project-by-michael-lewis&#34;&gt;&lt;strong&gt;The Undoing Project&lt;/strong&gt; by Michael Lewis&lt;/h2&gt;
-
-&lt;p&gt;&lt;img src=&#34;/img/books_2017/undoing.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Lewis follows the careers of Amos Tversky and Daniel Kahneman, two Israeli psychologists notable for their work in the foundations of behavioral economics. Like &lt;em&gt;Moneyball&lt;/em&gt; or &lt;em&gt;The Big Short&lt;/em&gt;, Lewis uses the stories of fascinating people to explore more complicated subjects. &lt;em&gt;Moneyball&lt;/em&gt; is very much the story of Billy Bean, but along the way, you learn a lot about advanced metrics in baseball. Likewise, &lt;em&gt;The Undoing Project&lt;/em&gt; is very much the story of Tversky and Kahneman, but along they way you will learn a lot about the way humans interpret numbers and probability, and the theories that underlie behavioral economics.
-&lt;hr&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;dataclysm-love-sex-race-and-identity-what-our-online-lives-tell-us-about-our-offline-selves-by-christian-rudder&#34;&gt;&lt;strong&gt;Dataclysm: Love, Sex, Race, and Identity – What our Online Lives Tell Us about Our Offline Selves&lt;/strong&gt; by Christian Rudder&lt;/h2&gt;
-
-&lt;p&gt;&lt;img src=&#34;/img/books_2017/dataclysm.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Dataclysm explores the data underlying human connections and romance. The book, written by Christian Rudder the founder and former CEO of OkCupid, has taken some of the popular posts and ideas behind Rudder&amp;rsquo;s OkCupid data blog and expanded on them. This book generated some great discussion around the use of data in our personal lives and how our understanding of data doesn&amp;rsquo;t necessarily change our behavior in dating or relationships.
-&lt;hr&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;hidden-figures-the-american-dream-and-the-untold-story-of-the-black-women-mathematicians-who-helped-win-the-space-race-by-margot-shetterly&#34;&gt;&lt;strong&gt;Hidden Figures: The American Dream and the Untold Story of the Black Women Mathematicians Who Helped Win the Space Race&lt;/strong&gt; by Margot Shetterly&lt;/h2&gt;
-
-&lt;p&gt;&lt;img src=&#34;/img/books_2017/hidden.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Now a major motion picture, Hidden Figures was a quick read that explored the stories of the black women working as &amp;lsquo;calculators&amp;rsquo; at NASA during the space race of the early 20th century. The book was not as thrilling as the movie, but provided nice insight into the world of mathematics and early computing, and shed a light on many of the difficulties these women overcame to have successful careers at NASA.
-&lt;hr&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;the-most-human-human-what-artificial-intelligence-teaches-us-about-being-alive-by-brian-christian&#34;&gt;&lt;strong&gt;The Most Human Human: What Artificial Intelligence Teaches Us About Being Alive&lt;/strong&gt; by Brian Christian&lt;/h2&gt;
-
-&lt;p&gt;&lt;img src=&#34;/img/books_2017/human.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Every year, the AI community gathers to hold a competition of chat bots to see if they can pass the Turing Test. As a part of the competition, human confederates are put in place so that a judge could be speaking to a computer or to a human. At the end of the competition, awards are given to the computer the judges determine to be most human, but also to the human most frequently identified as a human (aka The Most Human Human). Christian writes about his experience as a human confederate, and divulges into the methodology behind leading chat bots, as well as some more philosophical writing about what it means to be human.
-&lt;hr&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;algorithms-to-live-by-the-computer-science-of-human-decisions-by-brian-christian-and-tom-griffiths&#34;&gt;&lt;strong&gt;Algorithms to Live By: The Computer Science of Human Decisions&lt;/strong&gt; by Brian Christian and Tom Griffiths&lt;/h2&gt;
-
-&lt;p&gt;&lt;img src=&#34;/img/books_2017/algos.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;This book explores basic computer algorithms and attempts to connect and apply them to practical every day problems. Problems include: how many candidates should you interview before making an offer, how to best organize your desk, or how to best manage your time.
-&lt;hr&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;superforecasting-the-art-and-science-of-prediction-by-philip-e-tetlock&#34;&gt;&lt;strong&gt;Superforecasting: The Art and Science of Prediction&lt;/strong&gt; by Philip E. Tetlock&lt;/h2&gt;
-
-&lt;p&gt;&lt;img src=&#34;/img/books_2017/super.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Superforecasting looks into a longitudinal study conducted on the ability of individuals to forecast and predict geopolitical events. From that study, a group of individuals were identified as &amp;lsquo;superforecasters&amp;rsquo; who had the ability to consistently and accurately predict the future better than most. Tetlock dives into the reasons behind their success (incorporate additional information, precise estimates, etc.) as well as the methodology behind measuring predictions of future events.
-&lt;hr&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;thinking-in-systems-a-primer-by-donella-h-meadows&#34;&gt;&lt;strong&gt;Thinking in Systems: A Primer&lt;/strong&gt; by Donella H. Meadows&lt;/h2&gt;
-
-&lt;p&gt;&lt;img src=&#34;/img/books_2017/systems.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;This book introduces basic concepts around systems, including stocks, flows, and feedback loops. Meadows provides a good foundation for understanding how a small change in a system can have major impacts. The book even inspired a &lt;a href=&#34;https://www.noahlandesberg.com/post/thinking-in-systems-with-diagrammer/&#34; target=&#34;_blank&#34;&gt;blog post&lt;/a&gt; on how to replicate basic systems diagrams in R!
-&lt;hr&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;the-visual-display-of-quantitative-information-by-edward-r-tufte&#34;&gt;&lt;strong&gt;The Visual Display of Quantitative Information&lt;/strong&gt; by Edward R. Tufte&lt;/h2&gt;
-
-&lt;p&gt;&lt;img src=&#34;/img/books_2017/tufte.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Closed the year with some good ole Tufte, as gifted to me by my twin-sister! Tufte is a pioneer in the field of data visualization, and although he has a mixed reputation in recent years, I really enjoyed his compilation of historical data graphics and visuals.&lt;/p&gt;
-
-&lt;hr&gt;
-
-&lt;p&gt;Well, that&amp;rsquo;s all! 2017 was a great year for reading, here&amp;rsquo;s to &lt;em&gt;9&lt;/em&gt; analytics books in 2018!&lt;/p&gt;
-</description>
+      <description>This year I made a concerted effort to read more books related to my interests in analytics, math, and data science. I had the pleasure of reading most of these books with a group of people at work, and we met on a regular basis to discuss and gab. These books are casual, and not meant to be as strictly educational (or tedious) as reading a textbook.
+Without further ado&amp;hellip; here are 8 analytics books I read this year:</description>
     </item>
     
     <item>
@@ -90,50 +28,8 @@
       <pubDate>Sat, 23 Dec 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/introducing-rhymer/</guid>
-      <description>&lt;hr&gt;
-I’m proud to announce that I have published my first R package, &lt;code&gt;rhymer&lt;/code&gt;!&lt;br /&gt;
-Version 1.0 is now available on &lt;a href=&#34;https://CRAN.R-project.org/package=rhymer&#34;&gt;CRAN&lt;/a&gt;. You can view the source code on &lt;a href=&#34;http://github.com/landesbergn/rhymer&#34;&gt;github&lt;/a&gt;, and see the website for the package &lt;a href=&#34;https://landesbergn.github.io/rhymer/&#34;&gt;here&lt;/a&gt;.
-&lt;hr&gt;
-&lt;p&gt;The goal of &lt;code&gt;rhymer&lt;/code&gt; is to provide an R interface to the &lt;a href=&#34;https://www.datamuse.com/api&#34;&gt;Datamuse API&lt;/a&gt; in order to find rhyming words. The core function of &lt;code&gt;rhymer&lt;/code&gt; is &lt;code&gt;get_rhyme()&lt;/code&gt;, which can be used in a variety of ways.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(rhymer)
-
-# get rhymes for &amp;quot;R&amp;quot; and return a 5 word vector
-get_rhyme(&amp;quot;R&amp;quot;, return_type = &amp;quot;vector&amp;quot;, limit = 5)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;bar&amp;quot;    &amp;quot;car&amp;quot;    &amp;quot;star&amp;quot;   &amp;quot;avatar&amp;quot; &amp;quot;far&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;For example, I’ve been enjoying rewriting nursery rhymes:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;glue::glue(&amp;quot;
-  Jack and Jill 
-  Went up the {get_rhyme(&amp;#39;Jill&amp;#39;, return_type = &amp;#39;rand&amp;#39;)} 
-  To fetch a pail of water. 
-  Jack fell down 
-  And split his {get_rhyme(&amp;#39;down&amp;#39;, &amp;#39;rand&amp;#39;)},
-  And Jill came tumbling {get_rhyme(&amp;#39;water&amp;#39;, &amp;#39;rand&amp;#39;)}&amp;quot;
-)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Jack and Jill 
-## Went up the bill 
-## To fetch a pail of water. 
-## Jack fell down 
-## And split his gown,
-## And Jill came tumbling manslaughter&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The package includes additional functions to find other related words, including:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;get_means_like()&lt;/code&gt; to find words of similar meaning&lt;br /&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;get_sounds_like()&lt;/code&gt; to find words that sound similar&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;get_spelled_like()&lt;/code&gt; to find words that are spelled similarly&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;There are some more examples on the &lt;a href=&#34;https://landesbergn.github.io/rhymer/&#34;&gt;rhymer website&lt;/a&gt; as well as in the package vignette &lt;a href=&#34;https://landesbergn.github.io/rhymer/articles/intro-to-rhymer.html&#34;&gt;“Intro to rhymer”&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;I’m looking forward to seeing what you come up with as an interesting use case for &lt;code&gt;rhymer&lt;/code&gt;! Please submit all issues or feature requests on &lt;a href=&#34;https://github.com/landesbergn/rhymer/issues&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;And of course, much thanks to:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Hadley Wickham&lt;/strong&gt; for the &lt;a href=&#34;http://httr.r-lib.org&#34;&gt;&lt;code&gt;httr&lt;/code&gt;&lt;/a&gt; package that made API requests a breeze, &lt;a href=&#34;http://testthat.r-lib.org&#34;&gt;&lt;code&gt;testthtat&lt;/code&gt;&lt;/a&gt; which made writing tests genuinely enjoyable, &lt;a href=&#34;https://github.com/hadley/devtools&#34;&gt;&lt;code&gt;devtools&lt;/code&gt;&lt;/a&gt; which made first-time package development a pain-free experience, and &lt;a href=&#34;http://pkgdown.r-lib.org&#34;&gt;&lt;code&gt;pkgdown&lt;/code&gt;&lt;/a&gt; for turning all the package documentation into a beautiful website.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Jeroen Ooms&lt;/strong&gt;, &lt;strong&gt;Duncan Temple Lang&lt;/strong&gt;, and &lt;strong&gt;Lloyd Hilaiel&lt;/strong&gt; for the &lt;a href=&#34;https://arxiv.org/abs/1403.2805&#34;&gt;&lt;code&gt;jsonlite&lt;/code&gt;&lt;/a&gt; package which helped to parse the JSON responses from the API.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.datamuse.com/api/&#34;&gt;&lt;strong&gt;Datamuse&lt;/strong&gt;&lt;/a&gt; for providing an awesome and free API with great documentation and examples.&lt;/li&gt;
-&lt;li&gt;The internet for providing countless tips and tricks when it felt like I had reached an insurmountable problem.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Henry Willis&lt;/strong&gt;, &lt;strong&gt;Tim Helbig&lt;/strong&gt;, &lt;strong&gt;Alex McManus&lt;/strong&gt;, and &lt;strong&gt;Benjamin Ackerman&lt;/strong&gt; for teaching me a ton about package and software development and for doing some initial testing.
-&lt;hr&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+      <description>I’m proud to announce that I have published my first R package, rhymer!
+Version 1.0 is now available on CRAN. You can view the source code on github, and see the website for the package here.  The goal of rhymer is to provide an R interface to the Datamuse API in order to find rhyming words. The core function of rhymer is get_rhyme(), which can be used in a variety of ways.</description>
     </item>
     
     <item>
@@ -142,136 +38,8 @@ get_rhyme(&amp;quot;R&amp;quot;, return_type = &amp;quot;vector&amp;quot;, limit
       <pubDate>Tue, 17 Oct 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/thinking-in-systems-with-diagrammer/</guid>
-      <description>&lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/viz/viz.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;/rmarkdown-libs/DiagrammeR-styles/styles.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;/rmarkdown-libs/grViz-binding/grViz.js&#34;&gt;&lt;/script&gt;
-
-
-&lt;p&gt;I recently read &lt;a href=&#34;https://www.goodreads.com/book/show/3828902-thinking-in-systems&#34;&gt;&lt;strong&gt;Thinking in Systems: A Primer&lt;/strong&gt;&lt;/a&gt; by Donella H. Meadows (2008) for a book club. The book offers a great little primer on systems thinking and its application to problems big and small. It’s a quick read (&amp;lt; 200 pages, not counting the appendix), and it has many great tidbits on how to perceive and influence the systems around us.&lt;/p&gt;
-&lt;p&gt;One of the concepts introduced in the book is stock and flow diagrams that represent basic systems. The first diagram in the book shows a basic stock with an inflow and outflow.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/img/basic-stock-flow.jpg&#34; /&gt; &lt;em&gt;Thinking in Systems, pg. 18&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Meadows goes on to describe the stock-and-flow diagram:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;stocks are shown as boxes, and flows as arrow-headed “pipes” leading into or out of the stocks. The small T on each flow signifies a “faucet;” it can be turned higher or lower, on or off. The “clouds” stand for wherever the flows come from and go to–the sources and sinks that are being ignored for the purposes of the present discussion.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Cool! The drawings become increasingly complex as we add in additional stocks and flows and feedback loops. But looking back at our simple example got me thinking… could we replicate a stock-and-flow diagram in &lt;code&gt;R&lt;/code&gt;?&lt;/p&gt;
-&lt;p&gt;Browsing the web, it seems like &lt;code&gt;DiagrammeR&lt;/code&gt; is our best bet for a package that aids in the creation of diagrams and flowcharts. So, off we go!&lt;/p&gt;
-&lt;p&gt;First we need to install &lt;code&gt;DiagrammeR&lt;/code&gt;.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;install.packages(&amp;quot;DiagrammeR&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I actually had a minor snafu trying to install this on my Mac. Trying to compile a dependency package &lt;code&gt;tidyr&lt;/code&gt; required opening up Xcode and accepting the user agreement. But after that we were all set.&lt;/p&gt;
-&lt;p&gt;Let’s load the &lt;code&gt;DiagrammeR&lt;/code&gt; package:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(DiagrammeR)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;So judging from the &lt;a href=&#34;http://rich-iannone.github.io/DiagrammeR/&#34;&gt;DiagrammeR website&lt;/a&gt;, I wasn’t too sure where to start. So I watched the embedded video, which showed the quick creation of a graph using the &lt;code&gt;grVis&lt;/code&gt; function. It looks like this function will interpret some &lt;em&gt;DOT&lt;/em&gt; syntax, which the web tells me is a ‘plain text graph description language.’ That seems cool, Let’s give it a go!&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;grViz(&amp;quot;
- 
-digraph boxes_and_cirles {
-
-  # add nodes
-  node [shape = box]
-  stock
-  
-}
-&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;\n \ndigraph boxes_and_cirles {\n\n  # add nodes\n  node [shape = box]\n  stock\n  \n}\n&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
-&lt;p&gt;Not bad! We’ve got a stock! The other basic elements we will want to include would be: clouds at either end (representing sources and sinks), pipes, and faucets. Let’s try to get all of the elements together in one go.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;grViz(&amp;quot;
- 
-digraph boxes_and_cirles {
-
-  # add nodes
-  node [shape = box]
-  stock
-  cloud1
-  cloud2
-  inflow_faucet
-  outflow_faucet
-
-}
-&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;htmlwidget-2&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-2&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;\n \ndigraph boxes_and_cirles {\n\n  # add nodes\n  node [shape = box]\n  stock\n  cloud1\n  cloud2\n  inflow_faucet\n  outflow_faucet\n\n}\n&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
-&lt;p&gt;And then let’s connect the elements&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;grViz(&amp;quot;
- 
-digraph boxes_and_cirles {
-
-  # add nodes
-  node [shape = box]
-  stock
-  cloud1
-  cloud2
-  inflow_faucet
-  outflow_faucet
-
-  # edge statments
-  cloud1 -&amp;gt; inflow_faucet -&amp;gt; stock -&amp;gt; outflow_faucet -&amp;gt; outflow -&amp;gt; cloud2
-
-}
-&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;div id=&#34;htmlwidget-3&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-3&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;\n \ndigraph boxes_and_cirles {\n\n  # add nodes\n  node [shape = box]\n  stock\n  cloud1\n  cloud2\n  inflow_faucet\n  outflow_faucet\n\n  # edge statments\n  cloud1 -&gt; inflow_faucet -&gt; stock -&gt; outflow_faucet -&gt; outflow -&gt; cloud2\n\n}\n&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt; &lt;br&gt;&lt;/p&gt;
-&lt;p&gt;Nice! Let’s try to flip this thing around. I did some googleing and landed on some additional &lt;code&gt;DiagrammeR&lt;/code&gt; documentation &lt;a href=&#34;http://rich-iannone.github.io/DiagrammeR/graphviz_and_mermaid.html#graphviz-layouts&#34;&gt;here&lt;/a&gt;. It seems like adding some settings to the graph object using &lt;code&gt;graph [layout = dot, rankdir = LR]&lt;/code&gt; will do the trick&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;grViz(&amp;quot;
- 
-digraph boxes_and_cirles {
-
-  graph [layout = dot, rankdir = LR]
-
-  # add nodes
-  node [shape = box]
-  stock
-  cloud1
-  cloud2
-  inflow_faucet
-  outflow_faucet
-
-  # edge statments
-  cloud1 -&amp;gt; inflow_faucet -&amp;gt; stock -&amp;gt; outflow_faucet -&amp;gt; outflow -&amp;gt; cloud2
-
-}
-&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;htmlwidget-4&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-4&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;\n \ndigraph boxes_and_cirles {\n\n  graph [layout = dot, rankdir = LR]\n\n  # add nodes\n  node [shape = box]\n  stock\n  cloud1\n  cloud2\n  inflow_faucet\n  outflow_faucet\n\n  # edge statments\n  cloud1 -&gt; inflow_faucet -&gt; stock -&gt; outflow_faucet -&gt; outflow -&gt; cloud2\n\n}\n&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
-&lt;p&gt;Wow this off to a blazing start. Now comes the tough part: formatting everything to look nice, like the picture above. I couldn’t find a &lt;em&gt;cloud&lt;/em&gt; shape from the &lt;a href=&#34;http://www.graphviz.org/content/node-shapes#epsf&#34;&gt;list of shapes on the graphviz website&lt;/a&gt;, so I settled for the &lt;code&gt;tripleoctagon&lt;/code&gt;. There also wasn’t a &lt;em&gt;faucet&lt;/em&gt; shape off the shelf, so I settled for the frighteningly-named &lt;code&gt;terminator&lt;/code&gt; shape. I added some labels, altered some sizes, and &lt;em&gt;voilà&lt;/em&gt;:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;grViz(&amp;quot;
- 
-digraph boxes_and_cirles {
-
-  graph [layout = dot, rankdir = LR]
-
-  # add clouds
-  node [shape = tripleoctagon]
-  cloud1 [label = &amp;#39;&amp;#39;]
-  cloud2 [label = &amp;#39;&amp;#39;]
-
-  # add stock
-  node [shape = box]
-  stock [height = 1.2, width = 1.5]
-
-  # add faucets
-  node [shape = terminator, 
-        style = filled,
-        fillcolor = black]
-  inflow [label = &amp;#39;\n\ninflow&amp;#39;, penwidth = 3]
-  outflow [label = &amp;#39;\n\noutflow&amp;#39;, penwidth = 3]
-
-  # add pipes (edges)
-  cloud1 -&amp;gt; inflow [arrowhead = none, penwidth = 2, color = DimGray]
-  inflow -&amp;gt; stock [penwidth = 2, color = DimGray]
-  stock -&amp;gt; outflow [arrowhead = none, penwidth = 2, color = DimGray]
-  outflow -&amp;gt; cloud2 [penwidth = 2, color = DimGray]
-
-}      
-&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;htmlwidget-5&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-5&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;\n \ndigraph boxes_and_cirles {\n\n  graph [layout = dot, rankdir = LR]\n\n  # add clouds\n  node [shape = tripleoctagon]\n  cloud1 [label = \&#34;\&#34;]\n  cloud2 [label = \&#34;\&#34;]\n\n  # add stock\n  node [shape = box]\n  stock [height = 1.2, width = 1.5]\n\n  # add faucets\n  node [shape = terminator, \n        style = filled,\n        fillcolor = black]\n  inflow [label = \&#34;\n\ninflow\&#34;, penwidth = 3]\n  outflow [label = \&#34;\n\noutflow\&#34;, penwidth = 3]\n\n  # add pipes (edges)\n  cloud1 -&gt; inflow [arrowhead = none, penwidth = 2, color = DimGray]\n  inflow -&gt; stock [penwidth = 2, color = DimGray]\n  stock -&gt; outflow [arrowhead = none, penwidth = 2, color = DimGray]\n  outflow -&gt; cloud2 [penwidth = 2, color = DimGray]\n\n}      \n&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
-&lt;p&gt;Not bad right!&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/img/basic-stock-flow.jpg&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Thanks to &lt;code&gt;DiagrammeR&lt;/code&gt; creator Richard Iannone (&lt;a href=&#34;www.twitter.com/riannone&#34;&gt;@riannone&lt;/a&gt;) and contributors Kent Russell (&lt;a href=&#34;www.twitter.com/timelyportfolio&#34;&gt;@timelyportfolio&lt;/a&gt;), JJ Allaire (&lt;a href=&#34;www.twitter.com/rstudio&#34;&gt;@rstudio&lt;/a&gt;), and Michaël Benesty (&lt;a href=&#34;www.twitter.com/pommedeterre33&#34;&gt;@pommedeterre33&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;Thanks to Donella Meadows for an interesting book and some new perspectives on systems. Cheers!&lt;/p&gt;
-</description>
+      <description>I recently read Thinking in Systems: A Primer by Donella H. Meadows (2008) for a book club. The book offers a great little primer on systems thinking and its application to problems big and small. It’s a quick read (&amp;lt; 200 pages, not counting the appendix), and it has many great tidbits on how to perceive and influence the systems around us.
+One of the concepts introduced in the book is stock and flow diagrams that represent basic systems.</description>
     </item>
     
     <item>
@@ -280,19 +48,8 @@ digraph boxes_and_cirles {
       <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/building-my-website-with-blogdown/</guid>
-      <description>&lt;p&gt;I used to have a website on Squarespace. It was nice, but it cost ~$90 a year, and I wasn&amp;rsquo;t really using it for much. So&amp;hellip; enter &lt;code&gt;blogdown&lt;/code&gt;!&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;blogdown&lt;/code&gt; is an R package that allows you to make websites using a bunch of technologies in concert. This site uses &lt;code&gt;R&lt;/code&gt; and &lt;code&gt;Markdown&lt;/code&gt; and &lt;code&gt;R Markdown&lt;/code&gt; and &lt;code&gt;Hugo&lt;/code&gt; and &lt;code&gt;Netlify&lt;/code&gt; and &lt;code&gt;Git&lt;/code&gt; and &lt;code&gt;Github&lt;/code&gt; and on and on. If this seems overwhelming, don&amp;rsquo;t worry, there are plenty of resources out there to help.&lt;/p&gt;
-
-&lt;p&gt;When building this site, the two resources I consulted were:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://apreshill.rbind.io/post/up-and-running-with-blogdown/&#34; target=&#34;_blank&#34;&gt;This wonderful guide&lt;/a&gt; from Alison Presmanes Hill&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://bookdown.org/yihui/blogdown/&#34; target=&#34;_blank&#34;&gt;The &lt;code&gt;blogdown&lt;/code&gt; documentation&lt;/a&gt; from Yihui Xie, Amber Thomas, and Alison Presmanes Hill&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;It might seem complicated, but with some coffee and tenacity whole thing can be done in an afternoon!&lt;/p&gt;
-</description>
+      <description>I used to have a website on Squarespace. It was nice, but it cost ~$90 a year, and I wasn&amp;rsquo;t really using it for much. So&amp;hellip; enter blogdown!
+blogdown is an R package that allows you to make websites using a bunch of technologies in concert. This site uses R and Markdown and R Markdown and Hugo and Netlify and Git and Github and on and on. If this seems overwhelming, don&amp;rsquo;t worry, there are plenty of resources out there to help.</description>
     </item>
     
   </channel>

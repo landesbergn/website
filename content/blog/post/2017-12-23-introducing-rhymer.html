@@ -1,0 +1,59 @@
+---
+title: Introducing rhymer
+author: Noah Landesberg
+date: '2017-12-23'
+tags:
+  - rhymer
+  - R
+slug: introducing-rhymer
+---
+
+
+
+<hr>
+I’m proud to announce that I have published my first R package, <code>rhymer</code>!<br />
+Version 1.0 is now available on
+<a href="https://CRAN.R-project.org/package=rhymer">CRAN</a>. You can view the source code on <a href="http://github.com/landesbergn/rhymer">github</a>,
+and see the website for the package <a href="https://landesbergn.github.io/rhymer/">here</a>.
+<hr>
+<p>The goal of <code>rhymer</code> is to provide an R interface to the <a href="https://www.datamuse.com/api">Datamuse API</a>
+in order to find rhyming words. The core function of <code>rhymer</code> is <code>get_rhyme()</code>, which can be used in a variety of ways.</p>
+<pre class="r"><code>library(rhymer)
+
+# get rhymes for &quot;R&quot; and return a 5 word vector
+get_rhyme(&quot;R&quot;, return_type = &quot;vector&quot;, limit = 5)</code></pre>
+<pre><code>## [1] &quot;bar&quot;    &quot;car&quot;    &quot;star&quot;   &quot;avatar&quot; &quot;far&quot;</code></pre>
+<p>For example, I’ve been enjoying rewriting nursery rhymes:</p>
+<pre class="r"><code>glue::glue(&quot;
+  Jack and Jill 
+  Went up the {get_rhyme(&#39;Jill&#39;, return_type = &#39;rand&#39;)} 
+  To fetch a pail of water. 
+  Jack fell down 
+  And split his {get_rhyme(&#39;down&#39;, &#39;rand&#39;)},
+  And Jill came tumbling {get_rhyme(&#39;water&#39;, &#39;rand&#39;)}&quot;
+)</code></pre>
+<pre><code>## Jack and Jill 
+## Went up the mill 
+## To fetch a pail of water. 
+## Jack fell down 
+## And split his frown,
+## And Jill came tumbling slaughter</code></pre>
+<p>The package includes additional functions to find other related words, including:</p>
+<ul>
+<li><code>get_means_like()</code> to find words of similar meaning<br />
+</li>
+<li><code>get_sounds_like()</code> to find words that sound similar</li>
+<li><code>get_spelled_like()</code> to find words that are spelled similarly</li>
+</ul>
+<p>There are some more examples on the <a href="https://landesbergn.github.io/rhymer/">rhymer website</a> as well as in
+the package vignette <a href="https://landesbergn.github.io/rhymer/articles/intro-to-rhymer.html">“Intro to rhymer”</a>.</p>
+<p>I’m looking forward to seeing what you come up with as an interesting use case for <code>rhymer</code>! Please submit all issues or feature requests on <a href="https://github.com/landesbergn/rhymer/issues">github</a>.</p>
+<p>And of course, much thanks to:</p>
+<ul>
+<li><strong>Hadley Wickham</strong> for the <a href="http://httr.r-lib.org"><code>httr</code></a> package that made API requests a breeze, <a href="http://testthat.r-lib.org"><code>testthtat</code></a> which made writing tests genuinely enjoyable, <a href="https://github.com/hadley/devtools"><code>devtools</code></a> which made first-time package development a pain-free experience, and <a href="http://pkgdown.r-lib.org"><code>pkgdown</code></a> for turning all the package documentation into a beautiful website.</li>
+<li><strong>Jeroen Ooms</strong>, <strong>Duncan Temple Lang</strong>, and <strong>Lloyd Hilaiel</strong> for the <a href="https://arxiv.org/abs/1403.2805"><code>jsonlite</code></a> package which helped to parse the JSON responses from the API.</li>
+<li><a href="http://www.datamuse.com/api/"><strong>Datamuse</strong></a> for providing an awesome and free API with great documentation and examples.</li>
+<li>The internet for providing countless tips and tricks when it felt like I had reached an insurmountable problem.</li>
+<li><strong>Henry Willis</strong>, <strong>Tim Helbig</strong>, <strong>Alex McManus</strong>, and <strong>Benjamin Ackerman</strong> for teaching me a ton about package and software development and for doing some initial testing.
+<hr></li>
+</ul>

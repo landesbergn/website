@@ -1,0 +1,56 @@
+---
+title: Introducing rhymer
+author: Noah Landesberg
+date: '2017-12-23'
+tags:
+  - rhymer
+  - R
+slug: introducing-rhymer
+---
+<hr>
+I'm proud to announce that I have published my first R package, `rhymer`!  
+Version 1.0 is now available on
+[CRAN](https://CRAN.R-project.org/package=rhymer). You can view the source code on [github](http://github.com/landesbergn/rhymer), 
+and see the website for the package [here](https://landesbergn.github.io/rhymer/).
+<hr>
+The goal of `rhymer` is to provide an R interface to the [Datamuse API](https://www.datamuse.com/api) 
+in order to find rhyming words. The core function of `rhymer` is `get_rhyme()`, which can be used in a variety of ways.
+
+```{r}
+library(rhymer)
+
+# get rhymes for "R" and return a 5 word vector
+get_rhyme("R", return_type = "vector", limit = 5)
+```
+
+For example, I've been enjoying rewriting nursery rhymes:
+```{r}
+glue::glue("
+  Jack and Jill 
+  Went up the {get_rhyme('Jill', return_type = 'rand')} 
+  To fetch a pail of water. 
+  Jack fell down 
+  And split his {get_rhyme('down', 'rand')},
+  And Jill came tumbling {get_rhyme('water', 'rand')}"
+)
+```
+
+The package includes additional functions to find other related words, including:  
+
+* `get_means_like()` to find words of similar meaning  
+* `get_sounds_like()` to find words that sound similar
+* `get_spelled_like()` to find words that are spelled similarly
+
+There are some more examples on the [rhymer website](https://landesbergn.github.io/rhymer/) as well as in
+the package vignette ["Intro to rhymer"](https://landesbergn.github.io/rhymer/articles/intro-to-rhymer.html).  
+
+I'm looking forward to seeing what you come up with as an interesting use case for `rhymer`! Please submit all issues or feature requests on [github](https://github.com/landesbergn/rhymer/issues). 
+
+And of course, much thanks to:
+
+* **Hadley Wickham** for the [`httr`](http://httr.r-lib.org) package that made API requests a breeze, [`testthtat`](http://testthat.r-lib.org) which made writing tests genuinely enjoyable, [`devtools`](https://github.com/hadley/devtools) which made first-time package development a pain-free experience, and [`pkgdown`](http://pkgdown.r-lib.org) for turning all the package documentation into a beautiful website.
+* **Jeroen Ooms**, **Duncan Temple Lang**, and **Lloyd Hilaiel** for the [`jsonlite`](https://arxiv.org/abs/1403.2805) package which helped to parse the JSON responses from the API.
+* [**Datamuse**](http://www.datamuse.com/api/) for providing an awesome and free API with great documentation and examples.
+* The internet for providing countless tips and tricks when it felt like I had reached an insurmountable problem.
+* **Henry Willis**, **Tim Helbig**, **Alex McManus**, and **Benjamin Ackerman** for teaching me a ton about package and software development and for doing some initial testing.
+<hr>
