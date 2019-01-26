@@ -10,7 +10,7 @@ theme = "hugo-renga"
 enableEmoji = true
 hasCJKLanguage = true
 
-googleAnalytics = "UA-00000000-1"
+googleAnalytics = "UA-108370158-1"
 
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
