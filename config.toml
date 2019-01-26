@@ -41,9 +41,3 @@ identifier = "blog"
 name = "Blog"
 url = "/blog/"
 weight = 2
-
-[[menu.primary]]
-identifier = "rhymer"
-name = "rhymer"
-url = "https://landesbergn.github.io/rhymer/"
-weight = 3
