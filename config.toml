@@ -32,7 +32,7 @@ email = "noah.landesberg@gmail.com"
 
 [[menu.primary]]
 identifier = "projects"
-name = "Projets"
+name = "Projects"
 url = "/projects/"
 weight = 1
 
