@@ -1,78 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Noah Landesberg</title>
-    <link>/</link>
-    <description>Recent content on Noah Landesberg</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <lastBuildDate>Sat, 26 Jan 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Web scraping Reply All transcripts</title>
-      <link>/blog/post/web-scraping-reply-all-transcripts/</link>
-      <pubDate>Sat, 02 Mar 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/post/web-scraping-reply-all-transcripts/</guid>
-      <description>Download CSV here: https://github.com/landesbergn/reply-all/blob/master/reply_all_text_data.csv
-One of my favorite podcasts is Reply All, a show (roughly) about technology and the internet. Hosts PJ Vogt and Alex Goldman, and a rotating cast of fantastic reporters and producers tell some of the most fascinating stories about the way we interact with technology. The show has been in production since 2014, and for a time felt like a great little secret, but their website now indicates that the show is downloaded “around 3.</description>
-    </item>
-    
-    <item>
-      <title>8 Analytics Books I Read in 2017</title>
-      <link>/blog/post/8-analytics-books-i-read-in-2017/</link>
-      <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/post/8-analytics-books-i-read-in-2017/</guid>
-      <description>This year I made a concerted effort to read more books related to my interests in analytics, math, and data science. I had the pleasure of reading most of these books with a group of people at work, and we met on a regular basis to discuss and gab. These books are casual, and not meant to be as strictly educational (or tedious) as reading a textbook.
-Without further ado&amp;hellip; here are 8 analytics books I read this year:</description>
-    </item>
-    
-    <item>
-      <title>Introducing rhymer</title>
-      <link>/blog/post/introducing-rhymer/</link>
-      <pubDate>Sat, 23 Dec 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/post/introducing-rhymer/</guid>
-      <description>I’m proud to announce that I have published my first R package, rhymer!
-Version 1.0 is now available on CRAN. You can view the source code on github, and see the website for the package here.  The goal of rhymer is to provide an R interface to the Datamuse API in order to find rhyming words. The core function of rhymer is get_rhyme(), which can be used in a variety of ways.</description>
-    </item>
-    
-    <item>
-      <title>Thinking in Systems with DiagrammeR</title>
-      <link>/blog/post/thinking-in-systems-with-diagrammer/</link>
-      <pubDate>Tue, 17 Oct 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/post/thinking-in-systems-with-diagrammer/</guid>
-      <description>I recently read Thinking in Systems: A Primer by Donella H. Meadows (2008) for a book club. The book offers a great little primer on systems thinking and its application to problems big and small. It’s a quick read (&amp;lt; 200 pages, not counting the appendix), and it has many great tidbits on how to perceive and influence the systems around us.
-One of the concepts introduced in the book is stock and flow diagrams that represent basic systems.</description>
-    </item>
-    
-    <item>
-      <title>Building my website with Blogdown</title>
-      <link>/blog/post/building-my-website-with-blogdown/</link>
-      <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/post/building-my-website-with-blogdown/</guid>
-      <description>I used to have a website on Squarespace. It was nice, but it cost ~$90 a year, and I wasn&amp;rsquo;t really using it for much. So&amp;hellip; enter blogdown!
-blogdown is an R package that allows you to make websites using a bunch of technologies in concert. This site uses R and Markdown and R Markdown and Hugo and Netlify and Git and Github and on and on. If this seems overwhelming, don&amp;rsquo;t worry, there are plenty of resources out there to help.</description>
-    </item>
-    
-    <item>
-      <title>Projects</title>
-      <link>/projects/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/projects/</guid>
-      <description>rhymer    
-rhymer is an R Package to find rhyming words.
- Download from CRAN at https://cran.r-project.org/package=rhymer
- Browse source code at http://github.com/landesbergn/rhymer
- Report a bug at https://github.com/landesbergn/rhymer/issues   Feels Like&amp;nbsp;   The first and only weather app for iOS that is focused on letting you know what it feels like before you venture outdoors.</description>
-    </item>
-    
-  </channel>
-</rss>
