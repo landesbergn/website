@@ -1,0 +1,844 @@
+---
+title: Web scraping Reply All transcripts
+author: 'Noah Landesberg'
+date: '2019-03-02'
+slug: web-scraping-reply-all-transcripts
+categories: []
+tags:
+  - R
+description: Description for the page.
+---
+
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+
+
+<hr>
+<div style="width:200px">
+<p><img src="/image/reply-all.jpeg" /></p>
+</div>
+<p><strong>Download CSV here: <a href="https://github.com/landesbergn/reply-all/blob/master/reply_all_text_data.csv" class="uri">https://github.com/landesbergn/reply-all/blob/master/reply_all_text_data.csv</a></strong></p>
+<p>One of my favorite podcasts is <a href="https://www.gimletmedia.com/reply-all">Reply All</a>, a show (roughly) about technology and the internet. Hosts PJ Vogt and Alex Goldman, and a rotating cast of fantastic reporters and producers tell some of the most fascinating stories about the way we interact with technology.
+The show has been in production since 2014, and for a time felt like a great little secret, but their website now indicates that the show is downloaded “around 3.5 million times per month.”
+If you haven’t listened, I’d highly recommend checking it out. Some of my favorite episodes are (in no particular order):</p>
+<ul>
+<li><a href="https://www.gimletmedia.com/reply-all/50-the-cathedral#episode-player">The Cathedral</a><br />
+</li>
+<li><a href="https://www.gimletmedia.com/reply-all/79-boy-in-photo#episode-player">Boy in Photo</a><br />
+</li>
+<li><a href="https://www.gimletmedia.com/reply-all/77-the-grand-tapestry-of-pepe#episode-player">The Grand Tapestry of Pepe</a><br />
+</li>
+<li><a href="https://www.gimletmedia.com/reply-all/44-shine-on-you-crazy-goldman#episode-player">Shine on You Crazy Goldman</a><br />
+</li>
+<li><a href="https://www.gimletmedia.com/reply-all/long-distance#episode-player">Long Distance pt.1</a> and <a href="https://www.gimletmedia.com/reply-all/103-long-distance-part-ii#episode-player">Long Distance pt.2</a><br />
+</li>
+<li><a href="https://www.gimletmedia.com/reply-all/zardulu#episode-player">Zardulu</a></li>
+</ul>
+<p>I thought it would be a fun project to take the transcripts from every episode of Reply All and see what we can learn about the show. As is often the case in data science, 80% of the challenge is to gather and clean the data.</p>
+<hr>
+<div id="part-1-get-episode-links" class="section level3">
+<h3>Part 1: Get episode links</h3>
+<p>To gather data, we will make use of a few R packages. <code>rvest</code> will do most of the web scraping, and <code>dplyr</code>, <code>tidyr</code>, and <code>stringr</code> will help to clean and organize our data. So, without further ado, let’s load ’em up!</p>
+<pre class="r"><code>library(rvest) # for web scraping
+library(dplyr) # for data tidying
+library(stringr) # for working with strings
+library(tidytext) # analyze text data!
+library(ggplot2) # make nice plots
+library(scales) # make plots even nicer
+library(tidyr) # for data organization
+library(purrr) # for iteration</code></pre>
+<p>To get the transcripts of all the episodes, first we need to know which episodes are out there. By navigating to the <a href="https://www.gimletmedia.com/reply-all/all#all-episodes-list">Reply All website</a>, we can load a handy list of all episodes as well as some hyperlinks that will take us into the individual web page for each episode. This link will serve as the starting point for our web-scraping.</p>
+<pre class="r"><code>reply_all_url &lt;- &quot;https://www.gimletmedia.com/reply-all/all#all-episodes-list&quot;</code></pre>
+<p>We will use some functions from <code>rvest</code> to pull the hyperlinks to every episode we will eventually want to read the transcript from. This was my first time using <code>rvest</code>, and I found <a href="https://stat4701.github.io/edav/2015/04/02/rvest_tutorial/">this post</a> from Justin Law and Jordan Rosenblum to be helpful, as well as <a href="https://blog.rstudio.com/2014/11/24/rvest-easy-web-scraping-with-r/">this RStudio blog post</a> from Hadley Wickham. To get the episode links, we will look for all HTML in the <code>&lt;a&gt;</code> anchor tag and pull the <code>href</code> attribute where the hyperlink lives.</p>
+<pre class="r"><code>episode_links &lt;- reply_all_url %&gt;%
+  read_html() %&gt;% # read HTML from page
+  html_nodes(&quot;a&quot;) %&gt;% # look for &#39;anchor&#39; html tag &lt;a&gt;
+  html_attr(&quot;href&quot;) %&gt;% # get href attribute from the tag, which is where the hyperlink is stored
+  tibble(link = .) # put the data in a tibble with the variable episode
+
+tail(episode_links) %&gt;% 
+  knitr::kable(format = &quot;html&quot;) %&gt;% 
+  kableExtra::kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;), full_width = FALSE)</code></pre>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+link
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+/reply-all/1-an-app-sends-a-stranger-to-say-i-love-you#episode-player
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/about
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/careers
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/terms-of-service
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/privacy-policy
+</td>
+</tr>
+</tbody>
+</table>
+<p>We can tell by looking at the <code>head</code> (first 6 rows) and the <code>tail</code> (last 6 rows) of the list of episode links that there are some links to other pages here that are not of interest, like the privacy policy or the terms of service.</p>
+<p>Let’s clean this up a little bit, by only including episodes that reference <code>#episode-player</code> at the end of their link, indicated that there is an episode there, and not some other webpage. We can also filter out episodes that are rebroadcasts or presentations of other shows in the Reply All feed. The process of filtering down this list took some trial and error, as the formatting of episode titles in the hyperlink was inconsistent.</p>
+<pre class="r"><code>episode_links &lt;- episode_links %&gt;%
+  filter(
+    str_detect(link, &quot;#episode-player&quot;), # must link to an episode player
+    !str_detect(link, &quot;re-broadcast&quot;), # no re-broadcasts
+    !str_detect(link, &quot;rebroadcast&quot;), # or rebroadcasts
+    !str_detect(link, &quot;revisited&quot;), # or revisits
+    !str_detect(link, &quot;-2#episode-player&quot;), # or other rebroadcasts
+    !str_detect(link, &quot;presents&quot;), # or presentations of other shows
+    !str_detect(link, &quot;introducing&quot;), # or introductions of other shows
+    !str_detect(link, &quot;updated&quot;), # or updated versions of old episodes
+    link != &quot;/reply-all/6-this-proves-everything#episode-player&quot;, # sneaky update of an old episode that is not labeled well
+    link != &quot;/reply-all/104-the-case-of-the-phantom-caller#episode-player&quot; # another one
+  ) %&gt;%
+  distinct() # and after all of that, no duplicates
+
+episode_links &lt;- episode_links %&gt;%
+  mutate(episode_number = nrow(episode_links) + 1 - row_number()) # add in the episode number
+
+head(episode_links) %&gt;% 
+  knitr::kable(format = &quot;html&quot;) %&gt;% 
+  kableExtra::kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;), full_width = FALSE)</code></pre>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+link
+</th>
+<th style="text-align:right;">
+episode_number
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+/reply-all/135-the-robocall-conundrum#episode-player
+</td>
+<td style="text-align:right;">
+135
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/134-the-year-of-the-wallop#episode-player
+</td>
+<td style="text-align:right;">
+134
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/133-reply-alls-2018-year-end-extravaganza#episode-player
+</td>
+<td style="text-align:right;">
+133
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/132-negative-mount-pleasant#episode-player
+</td>
+<td style="text-align:right;">
+132
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/131-surefire-investigations#episode-player
+</td>
+<td style="text-align:right;">
+131
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/130-lizard#episode-player
+</td>
+<td style="text-align:right;">
+130
+</td>
+</tr>
+</tbody>
+</table>
+<p>We can also add in the episode number, which I originally tried to parse out from the string, but I am not good at regular expression, so I just used some math to back in to it.</p>
+<p>Finally, we add in the full web link, by appending the hyperlink extension to the Gimlet Media homepage (<code>gimetmedia.com</code>).</p>
+<pre class="r"><code>ep_data &lt;- episode_links %&gt;%
+  mutate(
+    full_link = paste0(&quot;https://www.gimletmedia.com&quot;, link)
+  )
+
+head(ep_data) %&gt;% 
+  knitr::kable(format = &quot;html&quot;) %&gt;% 
+  kableExtra::kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;), full_width = FALSE)</code></pre>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+link
+</th>
+<th style="text-align:right;">
+episode_number
+</th>
+<th style="text-align:left;">
+full_link
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+/reply-all/135-the-robocall-conundrum#episode-player
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:left;">
+<a href="https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player" class="uri">https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/134-the-year-of-the-wallop#episode-player
+</td>
+<td style="text-align:right;">
+134
+</td>
+<td style="text-align:left;">
+<a href="https://www.gimletmedia.com/reply-all/134-the-year-of-the-wallop#episode-player" class="uri">https://www.gimletmedia.com/reply-all/134-the-year-of-the-wallop#episode-player</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/133-reply-alls-2018-year-end-extravaganza#episode-player
+</td>
+<td style="text-align:right;">
+133
+</td>
+<td style="text-align:left;">
+<a href="https://www.gimletmedia.com/reply-all/133-reply-alls-2018-year-end-extravaganza#episode-player" class="uri">https://www.gimletmedia.com/reply-all/133-reply-alls-2018-year-end-extravaganza#episode-player</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/132-negative-mount-pleasant#episode-player
+</td>
+<td style="text-align:right;">
+132
+</td>
+<td style="text-align:left;">
+<a href="https://www.gimletmedia.com/reply-all/132-negative-mount-pleasant#episode-player" class="uri">https://www.gimletmedia.com/reply-all/132-negative-mount-pleasant#episode-player</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/131-surefire-investigations#episode-player
+</td>
+<td style="text-align:right;">
+131
+</td>
+<td style="text-align:left;">
+<a href="https://www.gimletmedia.com/reply-all/131-surefire-investigations#episode-player" class="uri">https://www.gimletmedia.com/reply-all/131-surefire-investigations#episode-player</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/130-lizard#episode-player
+</td>
+<td style="text-align:right;">
+130
+</td>
+<td style="text-align:left;">
+<a href="https://www.gimletmedia.com/reply-all/130-lizard#episode-player" class="uri">https://www.gimletmedia.com/reply-all/130-lizard#episode-player</a>
+</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</div>
+<div id="part-2-scrape-transcripts-from-links" class="section level3">
+<h3>Part 2: Scrape transcripts from links</h3>
+<p>Now that we have a link to every episode we want to parse, it is time to write a function that, when given a link, returns a transcript. This took a lot of time to nail down. As alluded to, the data and transcript formatting as inconsistent and messy. It took a fair amount of time and iteration to try to get this right. I spent a lot of time on <a href="https://regex101.com" class="uri">https://regex101.com</a> testing out stuff.</p>
+<pre class="r"><code>getTranscript &lt;- function(episode_link) {
+
+  # print statement helps to understand the progress of the function when it is running (commented out for now)
+  # print(episode_link)
+
+  # get the transcript from the webpage by referencing the CSS node &#39;.episode-transcript&#39;
+  transcript &lt;- episode_link %&gt;%
+    read_html() %&gt;%
+    html_nodes(&quot;.episode-transcript&quot;) %&gt;%
+    html_text()
+
+  # this is an attempt at splitting up the text by speaker, so that
+  # each string is separated by the person who said it.
+  episode_text &lt;- tibble(
+    unlist(strsplit(transcript, &quot;[^.a-z]+:&quot;, perl = T)) # identify [ALEX]: or [PJ]: at the beginning of a line
+  ) %&gt;% setNames(&quot;text&quot;)
+
+  episode_text &lt;- episode_text %&gt;%
+    mutate(
+      text = trimws(text) # remove leading and trailing white-space
+    ) %&gt;%
+    filter(
+      tolower(text) != &quot;transcript\n        &quot;, # get rid of line indicating start of transcript
+      tolower(text) != &quot;transcript&quot;, # or this type of line indicating the start of transcript,
+      tolower(text) != &quot;[theme music&quot;, # get rid of Theme (or theme music)
+      tolower(text) != &quot;[intro music&quot;, # get rid of Intro Music (or intro music)
+      tolower(text) != &quot;transcript\n        [intro music&quot;, # or a mix of things
+      tolower(text) != &quot;transcript\n        [theme music&quot;, # or a different mix of things
+      tolower(text) != &quot;transcript\n        [reply all theme&quot;
+    )
+
+  # ok this is gross, but handling some specific episodes where the transcript is not entered in a consistent way
+  if (episode_link == &quot;https://www.gimletmedia.com/reply-all/79-boy-in-photo#episode-player&quot;) {
+    speaker &lt;- rbind(
+      &quot;PJ&quot;,
+      data.frame(gsubfn::strapply(transcript, &quot;[^.a-z]+:&quot;, c, perl = TRUE), stringsAsFactors = FALSE) %&gt;% setNames(&quot;speaker&quot;)
+    )
+  } else if (episode_link == &quot;https://www.gimletmedia.com/reply-all/52-raising-the-bar#episode-player&quot;) {
+    speaker &lt;- rbind(
+      &quot;PJ&quot;,
+      data.frame(gsubfn::strapply(transcript, &quot;[^.a-z]+:&quot;, c, perl = TRUE), stringsAsFactors = FALSE) %&gt;% setNames(&quot;speaker&quot;)
+    )
+    episode_text &lt;- episode_text %&gt;% mutate(text = str_replace_all(text, &quot;Transcript\n        PJ Vogt: &quot;, &quot;&quot;))
+  } else if (episode_link == &quot;https://www.gimletmedia.com/reply-all/31-bonus-the-reddit-implosion-explainer#episode-player&quot;) {
+    speaker &lt;- rbind(
+      &quot;PJ&quot;,
+      data.frame(gsubfn::strapply(transcript, &quot;[^.a-z]+:&quot;, c, perl = TRUE), stringsAsFactors = FALSE) %&gt;% setNames(&quot;speaker&quot;)
+    )
+  } else if (episode_link == &quot;https://www.gimletmedia.com/reply-all/2-instagram-for-doctors#episode-player&quot;) {
+    speaker &lt;- rbind(
+      &quot;PJ&quot;,
+      data.frame(gsubfn::strapply(transcript, &quot;[^.a-z]+:&quot;, c, perl = TRUE), stringsAsFactors = FALSE) %&gt;% setNames(&quot;speaker&quot;)
+    )
+    episode_text &lt;- episode_text %&gt;% mutate(text = str_replace_all(text, fixed(&quot;Transcript\n        [THEME SONG]PJ Vogt: &quot;), &quot;&quot;))
+  } else {
+    speaker &lt;- gsubfn::strapply(transcript, &quot;[^.a-z]+:&quot;, c, perl = TRUE) %&gt;% setNames(&quot;speaker&quot;)
+  }
+
+  transcript_clean &lt;- data.frame(episode_text, speaker) %&gt;%
+    mutate(
+      speaker = trimws(speaker),
+      speaker = str_replace_all(speaker, &quot;[^A-Z ]&quot;, &quot;&quot;),
+      speaker = str_replace_all(speaker, &quot;THEME MUSIC&quot;, &quot;&quot;),
+      speaker = str_replace_all(speaker, &quot;RING&quot;, &quot;&quot;),
+      speaker = str_replace_all(speaker, &quot;MUSIC&quot;, &quot;&quot;),
+      speaker = str_replace_all(speaker, &quot;BREAK&quot;, &quot;&quot;)
+    )
+
+  # do some light cleaning of the transcript
+  transcript_new &lt;- transcript_clean %&gt;%
+    mutate(
+      linenumber = row_number() # get the line number (1 is the first line, 2 is the second, etc.)
+    ) %&gt;%
+    select(speaker, text, linenumber)
+
+  # convert normal boring text into exciting cool tidy text
+  transcript_tidy &lt;- transcript_new %&gt;%
+    unnest_tokens(word, text)
+
+  return(transcript_tidy)
+}</code></pre>
+<p>Now that we have a function, let’s test it for a single episode to show it in action.</p>
+<pre class="r"><code>getTranscript(&quot;https://www.gimletmedia.com/reply-all/114-apocalypse-soon#episode-player&quot;) %&gt;%
+  head() %&gt;% 
+  knitr::kable(format = &quot;html&quot;) %&gt;% 
+  kableExtra::kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;), full_width = FALSE)</code></pre>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+speaker
+</th>
+<th style="text-align:right;">
+linenumber
+</th>
+<th style="text-align:left;">
+word
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+PJ VOGT
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+hey
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1.1
+</td>
+<td style="text-align:left;">
+PJ VOGT
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+everybody
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1.2
+</td>
+<td style="text-align:left;">
+PJ VOGT
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+we
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1.3
+</td>
+<td style="text-align:left;">
+PJ VOGT
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+are
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1.4
+</td>
+<td style="text-align:left;">
+PJ VOGT
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+back
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1.5
+</td>
+<td style="text-align:left;">
+PJ VOGT
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+it’s
+</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</div>
+<div id="part-3-pull-transcripts-for-each-episode" class="section level3">
+<h3>Part 3: Pull transcripts for each episode</h3>
+<p>Now we can use <code>purrr</code> to iterate through every episode and ‘map’ the function <code>getTranscript</code> to each episode link. I learned a lot about iterating with <code>purrr</code> from <a href="https://jennybc.github.io/purrr-tutorial/">this tutorial</a> from Jenny Brian and the chapter from <a href="http://r4ds.had.co.nz/iteration.html">R for Data Science on Iteration</a> by Garrett Grolemund and Hadley Wickham. This takes ~3 minutes to run, depending on your internet connection.</p>
+<pre class="r"><code># use purrr to map the &#39;getTranscript&#39; function over all of the URLs in the ep_data data frame
+ep_data &lt;- ep_data %&gt;%
+  mutate(
+    transcript = map(full_link, getTranscript)
+  )
+
+# unnest the results into one big data frame
+tidy_ep_data &lt;- ep_data %&gt;%
+  unnest(transcript)
+
+head(tidy_ep_data) %&gt;% 
+  knitr::kable(format = &quot;html&quot;) %&gt;% 
+  kableExtra::kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;), full_width = FALSE)</code></pre>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+link
+</th>
+<th style="text-align:right;">
+episode_number
+</th>
+<th style="text-align:left;">
+full_link
+</th>
+<th style="text-align:left;">
+speaker
+</th>
+<th style="text-align:right;">
+linenumber
+</th>
+<th style="text-align:left;">
+word
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+/reply-all/135-the-robocall-conundrum#episode-player
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:left;">
+<a href="https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player" class="uri">https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player</a>
+</td>
+<td style="text-align:left;">
+PJ VOGT
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+from
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/135-the-robocall-conundrum#episode-player
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:left;">
+<a href="https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player" class="uri">https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player</a>
+</td>
+<td style="text-align:left;">
+PJ VOGT
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+gimlet
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/135-the-robocall-conundrum#episode-player
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:left;">
+<a href="https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player" class="uri">https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player</a>
+</td>
+<td style="text-align:left;">
+PJ VOGT
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+this
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/135-the-robocall-conundrum#episode-player
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:left;">
+<a href="https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player" class="uri">https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player</a>
+</td>
+<td style="text-align:left;">
+PJ VOGT
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+is
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/135-the-robocall-conundrum#episode-player
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:left;">
+<a href="https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player" class="uri">https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player</a>
+</td>
+<td style="text-align:left;">
+PJ VOGT
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+reply
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/135-the-robocall-conundrum#episode-player
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:left;">
+<a href="https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player" class="uri">https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player</a>
+</td>
+<td style="text-align:left;">
+PJ VOGT
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+all
+</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</div>
+<div id="part-4-clean-the-transcripts" class="section level3">
+<h3>Part 4: Clean the transcripts</h3>
+<p>Now that we have a big data frame, we can do a little more cleaning of the data. Arguably, this is avoidable with more intelligent regex and string work earlier, but this cleanup will have to do for now. I briefly use the <code>zoo</code> package to fill in some NA values in the <code>speaker</code> column using the previous non-NA value (inspired by <a href="https://stackoverflow.com/a/7735681/9185424">this StackoverFlow answer</a>).</p>
+<pre class="r"><code># turn missing values to NA and then fill using
+# the na.locf (last observation carried forward) function from the &#39;zoo&#39; package
+tidy_ep_data &lt;- tidy_ep_data %&gt;%
+  mutate(
+    speaker = if_else(speaker == &quot;&quot;, NA_character_, speaker),
+    speaker = zoo::na.locf(speaker)
+  )
+
+# get the list of speakers clean
+tidy_ep_data_clean &lt;- tidy_ep_data %&gt;%
+  filter(
+    !grepl(&quot;CREDIT&quot;, speaker), # remove credit chit-chat
+    !grepl(&quot;AD &quot;, speaker), # remove ad chit-chat
+    !grepl(&quot;THEME&quot;, speaker), # remove theme chit-chat
+    speaker != &quot;ADPJ&quot;,
+    speaker != &quot;ADALEX&quot;,
+    speaker != &quot;OUTPJ&quot;,
+    speaker != &quot;OUTALEX&quot;
+  ) %&gt;%
+  mutate(
+    speaker = trimws(speaker),
+    speaker = case_when(
+      speaker == &quot;ALEX&quot; ~ &quot;ALEX GOLDMAN&quot;,
+      speaker == &quot;REPLY ALL ALEX GOLDMAN&quot; ~ &quot;ALEX GOLDMAN&quot;,
+      speaker == &quot;GOLDMAN&quot; ~ &quot;ALEX GOLDMAN&quot;,
+      speaker == &quot;AG&quot; ~ &quot;ALEX GOLDMAN&quot;,
+      speaker == &quot;PJ&quot; ~ &quot;PJ VOGT&quot;,
+      speaker == &quot;REPLY ALL PJ VOGT&quot; ~ &quot;PJ VOGT&quot;,
+      speaker == &quot;BLUMBERG&quot; ~ &quot;ALEX BLUMBERG&quot;,
+      speaker == &quot;AB&quot; ~ &quot;ALEX BLUMBERG&quot;,
+      speaker == &quot;SRUTHI&quot; ~ &quot;SRUTHI PINNAMANENI&quot;,
+      TRUE ~ speaker
+    )
+  )</code></pre>
+<p>And after all of that, we now have some sort of nice text data from every episode of Reply All!</p>
+<pre class="r"><code>glimpse(tidy_ep_data_clean)</code></pre>
+<pre><code>## Observations: 704,321
+## Variables: 6
+## $ link           &lt;chr&gt; &quot;/reply-all/135-the-robocall-conundrum#episode-pl…
+## $ episode_number &lt;dbl&gt; 135, 135, 135, 135, 135, 135, 135, 135, 135, 135,…
+## $ full_link      &lt;chr&gt; &quot;https://www.gimletmedia.com/reply-all/135-the-ro…
+## $ speaker        &lt;chr&gt; &quot;PJ VOGT&quot;, &quot;PJ VOGT&quot;, &quot;PJ VOGT&quot;, &quot;PJ VOGT&quot;, &quot;PJ V…
+## $ linenumber     &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3…
+## $ word           &lt;chr&gt; &quot;from&quot;, &quot;gimlet&quot;, &quot;this&quot;, &quot;is&quot;, &quot;reply&quot;, &quot;all&quot;, &quot;…</code></pre>
+<pre class="r"><code>head(tidy_ep_data_clean) %&gt;% 
+  knitr::kable(format = &quot;html&quot;) %&gt;% 
+  kableExtra::kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;), full_width = FALSE)</code></pre>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+link
+</th>
+<th style="text-align:right;">
+episode_number
+</th>
+<th style="text-align:left;">
+full_link
+</th>
+<th style="text-align:left;">
+speaker
+</th>
+<th style="text-align:right;">
+linenumber
+</th>
+<th style="text-align:left;">
+word
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+/reply-all/135-the-robocall-conundrum#episode-player
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:left;">
+<a href="https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player" class="uri">https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player</a>
+</td>
+<td style="text-align:left;">
+PJ VOGT
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+from
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/135-the-robocall-conundrum#episode-player
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:left;">
+<a href="https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player" class="uri">https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player</a>
+</td>
+<td style="text-align:left;">
+PJ VOGT
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+gimlet
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/135-the-robocall-conundrum#episode-player
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:left;">
+<a href="https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player" class="uri">https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player</a>
+</td>
+<td style="text-align:left;">
+PJ VOGT
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+this
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/135-the-robocall-conundrum#episode-player
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:left;">
+<a href="https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player" class="uri">https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player</a>
+</td>
+<td style="text-align:left;">
+PJ VOGT
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+is
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/135-the-robocall-conundrum#episode-player
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:left;">
+<a href="https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player" class="uri">https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player</a>
+</td>
+<td style="text-align:left;">
+PJ VOGT
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+reply
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/reply-all/135-the-robocall-conundrum#episode-player
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:left;">
+<a href="https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player" class="uri">https://www.gimletmedia.com/reply-all/135-the-robocall-conundrum#episode-player</a>
+</td>
+<td style="text-align:left;">
+PJ VOGT
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+all
+</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</div>
+<div id="part-5-save-to-a-csv" class="section level3">
+<h3>Part 5: Save to a CSV</h3>
+<p>We can write the data to a <code>.csv</code> for anyone to use in the future.</p>
+<pre class="r"><code>readr::write_csv(tidy_ep_data_clean, &quot;reply_all_text_data.csv&quot;)</code></pre>
+<p><strong>Download CSV here: <a href="https://github.com/landesbergn/reply-all/blob/master/reply_all_text_data.csv" class="uri">https://github.com/landesbergn/reply-all/blob/master/reply_all_text_data.csv</a></strong></p>
+<p>In a future post, I will start to analyze this data!</p>
+</div>
