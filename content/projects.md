@@ -15,7 +15,7 @@ Status](https://img.shields.io/codecov/c/github/landesbergn/rhymer/master.svg)](
   
 [`rhymer`](https://landesbergn.github.io/rhymer/) is an R Package to find rhyming words.
 
-* Download from CRAN at [https://cran.r-project.org/package=rhymer](https://cran.r-project.org/package=rhymer)  
+* Download from CRAN at [https://cran.r-project.org/package=rhymer](https://cran.r-project.org/package=rhymer)  
 * Browse source code at [http://github.com/landesbergn/rhymer](http://github.com/landesbergn/rhymer)  
 * Report a bug at [https://github.com/landesbergn/rhymer/issues](https://github.com/landesbergn/rhymer/issues)
 
