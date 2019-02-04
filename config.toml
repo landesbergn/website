@@ -1,4 +1,4 @@
-baseurl = "https://www.noahlandesberg.com/"
+baseurl = "/"
 title = "Noah Landesberg"
 author = "Noah Landesberg"
 relativeurls = true
