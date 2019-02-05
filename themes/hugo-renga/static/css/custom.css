@@ -310,3 +310,7 @@ author {
         margin-right: 0;
     }
 }
+
+.footer .justify-content-center {
+  flex-wrap: inherit;
+}
