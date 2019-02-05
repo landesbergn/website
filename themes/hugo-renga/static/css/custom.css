@@ -265,10 +265,10 @@ author {
 /* Partial: Footer */
 
 .footer a {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     margin-left: 6px;
     margin-right: 6px;
-    opacity: 0.6;
+    opacity: 0.8;
     transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
     -webkit-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
     -moz-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
@@ -286,12 +286,12 @@ author {
 }
 
 .footer a:hover {
-    opacity: 0.8;
+    opacity: 1.0;
 }
 
 .footer a .icon {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
 }
 
 .footer span.title {
