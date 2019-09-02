@@ -11,7 +11,7 @@ enableEmoji = true
 hasCJKLanguage = true
 
 googleAnalytics = "UA-108370158-1"
-
+disableKinds = ["taxonomy", "taxonomyTerm"]
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [params]
@@ -23,7 +23,7 @@ logofile = "image/avatar.jpg"
 posts_navigation = true
 uselatex = true
 highlightjs = true
-progressively = false
+progressively = true
 
 github = "landesbergn"
 twitter = "noahlandesberg"
