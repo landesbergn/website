@@ -1,5 +1,5 @@
 ---
-title: 2020, in Review
+title: 2020, in review
 author: Noah Landesberg
 date: '2020-12-20'
 slug: []
@@ -27,7 +27,7 @@ Here are some of the things I enjoyed in this strange year.
 4. On the Floor - Perfume Genius
 5. The Steps - HAIM
 
-**Honorable mentions:** People, I’ve been sad - Christine and the Queens, Forever - Charli XCX, ooh la la - Run the Jewels, lucy - Soccer Mommy,  Savage Remix - Megan Thee Stalion Ft. Beyonce, Lifetime - Romy, Physical - Due Lipa, Blinding Lights - The Weeknd.
+**Honorable mentions:** People, I’ve been sad - Christine and the Queens, Forever - Charli XCX, ooh la la - Run the Jewels, lucy - Soccer Mommy,  Savage Remix - Megan Thee Stallion Ft. Beyonce, Lifetime - Romy, Physical - Dua Lipa, Blinding Lights - The Weeknd.
 
 ## Movies 
 ###### (I watched for the first time this year)
