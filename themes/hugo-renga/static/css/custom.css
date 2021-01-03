@@ -2,7 +2,7 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    background: snow;
+    background: #FAF6F6;
 }
 
 img {
@@ -65,7 +65,7 @@ author {
 }
 
 .header h1.name {
-    color: #006400; /* darkgreen */
+    color: #EE7E1B; /* Cadmium Orange */
     font-weight: 400;
     font-size: 4rem;
     font-family: monospace;

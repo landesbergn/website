@@ -24,8 +24,6 @@ posts_navigation = true
 uselatex = true
 highlightjs = true
 progressively = true
-[markup.goldmark.renderer]
-unsafe = true
 
 github = "landesbergn"
 twitter = "noahlandesberg"
