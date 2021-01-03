@@ -37,8 +37,8 @@ The first and only weather app for iOS that is focused on letting you know what 
 
 ### NYC Bar & Restaurant Closings Databse
 A 'database' of various NYC bar & restaurant closings since COVID-19 radically changed the restaurant landscape.
-* [Code](https://github.com/landesbergn/nyc_restaurants) which includes some scraping scripts.
-* [Datebase](https://docs.google.com/spreadsheets/d/e/2PACX-1vQWN8lpIxKrVRA08gB785c-bsJ5FkMzBzzpvxU1NdQUkEXBqWNIAYwWNSV5iuY3rsl7r8oeWjBejxLX/pubhtml) which to includes 300+ closings and various metadata.
+* [Code](https://github.com/landesbergn/nyc_restaurants) which includes some scraping scripts.  
+* [Database](https://docs.google.com/spreadsheets/d/e/2PACX-1vQWN8lpIxKrVRA08gB785c-bsJ5FkMzBzzpvxU1NdQUkEXBqWNIAYwWNSV5iuY3rsl7r8oeWjBejxLX/pubhtml) which to includes 300+ closings and various metadata.  
 
 <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQWN8lpIxKrVRA08gB785c-bsJ5FkMzBzzpvxU1NdQUkEXBqWNIAYwWNSV5iuY3rsl7r8oeWjBejxLX/pubhtml?widget=true&amp;headers=false" style="width: -webkit-fill-available;height: -webkit-fill-available;ebkit-fill-available;"></iframe>
 
