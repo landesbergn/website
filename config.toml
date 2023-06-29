@@ -16,7 +16,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
 
 [params]
 pagetitle = "Noah Landesberg"
-copyright = "© 2022 Noah Landesberg"
+copyright = "© 2023 Noah Landesberg"
 copyrightUrl = "https://www.noahlandesberg.com"
 faviconfile = "image/favicon.png"
 logofile = "image/avatar.jpg"
