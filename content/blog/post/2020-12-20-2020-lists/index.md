@@ -37,12 +37,12 @@ Here are some of the things I enjoyed in this strange year.
 4. Being John Malkovich
 5. What Happened, Miss Simone?
 
-**Honorable mentions:** Minority Report, Blade Runner, Snowpiercer, Frances Ha, Dolemite Is My Name, Tokyo Olympiad, Midsomar, Meru.
+**Honorable mentions:** Minority Report, Blade Runner, Snowpiercer, Frances Ha, Dolemite Is My Name, Tokyo Olympiad, Midsommar, Meru.
 
 ## TV
 1. Better Call Saul (AMC)
 2. I May Destroy You (HBO)
-3. The Mandolorian (Disney+)
+3. The Mandalorian (Disney+)
 4. Middleditch and Schwartz (Netflix)
 5. The Last Dance (Netflix)
 
@@ -51,7 +51,7 @@ Here are some of the things I enjoyed in this strange year.
 ## Books 
 ###### (I read for the first time this year)
 1. Homegoing - Yaa Gyasi 
-2. Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch - Terry Prachet & Neil Gaiman
+2. Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch - Terry Pratchett & Neil Gaiman
 3. Dune - Frank Herbert
 4. The Summer Book - Tove Jansson
 5. And the Band Played On: Politics, People, and the AIDS Epidemic - Randy Shilts

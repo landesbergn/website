@@ -91,7 +91,7 @@ head(episode_links) %>%
 
 We can also add in the episode number, which I originally tried to parse out from the string, but I am not good at regular expression, so I just used some math to back in to it.
 
-Finally, we add in the full web link, by appending the hyperlink extension to the Gimlet Media homepage (`gimetmedia.com`).
+Finally, we add in the full web link, by appending the hyperlink extension to the Gimlet Media homepage (`gimletmedia.com`).
 ```{r get-full-episode-link}
 ep_data <- episode_links %>%
   mutate(
@@ -105,7 +105,7 @@ head(ep_data) %>%
 <hr>
 ### Part 2: Scrape transcripts from links
 
-Now that we have a link to every episode we want to parse, it is time to write a function that, when given a link, returns a transcript. This took a lot of time to nail down. As alluded to, the data and transcript formatting as inconsistent and messy. It took a fair amount of time and iteration to try to get this right. I spent a lot of time on [https://regex101.com](https://regex101.com) testing out stuff.
+Now that we have a link to every episode we want to parse, it is time to write a function that, when given a link, returns a transcript. This took a lot of time to nail down. As alluded to, the data and transcript formatting was inconsistent and messy. It took a fair amount of time and iteration to try to get this right. I spent a lot of time on [https://regex101.com](https://regex101.com) testing out stuff.
 ```{r get-transcript-function}
 getTranscript <- function(episode_link) {
 
@@ -201,7 +201,7 @@ getTranscript("https://www.gimletmedia.com/reply-all/114-apocalypse-soon#episode
 <hr> 
 ### Part 3: Pull transcripts for each episode
 
-Now we can use `purrr` to iterate through every episode and 'map' the function `getTranscript` to each episode link. I learned a lot about iterating with `purrr` from [this tutorial](https://jennybc.github.io/purrr-tutorial/) from Jenny Brian and the chapter from [R for Data Science on Iteration](http://r4ds.had.co.nz/iteration.html) by Garrett Grolemund and Hadley Wickham. This takes ~3 minutes to run, depending on your internet connection.
+Now we can use `purrr` to iterate through every episode and 'map' the function `getTranscript` to each episode link. I learned a lot about iterating with `purrr` from [this tutorial](https://jennybc.github.io/purrr-tutorial/) from Jenny Bryan and the chapter from [R for Data Science on Iteration](http://r4ds.had.co.nz/iteration.html) by Garrett Grolemund and Hadley Wickham. This takes ~3 minutes to run, depending on your internet connection.
 ```{r get-all-transcripts}
 # use purrr to map the 'getTranscript' function over all of the URLs in the ep_data data frame
 ep_data <- ep_data %>%

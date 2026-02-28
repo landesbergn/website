@@ -14,7 +14,7 @@ Without further ado... here are 8 analytics books I read this year:
 ## **The Undoing Project** by Michael Lewis  
 ![](/image/undoing.jpg)
   
-Lewis follows the careers of Amos Tversky and Daniel Kahneman, two Israeli psychologists notable for their work in the foundations of behavioral economics. Like _Moneyball_ or _The Big Short_, Lewis uses the stories of fascinating people to explore more complicated subjects. _Moneyball_ is very much the story of Billy Bean, but along the way, you learn a lot about advanced metrics in baseball. Likewise, _The Undoing Project_ is very much the story of Tversky and Kahneman, but along they way you will learn a lot about the way humans interpret numbers and probability, and the theories that underlie behavioral economics.
+Lewis follows the careers of Amos Tversky and Daniel Kahneman, two Israeli psychologists notable for their work in the foundations of behavioral economics. Like _Moneyball_ or _The Big Short_, Lewis uses the stories of fascinating people to explore more complicated subjects. _Moneyball_ is very much the story of Billy Bean, but along the way, you learn a lot about advanced metrics in baseball. Likewise, _The Undoing Project_ is very much the story of Tversky and Kahneman, but along the way you will learn a lot about the way humans interpret numbers and probability, and the theories that underlie behavioral economics.
 <hr>
 
 ## **Dataclysm: Love, Sex, Race, and Identity – What our Online Lives Tell Us about Our Offline Selves** by Christian Rudder

@@ -16,4 +16,4 @@ When building this site, the two resources I consulted were:
 * [This wonderful guide](https://apreshill.rbind.io/post/up-and-running-with-blogdown/) from Alison Presmanes Hill
 * [The `blogdown` documentation](https://bookdown.org/yihui/blogdown/) from Yihui Xie, Amber Thomas, and Alison Presmanes Hill
 
-It might seem complicated, but with some coffee and tenacity whole thing can be done in an afternoon!
+It might seem complicated, but with some coffee and tenacity the whole thing can be done in an afternoon!

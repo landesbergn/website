@@ -48,7 +48,7 @@ I'm looking forward to seeing what you come up with as an interesting use case f
 
 And of course, much thanks to:
 
-* **Hadley Wickham** for the [`httr`](http://httr.r-lib.org) package that made API requests a breeze, [`testthtat`](http://testthat.r-lib.org) which made writing tests genuinely enjoyable, [`devtools`](https://github.com/hadley/devtools) which made first-time package development a pain-free experience, and [`pkgdown`](http://pkgdown.r-lib.org) for turning all the package documentation into a beautiful website.
+* **Hadley Wickham** for the [`httr`](http://httr.r-lib.org) package that made API requests a breeze, [`testthat`](http://testthat.r-lib.org) which made writing tests genuinely enjoyable, [`devtools`](https://github.com/hadley/devtools) which made first-time package development a pain-free experience, and [`pkgdown`](http://pkgdown.r-lib.org) for turning all the package documentation into a beautiful website.
 * **Jeroen Ooms**, **Duncan Temple Lang**, and **Lloyd Hilaiel** for the [`jsonlite`](https://arxiv.org/abs/1403.2805) package which helped to parse the JSON responses from the API.
 * [**Datamuse**](http://www.datamuse.com/api/) for providing an awesome and free API with great documentation and examples.
 * The internet for providing countless tips and tricks when it felt like I had reached an insurmountable problem.

@@ -38,7 +38,7 @@ library(DiagrammeR)
 ```
 
 
-So judging from the [DiagrammeR website](http://rich-iannone.github.io/DiagrammeR/), I wasn't too sure where to start. So I watched the embedded video, which showed the quick creation of a graph using the `grVis` function. It looks like this function will interpret some _DOT_ syntax, which the web tells me is a 'plain text graph description language.' That seems cool, Let's give it a go!
+So judging from the [DiagrammeR website](http://rich-iannone.github.io/DiagrammeR/), I wasn't too sure where to start. So I watched the embedded video, which showed the quick creation of a graph using the `grViz` function. It looks like this function will interpret some _DOT_ syntax, which the web tells me is a 'plain text graph description language.' That seems cool, Let's give it a go!
 
 ```{r}
 grViz("
@@ -95,7 +95,7 @@ digraph boxes_and_cirles {
 ```
 <br>
 
-Nice! Let's try to flip this thing around. I did some googleing and landed on some additional `DiagrammeR` documentation [here](http://rich-iannone.github.io/DiagrammeR/graphviz_and_mermaid.html#graphviz-layouts). It seems like adding some settings to the graph object using `graph [layout = dot, rankdir = LR]` will do the trick
+Nice! Let's try to flip this thing around. I did some googling and landed on some additional `DiagrammeR` documentation [here](http://rich-iannone.github.io/DiagrammeR/graphviz_and_mermaid.html#graphviz-layouts). It seems like adding some settings to the graph object using `graph [layout = dot, rankdir = LR]` will do the trick
 
 ```{r}
 grViz("
