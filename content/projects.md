@@ -6,12 +6,10 @@ description: "Noah Landesberg's Projects"
 ***
 
 ### rhymer
-[![Build
-Status](https://travis-ci.org/landesbergn/rhymer.svg?branch=master)](https://travis-ci.org/landesbergn/rhymer)
-[![Coverage
-Status](https://img.shields.io/codecov/c/github/landesbergn/rhymer/master.svg)](https://codecov.io/github/landesbergn/rhymer?branch=master)
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/rhymer)](https://cran.r-project.org/package=rhymer)
-[![](https://cranlogs.r-pkg.org/badges/grand-total/rhymer)](http://cran.rstudio.com/web/packages/rhymer/index.html)  
+[![R-CMD-check](https://github.com/landesbergn/rhymer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/landesbergn/rhymer/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/landesbergn/rhymer/graph/badge.svg)](https://app.codecov.io/gh/landesbergn/rhymer)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/rhymer)](https://cran.r-project.org/package=rhymer)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/rhymer)](https://cran.r-project.org/package=rhymer)  
   
 [`rhymer`](https://landesbergn.github.io/rhymer/) is an R Package to find rhyming words.
 
@@ -21,11 +19,7 @@ Status](https://img.shields.io/codecov/c/github/landesbergn/rhymer/master.svg)](
 
 ***
 
-<div style='margin-bottom: .5rem;'>
-  <h3 style='display:inline;'>Feels Like&nbsp;
-    <img style='vertical-align: top;' src="/./projects_files/1024.png" alt="" width="38px" height="38px"/>
-  </h2>
-</div>  
+### Feels Like  
 
 The first and only weather app for iOS that is focused on letting you know what it feels like before you venture outdoors. Apple rejected it from the App Store because they "found that the usefulness of your app is limited by the minimal amount of content or features it includes." But they are wrong! Beta testers have cumulatively averaged 450 uses per month.
 
