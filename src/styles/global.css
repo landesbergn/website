@@ -93,6 +93,10 @@ main {
   display: block;
 }
 
+main > *:first-child {
+  margin-top: 0;
+}
+
 a {
   color: var(--color-link);
   text-decoration: underline;
