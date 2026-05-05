@@ -120,25 +120,49 @@ body {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  min-height: 44px;            /* tap-target row height */
   font-family: var(--font-mono);
   font-size: 0.85rem;
   color: var(--color-muted);
-  row-gap: 6px;
+  row-gap: 4px;
+}
+
+/* Each text link is its own 44px tap target, vertically centered. */
+.site-header nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 4px;
+  margin-right: 8px;
+  margin-left: -4px;           /* offset padding so visual gap stays even */
+}
+
+.site-header nav .sep {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+  color: var(--color-muted);
 }
 
 .site-header nav .social {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  margin-left: 14px;
+  gap: 4px;
+  margin-left: 10px;
   padding-left: 14px;
   border-left: 1px solid var(--color-rule);
+  align-self: stretch;
 }
 
+/* Social icon tap targets are 44×44 (icons stay visually 14×14). */
 .site-header nav .social a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: 0;                   /* override the text-link rule above */
+  padding: 0;
   color: var(--color-muted);
   text-decoration: none;
   transition: color 0.12s ease;
@@ -153,15 +177,6 @@ body {
   width: 14px;
   height: 14px;
   display: block;
-}
-
-.site-header nav a {
-  margin-right: 10px;
-}
-
-.site-header nav .sep {
-  color: var(--color-muted);
-  margin-right: 10px;
 }
 
 .site-header nav a[aria-current="page"] {
