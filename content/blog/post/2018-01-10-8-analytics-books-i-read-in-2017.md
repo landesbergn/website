@@ -14,7 +14,7 @@ Without further ado... here are 8 analytics books I read this year:
 ## **The Undoing Project** by Michael Lewis  
 ![](/image/undoing.jpg)
   
-Lewis follows the careers of Amos Tversky and Daniel Kahneman, two Israeli psychologists notable for their work in the foundations of behavioral economics. Like _Moneyball_ or _The Big Short_, Lewis uses the stories of fascinating people to explore more complicated subjects. _Moneyball_ is very much the story of Billy Bean, but along the way, you learn a lot about advanced metrics in baseball. Likewise, _The Undoing Project_ is very much the story of Tversky and Kahneman, but along the way you will learn a lot about the way humans interpret numbers and probability, and the theories that underlie behavioral economics.
+Lewis follows the careers of Amos Tversky and Daniel Kahneman, two Israeli psychologists notable for their work in the foundations of behavioral economics. Like _Moneyball_ or _The Big Short_, Lewis uses the stories of fascinating people to explore more complicated subjects. _Moneyball_ is very much the story of Billy Beane, but along the way, you learn a lot about advanced metrics in baseball. Likewise, _The Undoing Project_ is very much the story of Tversky and Kahneman, but along the way you will learn a lot about the way humans interpret numbers and probability, and the theories that underlie behavioral economics.
 <hr>
 
 ## **Dataclysm: Love, Sex, Race, and Identity – What our Online Lives Tell Us about Our Offline Selves** by Christian Rudder
@@ -32,13 +32,13 @@ Now a major motion picture, Hidden Figures was a quick read that explored the st
 ## **The Most Human Human: What Artificial Intelligence Teaches Us About Being Alive** by Brian Christian
 ![](/image/human.jpg) 
 
-Every year, the AI community gathers to hold a competition of chat bots to see if they can pass the Turing Test. As a part of the competition, human confederates are put in place so that a judge could be speaking to a computer or to a human. At the end of the competition, awards are given to the computer the judges determine to be most human, but also to the human most frequently identified as a human (aka The Most Human Human). Christian writes about his experience as a human confederate, and divulges into the methodology behind leading chat bots, as well as some more philosophical writing about what it means to be human. 
+Every year, the AI community gathers to hold a competition of chat bots to see if they can pass the Turing Test. As a part of the competition, human confederates are put in place so that a judge could be speaking to a computer or to a human. At the end of the competition, awards are given to the computer the judges determine to be most human, but also to the human most frequently identified as a human (aka The Most Human Human). Christian writes about his experience as a human confederate, and delves into the methodology behind leading chat bots, as well as some more philosophical writing about what it means to be human. 
 <hr>
 
 ## **Algorithms to Live By: The Computer Science of Human Decisions** by Brian Christian and Tom Griffiths
 ![](/image/algos.jpg) 
 
-This book explores basic computer algorithms and attempts to connect and apply them to practical every day problems. Problems include: how many candidates should you interview before making an offer, how to best organize your desk, or how to best manage your time. 
+This book explores basic computer algorithms and attempts to connect and apply them to practical everyday problems. Problems include: how many candidates should you interview before making an offer, how to best organize your desk, or how to best manage your time. 
 <hr>
 
 ## **Superforecasting: The Art and Science of Prediction** by Philip E. Tetlock
@@ -56,7 +56,7 @@ This book introduces basic concepts around systems, including stocks, flows, and
 ## **The Visual Display of Quantitative Information** by Edward R. Tufte
 ![](/image/tufte.jpg) 
 
-Closed the year with some good ole Tufte, as gifted to me by my twin-sister! Tufte is a pioneer in the field of data visualization, and although he has a mixed reputation in recent years, I really enjoyed his compilation of historical data graphics and visuals.
+Closed the year with some good ole Tufte, as gifted to me by my twin sister! Tufte is a pioneer in the field of data visualization, and although he has a mixed reputation in recent years, I really enjoyed his compilation of historical data graphics and visuals.
 
 <hr>
 Well, that's all! 2017 was a great year for reading, here's to _9_ analytics books in 2018!
