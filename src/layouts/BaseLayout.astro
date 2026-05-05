@@ -10,7 +10,7 @@ const { title, description = "Noah Landesberg's personal site." } = Astro.props;
 const pathname = Astro.url.pathname;
 const isActive = (href: string) => pathname === href || (pathname.startsWith(href) && href !== '/');
 
-const year = new Date().getFullYear();
+const buildDate = new Date().toISOString().slice(0, 10);
 ---
 
 <!doctype html>
@@ -27,24 +27,27 @@ const year = new Date().getFullYear();
   <body>
     <div class="page">
       <header class="site-header">
-        <a href="/" class="site-title">Noah Landesberg</a>
+        <h1 class="site-title"><a href="/">Noah Landesberg</a></h1>
         <nav>
-          <a href="/projects/" aria-current={isActive('/projects/') ? 'page' : undefined}>Projects</a>
-          <a href="/blog/" aria-current={isActive('/blog/') ? 'page' : undefined}>Blog</a>
+          <a href="/" aria-current={pathname === '/' ? 'page' : undefined}>home</a>
+          <span class="sep">·</span>
+          <a href="/projects/" aria-current={isActive('/projects/') ? 'page' : undefined}>projects</a>
+          <span class="sep">·</span>
+          <a href="/blog/" aria-current={isActive('/blog/') ? 'page' : undefined}>blog</a>
         </nav>
       </header>
       <main>
         <slot />
       </main>
       <footer class="site-footer">
-        <span>&copy; {year} Noah Landesberg</span>
-        <span>
-          <a href="https://github.com/landesbergn">GitHub</a>
+        <p>
+          email: noah.landesberg [at] gmail.com
           &nbsp;·&nbsp;
-          <a href="https://www.linkedin.com/in/noah-landesberg">LinkedIn</a>
+          <a href="https://github.com/landesbergn">github</a>
           &nbsp;·&nbsp;
-          <a href="mailto:noah.landesberg@gmail.com">Email</a>
-        </span>
+          <a href="https://www.linkedin.com/in/noah-landesberg">linkedin</a>
+        </p>
+        <p>hand-coded HTML, mostly. last updated {buildDate}.</p>
       </footer>
     </div>
 

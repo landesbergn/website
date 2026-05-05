@@ -9,17 +9,15 @@ interface Props {
 
 const { title, date, description } = Astro.props;
 const dateObj = typeof date === 'string' ? new Date(date) : date;
-const formattedDate = dateObj.toLocaleDateString('en-US', {
-  year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
-});
+const isoDate = dateObj.toISOString().slice(0, 10);
 ---
 
 <BaseLayout title={`${title} — Noah Landesberg`} description={description}>
   <slot name="head" slot="head" />
   <article>
     <h1>{title}</h1>
-    <p class="post-meta">{formattedDate}</p>
+    <p class="post-meta">{isoDate}</p>
     <slot />
   </article>
-  <p style="margin-top: 3em;"><a href="/blog/">← All posts</a></p>
+  <p class="back-link"><a href="/blog/">← all posts</a></p>
 </BaseLayout>
