@@ -225,6 +225,16 @@ pre code {
   margin-top: 3em;
 }
 
+a.project-link {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+a.project-link:hover {
+  text-decoration-thickness: 2px;
+}
+
 .contact-floater {
   position: fixed;
   bottom: 20px;
