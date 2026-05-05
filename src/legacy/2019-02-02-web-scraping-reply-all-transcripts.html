@@ -90,7 +90,7 @@ link
 </tbody>
 </table>
 <p>We can tell by looking at the <code>head</code> (first 6 rows) and the <code>tail</code> (last 6 rows) of the list of episode links that there are some links to other pages here that are not of interest, like the privacy policy or the terms of service.</p>
-<p>Let’s clean this up a little bit, by only including episodes that reference <code>#episode-player</code> at the end of their link, indicated that there is an episode there, and not some other webpage. We can also filter out episodes that are rebroadcasts or presentations of other shows in the Reply All feed. The process of filtering down this list took some trial and error, as the formatting of episode titles in the hyperlink was inconsistent.</p>
+<p>Let’s clean this up a little bit, by only including episodes that reference <code>#episode-player</code> at the end of their link, indicating that there is an episode there, and not some other webpage. We can also filter out episodes that are rebroadcasts or presentations of other shows in the Reply All feed. The process of filtering down this list took some trial and error, as the formatting of episode titles in the hyperlink was inconsistent.</p>
 <pre class="r"><code>episode_links &lt;- episode_links %&gt;%
   filter(
     str_detect(link, &quot;#episode-player&quot;), # must link to an episode player
@@ -174,8 +174,8 @@ episode_number
 </tr>
 </tbody>
 </table>
-<p>We can also add in the episode number, which I originally tried to parse out from the string, but I am not good at regular expression, so I just used some math to back in to it.</p>
-<p>Finally, we add in the full web link, by appending the hyperlink extension to the Gimlet Media homepage (<code>gimetmedia.com</code>).</p>
+<p>We can also add in the episode number, which I originally tried to parse out from the string, but I am not good at regular expressions, so I just used some math to back into it.</p>
+<p>Finally, we add in the full web link, by appending the hyperlink extension to the Gimlet Media homepage (<code>gimletmedia.com</code>).</p>
 <pre class="r"><code>ep_data &lt;- episode_links %&gt;%
   mutate(
     full_link = paste0(&quot;https://www.gimletmedia.com&quot;, link)
@@ -271,7 +271,7 @@ full_link
 </div>
 <div id="part-2-scrape-transcripts-from-links" class="section level2">
 <h2>Part 2: Scrape transcripts from links</h2>
-<p>Now that we have a link to every episode we want to parse, it is time to write a function that, when given a link, returns a transcript. This took a lot of time to nail down. As alluded to, the data and transcript formatting as inconsistent and messy. It took a fair amount of time and iteration to try to get this right. I spent a lot of time on <a href="https://regex101.com" class="uri">https://regex101.com</a> testing out stuff.</p>
+<p>Now that we have a link to every episode we want to parse, it is time to write a function that, when given a link, returns a transcript. This took a lot of time to nail down. As alluded to, the data and transcript formatting was inconsistent and messy. It took a fair amount of time and iteration to try to get this right. I spent a lot of time on <a href="https://regex101.com" class="uri">https://regex101.com</a> testing out stuff.</p>
 <pre class="r"><code>getTranscript &lt;- function(episode_link) {
 
   # print statement helps to understand the progress of the function when it is running (commented out for now)
@@ -465,7 +465,7 @@ it’s
 </div>
 <div id="part-3-pull-transcripts-for-each-episode" class="section level2">
 <h2>Part 3: Pull transcripts for each episode</h2>
-<p>Now we can use <code>purrr</code> to iterate through every episode and ‘map’ the function <code>getTranscript</code> to each episode link. I learned a lot about iterating with <code>purrr</code> from <a href="https://jennybc.github.io/purrr-tutorial/">this tutorial</a> from Jenny Brian and the chapter from <a href="http://r4ds.had.co.nz/iteration.html">R for Data Science on Iteration</a> by Garrett Grolemund and Hadley Wickham. This takes ~3 minutes to run, depending on your internet connection.</p>
+<p>Now we can use <code>purrr</code> to iterate through every episode and ‘map’ the function <code>getTranscript</code> to each episode link. I learned a lot about iterating with <code>purrr</code> from <a href="https://jennybc.github.io/purrr-tutorial/">this tutorial</a> from Jenny Bryan and the chapter from <a href="http://r4ds.had.co.nz/iteration.html">R for Data Science on Iteration</a> by Garrett Grolemund and Hadley Wickham. This takes ~3 minutes to run, depending on your internet connection.</p>
 <pre class="r"><code># use purrr to map the &#39;getTranscript&#39; function over all of the URLs in the ep_data data frame
 ep_data &lt;- ep_data %&gt;%
   mutate(
