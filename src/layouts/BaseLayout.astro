@@ -56,9 +56,11 @@ const year = new Date().getFullYear();
       if (key) {
         posthog.init(key, {
           api_host: 'https://us.i.posthog.com',
-          persistence: 'memory',
-          disable_session_recording: false,
-          capture_pageview: true,
+          persistence: 'memory',           // cookieless — no consent banner needed
+          capture_pageview: true,          // track pageviews
+          autocapture: true,               // track clicks, form submits, link clicks
+          capture_exceptions: true,        // track unhandled JS errors
+          disable_session_recording: false // session replay (enable in PostHog UI)
         });
       }
     </script>
