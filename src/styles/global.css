@@ -26,9 +26,10 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-serif);
-  font-size: 16px;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
+  font-size: 17px;
+  line-height: 1.55;
+  /* Use the browser's default subpixel antialiasing — `antialiased`
+     thins serif strokes on macOS and made the body feel faint. */
 }
 
 .page {
@@ -44,15 +45,22 @@ body {
 }
 
 .site-header {
-  margin-bottom: 28px;
+  margin-bottom: 36px;
 }
 
 .site-header h1.site-title {
   font-family: var(--font-serif);
-  font-size: 1.6rem;
+  font-size: 2.4rem;
   font-weight: 700;
   margin: 0;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+
+@media (min-width: 720px) {
+  .site-header h1.site-title {
+    font-size: 2.8rem;
+  }
 }
 
 .site-header h1.site-title a {
@@ -62,8 +70,8 @@ body {
 
 .site-header nav {
   font-family: var(--font-mono);
-  font-size: 0.82rem;
-  margin-top: 6px;
+  font-size: 0.85rem;
+  margin-top: 10px;
   color: var(--color-muted);
 }
 
@@ -213,24 +221,58 @@ pre code {
   margin-top: 3em;
 }
 
-.site-footer {
-  margin-top: 64px;
-  padding-top: 14px;
-  border-top: 1px solid var(--color-rule);
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--color-muted);
-  line-height: 1.7;
+.contact-floater {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 8px 10px;
+  border: 1px solid var(--color-rule);
+  z-index: 50;
 }
 
-.site-footer p {
-  margin: 0;
+.contact-floater a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: opacity 0.12s ease;
 }
 
-.site-footer a {
-  color: var(--color-link);
+.contact-floater a:visited {
+  color: var(--color-text);
 }
 
-.site-footer a:visited {
-  color: var(--color-link-visited);
+.contact-floater a:hover {
+  opacity: 0.55;
+  text-decoration: none;
+}
+
+.contact-floater svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 719px) {
+  .contact-floater {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 8px;
+    gap: 2px;
+  }
+  .contact-floater a {
+    width: 26px;
+    height: 26px;
+  }
+  .contact-floater svg {
+    width: 14px;
+    height: 14px;
+  }
 }
