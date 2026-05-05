@@ -6,10 +6,11 @@
   --color-accent: #b14545;         /* oxblood — used sparingly */
   --color-code-bg: #f1ede1;
 
+  --content-max: 720px;
+  --content-wide: 840px;
+
   --font-serif: 'Iowan Old Style', 'Charter', 'Source Serif 4', Georgia, 'Times New Roman', Times, serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, Monaco, 'Cascadia Mono', Consolas, 'Courier New', Courier, monospace;
-
-  --content-max: 600px;
 }
 
 * {
@@ -80,6 +81,11 @@ body {
   overflow: hidden;
   background: var(--color-rule);
   flex-shrink: 0;
+  display: block;
+}
+
+.site-header a.avatar:hover {
+  text-decoration: none;
 }
 
 .site-header .avatar img {
@@ -202,8 +208,10 @@ h1, h2, h3, h4 {
 }
 
 article > h1 {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   margin-top: 0;
+  margin-bottom: 0.3em;
+  letter-spacing: -0.01em;
 }
 
 h2 {
@@ -235,12 +243,16 @@ ul, ol {
 }
 
 li {
-  margin-bottom: 0.2em;
+  margin-bottom: 0.3em;
 }
 
 img {
   max-width: 100%;
   height: auto;
+}
+
+article img {
+  margin: 1em 0;
 }
 
 /* Editorial * * * divider in place of a literal rule */
@@ -281,25 +293,90 @@ blockquote {
 
 pre, code {
   font-family: var(--font-mono);
-  font-size: 0.85em;
+  font-size: 0.82em;
 }
 
 pre {
-  padding: 10px 12px;
+  padding: 14px 18px;
   background: var(--color-code-bg);
   overflow-x: auto;
   border: 1px solid var(--color-rule);
+  margin: 1.5em 0;
+  line-height: 1.5;
+  tab-size: 2;
 }
 
 code {
   background: var(--color-code-bg);
-  padding: 1px 4px;
+  padding: 1px 5px;
+  border-radius: 2px;
 }
 
 pre code {
   background: transparent;
   padding: 0;
   border: 0;
+  border-radius: 0;
+}
+
+/* Tables: borders, padding, mono font, vertical rhythm */
+article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  line-height: 1.4;
+}
+
+article thead {
+  border-bottom: 2px solid var(--color-text);
+}
+
+article th,
+article td {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--color-rule);
+  vertical-align: top;
+}
+
+article th {
+  font-weight: 700;
+}
+
+article tbody tr:last-child td {
+  border-bottom: none;
+}
+
+article table th:first-child,
+article table td:first-child {
+  padding-left: 0;
+}
+
+article table th:last-child,
+article table td:last-child {
+  padding-right: 0;
+}
+
+/* Breakout on desktop: code blocks and tables extend wider than the
+   prose column so long R lines / wide tables don't trigger horizontal
+   scroll for the most part. Stays within the page padding edges. */
+@media (min-width: 800px) {
+  article pre,
+  article table,
+  .scroll-wrap {
+    margin-left: -40px;
+    margin-right: -40px;
+  }
+}
+
+/* For wide tables that come from kable in the frozen R posts —
+   wrap them in a horizontally-scrollable container so they don't
+   blow out the layout when they're truly too wide. */
+.scroll-wrap {
+  overflow-x: auto;
+  margin: 1.5em 0;
 }
 
 .post-list {

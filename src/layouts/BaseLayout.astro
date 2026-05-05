@@ -26,9 +26,9 @@ const isActive = (href: string) => pathname === href || (pathname.startsWith(hre
     <div class="page">
       <header class="site-header">
         <h1 class="site-title"><a href="/">Noah Landesberg</a></h1>
-        <span class="avatar" aria-hidden="true">
+        <a href="/" class="avatar" aria-label="Home">
           <img src="/image/avatar.jpg" alt="" width="72" height="72" loading="eager" />
-        </span>
+        </a>
         <nav>
           <a href="/" aria-current={pathname === '/' ? 'page' : undefined}>Home</a>
           <span class="sep">·</span>
