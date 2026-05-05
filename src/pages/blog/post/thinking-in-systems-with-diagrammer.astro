@@ -1,0 +1,30 @@
+---
+import PostLayout from '../../../layouts/PostLayout.astro';
+import body from '../../../legacy/2017-10-17-thinking-in-systems-with-diagrammer.html?raw';
+
+// External scripts and CSS that the DiagrammeR htmlwidget depends on must
+// live in <head> so the browser actually executes them — scripts inserted
+// via set:html below are parsed but not executed by the browser.
+// The inline <script type="application/json"> data blocks in the body
+// are non-executing data containers, read by the htmlwidgets framework
+// via DOM queries, so set:html-insertion is fine for those.
+const cleanedBody = body
+  .replace(/<script src="\/rmarkdown-libs\/htmlwidgets\/htmlwidgets\.js"><\/script>\s*/, '')
+  .replace(/<script src="\/rmarkdown-libs\/viz\/viz\.js"><\/script>\s*/, '')
+  .replace(/<link href="\/rmarkdown-libs\/DiagrammeR-styles\/styles\.css" rel="stylesheet" \/>\s*/, '')
+  .replace(/<script src="\/rmarkdown-libs\/grViz-binding\/grViz\.js"><\/script>\s*/, '');
+---
+
+<PostLayout
+  title="Thinking in Systems with DiagrammeR"
+  date="2017-10-17"
+  description="Replicating stock-and-flow diagrams from Donella Meadows' Thinking in Systems using DiagrammeR in R."
+>
+  <Fragment slot="head">
+    <link href="/rmarkdown-libs/DiagrammeR-styles/styles.css" rel="stylesheet" />
+    <script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js" is:inline></script>
+    <script src="/rmarkdown-libs/viz/viz.js" is:inline></script>
+    <script src="/rmarkdown-libs/grViz-binding/grViz.js" is:inline></script>
+  </Fragment>
+  <Fragment set:html={cleanedBody} />
+</PostLayout>

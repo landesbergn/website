@@ -1,0 +1,464 @@
+:root {
+  --color-bg: #fdfbf5;             /* warm off-white */
+  --color-text: #1a1a1a;           /* near-black, softer on warm bg */
+  --color-muted: #6b6b6b;
+  --color-rule: #d8d3c3;
+  --color-accent: #b14545;         /* oxblood — used sparingly */
+  --color-code-bg: #f1ede1;
+
+  --content-max: 720px;
+  --content-wide: 840px;
+
+  --font-serif: 'Iowan Old Style', 'Charter', 'Source Serif 4', Georgia, 'Times New Roman', Times, serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Monaco, 'Cascadia Mono', Consolas, 'Courier New', Courier, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: 1.55;
+  /* Use the browser's default subpixel antialiasing — `antialiased`
+     thins serif strokes on macOS and made the body feel faint. */
+}
+
+.page {
+  max-width: var(--content-max);
+  margin: 0;
+  padding: 24px 20px 40px;
+}
+
+@media (min-width: 720px) {
+  .page {
+    padding: 40px;
+  }
+}
+
+.site-header {
+  margin-bottom: 36px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "avatar title"
+    "avatar nav";
+  align-items: center;
+  column-gap: 16px;
+  row-gap: 6px;
+}
+
+.site-header h1.site-title {
+  grid-area: title;
+  align-self: end;
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+
+.site-header .avatar {
+  grid-area: avatar;
+  align-self: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--color-rule);
+  flex-shrink: 0;
+  display: block;
+}
+
+.site-header a.avatar:hover {
+  text-decoration: none;
+}
+
+.site-header .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (min-width: 720px) {
+  .site-header h1.site-title {
+    font-size: 2.8rem;
+  }
+  .site-header .avatar {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+.site-header h1.site-title a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.site-header h1.site-title a:hover {
+  text-decoration: none;
+}
+
+.site-header nav {
+  grid-area: nav;
+  align-self: start;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  row-gap: 6px;
+}
+
+.site-header nav .social {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 14px;
+  padding-left: 14px;
+  border-left: 1px solid var(--color-rule);
+}
+
+.site-header nav .social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+  text-decoration: none;
+  transition: color 0.12s ease;
+}
+
+.site-header nav .social a:hover {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.site-header nav .social svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+.site-header nav a {
+  margin-right: 10px;
+}
+
+.site-header nav .sep {
+  color: var(--color-muted);
+  margin-right: 10px;
+}
+
+.site-header nav a[aria-current="page"] {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+main {
+  display: block;
+}
+
+main > *:first-child {
+  margin-top: 0;
+}
+
+/* Links inherit body color; affordance is a subtle weight bump in
+   prose, plus a faded underline on hover. No browser-default blue/
+   purple, no always-on underline. */
+a, a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--color-accent);
+}
+
+/* In flowing prose, give links a small weight bump so they're scannable
+   without underlines or color shifts. */
+main p a,
+main li a,
+main blockquote a {
+  font-weight: 600;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 1.6em 0 0.5em;
+}
+
+article > h1 {
+  font-size: 1.75rem;
+  margin-top: 0;
+  margin-bottom: 0.3em;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: 1.2rem;
+  position: relative;
+  padding-left: 14px;
+}
+
+h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.25em;
+  bottom: 0.2em;
+  width: 3px;
+  background: var(--color-accent);
+}
+
+h3 { font-size: 1.05rem; }
+h4 { font-size: 1rem; }
+
+p {
+  margin: 0 0 1em;
+}
+
+ul, ol {
+  margin: 0 0 1em;
+  padding-left: 1.5em;
+}
+
+li {
+  margin-bottom: 0.3em;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+article img {
+  margin: 1em 0;
+}
+
+/* Editorial * * * divider in place of a literal rule */
+hr {
+  border: 0;
+  margin: 2.5em 0;
+  text-align: center;
+  height: auto;
+  overflow: visible;
+}
+
+hr::before {
+  content: "* * *";
+  display: block;
+  font-family: var(--font-serif);
+  letter-spacing: 0.55em;
+  color: var(--color-muted);
+  font-size: 1rem;
+  /* Compensate for letter-spacing pushing content right of optical center */
+  padding-left: 0.55em;
+}
+
+.divider-ascii {
+  font-family: var(--font-mono);
+  color: var(--color-muted);
+  margin: 2em 0;
+  letter-spacing: 0.3em;
+  font-size: 0.85rem;
+}
+
+blockquote {
+  margin: 1em 0;
+  padding-left: 1em;
+  border-left: 2px solid var(--color-rule);
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+pre, code {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+}
+
+pre {
+  padding: 14px 18px;
+  background: var(--color-code-bg);
+  overflow-x: auto;
+  border: 1px solid var(--color-rule);
+  margin: 1.5em 0;
+  line-height: 1.5;
+  tab-size: 2;
+}
+
+code {
+  background: var(--color-code-bg);
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+
+pre code {
+  background: transparent;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+/* Tables: borders, padding, mono font, vertical rhythm */
+article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  line-height: 1.4;
+}
+
+article thead {
+  border-bottom: 2px solid var(--color-text);
+}
+
+article th,
+article td {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--color-rule);
+  vertical-align: top;
+}
+
+article th {
+  font-weight: 700;
+}
+
+article tbody tr:last-child td {
+  border-bottom: none;
+}
+
+article table th:first-child,
+article table td:first-child {
+  padding-left: 0;
+}
+
+article table th:last-child,
+article table td:last-child {
+  padding-right: 0;
+}
+
+/* Tables get a small breakout on desktop so they can use a bit more
+   horizontal room without touching the page edge. */
+@media (min-width: 800px) {
+  article table,
+  .scroll-wrap {
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+}
+
+/* Code blocks: ~20% wider than the prose column on viewports that can
+   accommodate it (>= 1080px). Asymmetric — left edge stays flush with
+   the prose text, right edge extends 144px (20% of the 720px column).
+   On narrower screens pre stays within the column. */
+@media (min-width: 1080px) {
+  article pre {
+    margin-right: -144px;
+    /* margin-left intentionally stays 0 to keep prose alignment */
+  }
+}
+
+/* For wide tables that come from kable in the frozen R posts —
+   wrap them in a horizontally-scrollable container so they don't
+   blow out the layout when they're truly too wide. */
+.scroll-wrap {
+  overflow-x: auto;
+  margin: 1.5em 0;
+}
+
+.post-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.post-list li {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.post-list time {
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  min-width: 6.5em;
+}
+
+.post-list .leader {
+  flex: 1;
+  border-bottom: 1px dotted var(--color-rule);
+  position: relative;
+  top: -3px;
+  min-width: 16px;
+}
+
+.post-list li > a {
+  flex-shrink: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 540px) {
+  .post-list .leader {
+    display: none;
+  }
+}
+
+.post-meta {
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  margin-bottom: 2em;
+}
+
+.back-link {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  margin-top: 3em;
+}
+
+/* Project header links: H2 inheritance handles weight; arrow ↗ is the
+   visual cue. Hover reveals the underline like other links. */
+a.project-link {
+  text-decoration: none;
+}
+
+a.project-link .arrow {
+  display: inline-block;
+  margin-left: 0.35em;
+  color: var(--color-accent);
+  font-size: 0.6em;
+  font-weight: 400;
+  vertical-align: 0.4em;
+  transition: transform 0.12s ease;
+}
+
+a.project-link:hover .arrow {
+  transform: translate(1px, -1px);
+}
+

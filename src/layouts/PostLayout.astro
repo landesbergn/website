@@ -1,0 +1,23 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  date: string | Date;
+  description?: string;
+}
+
+const { title, date, description } = Astro.props;
+const dateObj = typeof date === 'string' ? new Date(date) : date;
+const isoDate = dateObj.toISOString().slice(0, 10);
+---
+
+<BaseLayout title={`${title} — Noah Landesberg`} description={description}>
+  <slot name="head" slot="head" />
+  <article>
+    <h1>{title}</h1>
+    <p class="post-meta">{isoDate}</p>
+    <slot />
+  </article>
+  <p class="back-link"><a href="/blog/">← All Writing</a></p>
+</BaseLayout>
