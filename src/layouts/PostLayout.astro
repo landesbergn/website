@@ -1,0 +1,25 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  date: string | Date;
+  description?: string;
+}
+
+const { title, date, description } = Astro.props;
+const dateObj = typeof date === 'string' ? new Date(date) : date;
+const formattedDate = dateObj.toLocaleDateString('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
+});
+---
+
+<BaseLayout title={`${title} — Noah Landesberg`} description={description}>
+  <slot name="head" slot="head" />
+  <article>
+    <h1>{title}</h1>
+    <p class="post-meta">{formattedDate}</p>
+    <slot />
+  </article>
+  <p style="margin-top: 3em;"><a href="/blog/">← All posts</a></p>
+</BaseLayout>

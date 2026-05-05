@@ -1,0 +1,66 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Noah Landesberg's personal site." } = Astro.props;
+const pathname = Astro.url.pathname;
+const isActive = (href: string) => pathname === href || (pathname.startsWith(href) && href !== '/');
+
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href="/image/favicon.png" />
+    <link rel="canonical" href={new URL(pathname, Astro.site).toString()} />
+    <title>{title}</title>
+    <slot name="head" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <a href="/" class="site-title">Noah Landesberg</a>
+        <nav>
+          <a href="/projects/" aria-current={isActive('/projects/') ? 'page' : undefined}>Projects</a>
+          <a href="/blog/" aria-current={isActive('/blog/') ? 'page' : undefined}>Blog</a>
+        </nav>
+      </header>
+      <main>
+        <slot />
+      </main>
+      <footer class="site-footer">
+        <span>&copy; {year} Noah Landesberg</span>
+        <span>
+          <a href="https://github.com/landesbergn">GitHub</a>
+          &nbsp;·&nbsp;
+          <a href="https://www.linkedin.com/in/noah-landesberg">LinkedIn</a>
+          &nbsp;·&nbsp;
+          <a href="mailto:noah.landesberg@gmail.com">Email</a>
+        </span>
+      </footer>
+    </div>
+
+    <script>
+      // PostHog cookieless init — no consent banner needed.
+      // persistence: 'memory' = each visit is a new identity, no cookies/localStorage.
+      import posthog from 'posthog-js';
+      const key = import.meta.env.PUBLIC_POSTHOG_KEY;
+      if (key) {
+        posthog.init(key, {
+          api_host: 'https://us.i.posthog.com',
+          persistence: 'memory',
+          disable_session_recording: false,
+          capture_pageview: true,
+        });
+      }
+    </script>
+  </body>
+</html>

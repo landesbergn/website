@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const collectionPosts = await getCollection('blog', ({ data }) => !data.draft);
+const frozenPosts = [
+  { title: 'Web scraping Reply All transcripts', date: new Date('2019-02-02'), url: '/blog/post/web-scraping-reply-all-transcripts/' },
+  { title: 'Introducing rhymer', date: new Date('2017-12-23'), url: '/blog/post/introducing-rhymer/' },
+  { title: 'Thinking in Systems with DiagrammeR', date: new Date('2017-10-17'), url: '/blog/post/thinking-in-systems-with-diagrammer/' },
+];
+
+const recent = [
+  ...collectionPosts.map((p) => ({ title: p.data.title, date: p.data.date, url: `/blog/${p.data.permalink}/` })),
+  ...frozenPosts,
+]
+  .sort((a, b) => b.date.getTime() - a.date.getTime())
+  .slice(0, 3);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+---
+
+<BaseLayout title="Noah Landesberg" description="Personal site of Noah Landesberg.">
+  <p>
+    NYC-based product manager focused on using data to build great products. On
+    the side I tinker with software that's mostly useless, like an
+    <a href="https://landesbergn.github.io/rhymer/index.html">R package for finding rhyming words</a>
+    or an iOS weather app that tells you what the weather
+    <a href="https://github.com/landesbergn/feels-like">"feels like"</a> outside.
+  </p>
+
+  <h2>Recent writing</h2>
+  <ul class="post-list">
+    {recent.map((post) => (
+      <li>
+        <time datetime={post.date.toISOString().slice(0, 10)}>{fmt(post.date)}</time>
+        <a href={post.url}>{post.title}</a>
+      </li>
+    ))}
+  </ul>
+  <p><a href="/blog/">All posts →</a></p>
+</BaseLayout>

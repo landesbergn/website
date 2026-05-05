@@ -1,0 +1,12 @@
+---
+import PostLayout from '../../../layouts/PostLayout.astro';
+import body from '../../../legacy/2017-12-23-introducing-rhymer.html?raw';
+---
+
+<PostLayout
+  title="Introducing rhymer"
+  date="2017-12-23"
+  description="Announcing rhymer, an R package that wraps the Datamuse API to find rhyming words."
+>
+  <Fragment set:html={body} />
+</PostLayout>
