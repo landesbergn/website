@@ -242,6 +242,21 @@ a.project-link {
   text-decoration: none;
 }
 
+a.project-link .arrow {
+  display: inline-block;
+  margin-left: 0.35em;
+  color: var(--color-muted);
+  font-size: 0.6em;
+  font-weight: 400;
+  vertical-align: 0.4em;
+  transition: color 0.12s ease, transform 0.12s ease;
+}
+
+a.project-link:hover .arrow {
+  color: var(--color-text);
+  transform: translate(1px, -1px);
+}
+
 .contact-floater {
   position: fixed;
   bottom: 20px;
