@@ -64,7 +64,7 @@ tail(episode_links) %>%
 
 We can tell by looking at the `head` (first 6 rows) and the `tail` (last 6 rows) of the list of episode links that there are some links to other pages here that are not of interest, like the privacy policy or the terms of service.
 
-Let's clean this up a little bit, by only including episodes that reference `#episode-player` at the end of their link, indicated that there is an episode there, and not some other webpage. We can also filter out episodes that are rebroadcasts or presentations of other shows in the Reply All feed. The process of filtering down this list took some trial and error, as the formatting of episode titles in the hyperlink was inconsistent.
+Let's clean this up a little bit, by only including episodes that reference `#episode-player` at the end of their link, indicating that there is an episode there, and not some other webpage. We can also filter out episodes that are rebroadcasts or presentations of other shows in the Reply All feed. The process of filtering down this list took some trial and error, as the formatting of episode titles in the hyperlink was inconsistent.
 ```{r clean-episode-links}
 episode_links <- episode_links %>%
   filter(
@@ -89,7 +89,7 @@ head(episode_links) %>%
   kableExtra::kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE)
 ```
 
-We can also add in the episode number, which I originally tried to parse out from the string, but I am not good at regular expression, so I just used some math to back in to it.
+We can also add in the episode number, which I originally tried to parse out from the string, but I am not good at regular expressions, so I just used some math to back into it.
 
 Finally, we add in the full web link, by appending the hyperlink extension to the Gimlet Media homepage (`gimletmedia.com`).
 ```{r get-full-episode-link}

@@ -38,7 +38,7 @@ library(DiagrammeR)
 ```
 
 
-So judging from the [DiagrammeR website](http://rich-iannone.github.io/DiagrammeR/), I wasn't too sure where to start. So I watched the embedded video, which showed the quick creation of a graph using the `grViz` function. It looks like this function will interpret some _DOT_ syntax, which the web tells me is a 'plain text graph description language.' That seems cool, Let's give it a go!
+So judging from the [DiagrammeR website](http://rich-iannone.github.io/DiagrammeR/), I wasn't too sure where to start. So I watched the embedded video, which showed the quick creation of a graph using the `grViz` function. It looks like this function will interpret some _DOT_ syntax, which the web tells me is a 'plain text graph description language.' That seems cool, let's give it a go!
 
 ```{r}
 grViz("
@@ -87,7 +87,7 @@ digraph boxes_and_cirles {
   inflow_faucet
   outflow_faucet
 
-  # edge statments
+  # edge statements
   cloud1 -> inflow_faucet -> stock -> outflow_faucet -> outflow -> cloud2
 
 }
@@ -112,14 +112,14 @@ digraph boxes_and_cirles {
   inflow_faucet
   outflow_faucet
 
-  # edge statments
+  # edge statements
   cloud1 -> inflow_faucet -> stock -> outflow_faucet -> outflow -> cloud2
 
 }
 ")
 ```
 
-Wow this off to a blazing start. Now comes the tough part: formatting everything to look nice, like the picture above. I couldn't find a _cloud_ shape from the [list of shapes on the graphviz website](http://www.graphviz.org/content/node-shapes#epsf), so I settled for the `tripleoctagon`. There also wasn't a _faucet_ shape off the shelf, so I settled for the frighteningly-named `terminator` shape. I added some labels, altered some sizes, and _voilà_:
+Wow, this is off to a blazing start. Now comes the tough part: formatting everything to look nice, like the picture above. I couldn't find a _cloud_ shape from the [list of shapes on the graphviz website](http://www.graphviz.org/content/node-shapes#epsf), so I settled for the `tripleoctagon`. There also wasn't a _faucet_ shape off the shelf, so I settled for the frighteningly-named `terminator` shape. I added some labels, altered some sizes, and _voilà_:
 
 ```{r}
 grViz("
@@ -154,7 +154,7 @@ digraph boxes_and_cirles {
 ")
 ```
 
-Not bad right!
+Not bad, right!
 
 ![](/image/basic-stock-flow.jpg)
 
