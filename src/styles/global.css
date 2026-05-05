@@ -359,15 +359,24 @@ article table td:last-child {
   padding-right: 0;
 }
 
-/* Tables can extend slightly past the prose column on desktop, but not
-   so far that they touch the page edge — leaves visible breathing room.
-   Code blocks stay within the prose column so their left edge aligns
-   cleanly with body text. */
+/* Tables get a small breakout on desktop so they can use a bit more
+   horizontal room without touching the page edge. */
 @media (min-width: 800px) {
   article table,
   .scroll-wrap {
     margin-left: -16px;
     margin-right: -16px;
+  }
+}
+
+/* Code blocks: ~20% wider than the prose column on viewports that can
+   accommodate it (>= 960px). Symmetric breakout keeps code text
+   centered on the same axis as prose. On narrower screens pre stays
+   within the column. */
+@media (min-width: 960px) {
+  article pre {
+    margin-left: -72px;
+    margin-right: -72px;
   }
 }
 
