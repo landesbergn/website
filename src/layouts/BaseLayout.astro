@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import { Image } from 'astro:assets';
+import avatarSrc from '../assets/avatar.jpg';
 
 interface Props {
   title: string;
@@ -27,7 +29,17 @@ const isActive = (href: string) => pathname === href || (pathname.startsWith(hre
       <header class="site-header">
         <h1 class="site-title"><a href="/">Noah Landesberg</a></h1>
         <a href="/" class="avatar" aria-label="Home">
-          <img src="/image/avatar.jpg" alt="" width="72" height="72" loading="eager" />
+          <Image
+            src={avatarSrc}
+            alt=""
+            width={72}
+            height={72}
+            densities={[1, 2, 3]}
+            format="webp"
+            quality={80}
+            loading="eager"
+            decoding="async"
+          />
         </a>
         <nav>
           <a href="/" aria-current={pathname === '/' ? 'page' : undefined}>Home</a>
