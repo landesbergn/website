@@ -2,8 +2,6 @@
   --color-bg: #ffffff;
   --color-text: #000000;
   --color-muted: #555555;
-  --color-link: #0000ee;            /* classic browser-default unvisited */
-  --color-link-visited: #551a8b;    /* classic browser-default visited */
   --color-rule: #cccccc;
   --color-code-bg: #f4f4f4;
 
@@ -68,6 +66,10 @@ body {
   text-decoration: none;
 }
 
+.site-header h1.site-title a:hover {
+  text-decoration: none;
+}
+
 .site-header nav {
   font-family: var(--font-mono);
   font-size: 0.85rem;
@@ -97,18 +99,27 @@ main > *:first-child {
   margin-top: 0;
 }
 
-a {
-  color: var(--color-link);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-a:visited {
-  color: var(--color-link-visited);
+/* Links inherit body color; affordance is a subtle weight bump in
+   prose, plus a faded underline on hover. No browser-default blue/
+   purple, no always-on underline. */
+a, a:visited {
+  color: inherit;
+  text-decoration: none;
 }
 
 a:hover {
-  text-decoration-thickness: 2px;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(0, 0, 0, 0.5);
+}
+
+/* In flowing prose, give links a small weight bump so they're scannable
+   without underlines or color shifts. */
+main p a,
+main li a,
+main blockquote a {
+  font-weight: 600;
 }
 
 h1, h2, h3, h4 {
@@ -225,14 +236,10 @@ pre code {
   margin-top: 3em;
 }
 
+/* Project header links: H2 inheritance handles weight; arrow ↗ is the
+   visual cue. Hover reveals the underline like other links. */
 a.project-link {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 1px;
-}
-
-a.project-link:hover {
-  text-decoration-thickness: 2px;
+  text-decoration: none;
 }
 
 .contact-floater {
