@@ -370,13 +370,13 @@ article table td:last-child {
 }
 
 /* Code blocks: ~20% wider than the prose column on viewports that can
-   accommodate it (>= 960px). Symmetric breakout keeps code text
-   centered on the same axis as prose. On narrower screens pre stays
-   within the column. */
-@media (min-width: 960px) {
+   accommodate it (>= 1080px). Asymmetric — left edge stays flush with
+   the prose text, right edge extends 144px (20% of the 720px column).
+   On narrower screens pre stays within the column. */
+@media (min-width: 1080px) {
   article pre {
-    margin-left: -72px;
-    margin-right: -72px;
+    margin-right: -144px;
+    /* margin-left intentionally stays 0 to keep prose alignment */
   }
 }
 
