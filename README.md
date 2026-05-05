@@ -1,6 +1,6 @@
 # noahlandesberg.com
 
-Personal site for [Noah Landesberg](https://www.noahlandesberg.com). Built with [Astro](https://astro.build) and deployed on [Vercel](https://vercel.com).
+Personal site for [Noah Landesberg](https://www.noahlandesberg.com). Built with [Astro](https://astro.build) and deployed on [Netlify](https://netlify.com).
 
 ## Local development
 
@@ -11,7 +11,7 @@ npm run dev   # http://localhost:4321
 
 ## Deploy
 
-Pushes to `master` deploy to production via Vercel. All other branches get a preview URL.
+Pushes to `master` deploy to production via Netlify. PRs get deploy-preview URLs automatically.
 
 ## Adding a blog post
 
