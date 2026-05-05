@@ -359,15 +359,15 @@ article table td:last-child {
   padding-right: 0;
 }
 
-/* Breakout on desktop: code blocks and tables extend wider than the
-   prose column so long R lines / wide tables don't trigger horizontal
-   scroll for the most part. Stays within the page padding edges. */
+/* Tables can extend slightly past the prose column on desktop, but not
+   so far that they touch the page edge — leaves visible breathing room.
+   Code blocks stay within the prose column so their left edge aligns
+   cleanly with body text. */
 @media (min-width: 800px) {
-  article pre,
   article table,
   .scroll-wrap {
-    margin-left: -40px;
-    margin-right: -40px;
+    margin-left: -16px;
+    margin-right: -16px;
   }
 }
 
