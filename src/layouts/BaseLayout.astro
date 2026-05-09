@@ -9,6 +9,10 @@ interface Props {
 const { title, description = "Noah Landesberg's personal site." } = Astro.props;
 const pathname = Astro.url.pathname;
 const isActive = (href: string) => pathname === href || (pathname.startsWith(href) && href !== '/');
+
+// Wrap each letter of the site title in its own span so CSS can stagger
+// the per-letter wave + color cascade on hover.
+const titleLetters = Array.from('Noah Landesberg');
 ---
 
 <!doctype html>
@@ -25,7 +29,9 @@ const isActive = (href: string) => pathname === href || (pathname.startsWith(hre
   <body>
     <div class="page">
       <header class="site-header">
-        <h1 class="site-title"><a href="/">Noah Landesberg</a></h1>
+        <h1 class="site-title"><a href="/" aria-label="Noah Landesberg — home">{titleLetters.map((ch, i) => (
+          <span style={`--i: ${i}`} aria-hidden="true">{ch === ' ' ? ' ' : ch}</span>
+        ))}</a></h1>
         <nav>
           <a href="/" aria-current={pathname === '/' ? 'page' : undefined}>Home</a>
           <span class="sep">·</span>
@@ -49,6 +55,16 @@ const isActive = (href: string) => pathname === href || (pathname.startsWith(hre
         <slot />
       </main>
     </div>
+
+    <script is:inline>
+      // Quiet hello in the devtools console for the curious.
+      try {
+        console.log(
+          '%c say hi: noah.landesberg@gmail.com',
+          'color:#2d6a6d;font:12px ui-monospace,Menlo,monospace;'
+        );
+      } catch (e) { /* no console available */ }
+    </script>
 
     <script>
       // PostHog cookieless init — no consent banner needed.
