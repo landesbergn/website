@@ -15,7 +15,7 @@ Pushes to `master` deploy to production via Netlify. PRs get deploy-preview URLs
 
 ## Adding a blog post
 
-Drop a Markdown file in `src/content/blog/` with the frontmatter below. Pushing to GitHub is enough — Vercel rebuilds.
+Drop a Markdown file in `src/content/blog/` with the frontmatter below. Pushing to GitHub is enough — Netlify rebuilds.
 
 ```md
 ---
