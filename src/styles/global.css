@@ -100,11 +100,12 @@ body {
   transform: translateY(-6px);
 }
 
-.site-header h1.site-title a:hover span:nth-child(5n+1) { color: var(--color-accent); }
-.site-header h1.site-title a:hover span:nth-child(5n+2) { color: var(--accent-mustard); }
-.site-header h1.site-title a:hover span:nth-child(5n+3) { color: var(--accent-teal); }
-.site-header h1.site-title a:hover span:nth-child(5n+4) { color: var(--accent-rose); }
-.site-header h1.site-title a:hover span:nth-child(5n+5) { color: var(--color-text); }
+/* 4-color cycle (no ink slot) so every letter — including the trailing
+   "e" and "g" — picks up a hue. */
+.site-header h1.site-title a:hover span:nth-child(4n+1) { color: var(--color-accent); }
+.site-header h1.site-title a:hover span:nth-child(4n+2) { color: var(--accent-mustard); }
+.site-header h1.site-title a:hover span:nth-child(4n+3) { color: var(--accent-teal); }
+.site-header h1.site-title a:hover span:nth-child(4n+4) { color: var(--accent-rose); }
 
 .site-header nav {
   display: flex;
@@ -560,59 +561,6 @@ a.project-link:hover .arrow {
   transform: translate(4px, -4px) rotate(12deg) scale(1.15);
 }
 
-/* Per-project color identity on the projects page. The H2 vertical
-   bar and the ↗ arrow each take one of the three secondary accents,
-   giving each row its own personality without changing the layout. */
-.projects-page main h2:nth-of-type(1)::before { background: var(--accent-mustard); }
-.projects-page main h2:nth-of-type(2)::before { background: var(--accent-teal); }
-.projects-page main h2:nth-of-type(3)::before { background: var(--accent-rose); }
-
-.projects-page main h2:nth-of-type(1) .arrow { color: var(--accent-mustard); }
-.projects-page main h2:nth-of-type(2) .arrow { color: var(--accent-teal); }
-.projects-page main h2:nth-of-type(3) .arrow { color: var(--accent-rose); }
-
-/* Footer signoff — picked at random on each visit by inline JS. */
-.signoff {
-  margin-top: 5em;
-  padding-top: 1.5em;
-  border-top: 1px dashed var(--color-rule);
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--color-muted);
-  text-align: center;
-  letter-spacing: 0.01em;
-}
-
-.signoff [data-signoff]::before { content: "— "; opacity: 0.6; }
-
-/* "Rhyme rain" easter egg — triggered by the konami code. A fixed
-   overlay above all content; words fall from above and fade out. */
-.rhyme-rain {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-  overflow: hidden;
-}
-
-.rhyme-rain span {
-  position: absolute;
-  top: -10vh;
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 700;
-  white-space: nowrap;
-  user-select: none;
-  animation: rhyme-fall linear forwards;
-}
-
-@keyframes rhyme-fall {
-  0%   { transform: translateY(0)     rotate(0);    opacity: 0; }
-  10%  {                                            opacity: 1; }
-  90%  {                                            opacity: 1; }
-  100% { transform: translateY(115vh) rotate(20deg); opacity: 0; }
-}
-
 /* 404 page polish */
 .lost {
   text-align: center;
@@ -644,18 +592,10 @@ a.project-link:hover .arrow {
   50%      { background-position: 100% 50%; }
 }
 
-.lost-tag {
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  color: var(--color-muted);
-  margin: 0.5em 0 2.5em;
-  min-height: 1.5em;             /* avoid layout shift while JS fills it */
-}
-
 .lost-links {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 2.5em 0 0;
   display: inline-flex;
   flex-wrap: wrap;
   gap: 1.4em;
@@ -693,6 +633,5 @@ a.project-link:hover .arrow {
     color: var(--color-text);
     -webkit-text-fill-color: var(--color-text);
   }
-  .rhyme-rain { display: none; }
 }
 

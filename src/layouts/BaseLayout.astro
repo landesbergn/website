@@ -4,16 +4,14 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
-  bodyClass?: string;
 }
 
-const { title, description = "Noah Landesberg's personal site.", bodyClass } = Astro.props;
+const { title, description = "Noah Landesberg's personal site." } = Astro.props;
 const pathname = Astro.url.pathname;
 const isActive = (href: string) => pathname === href || (pathname.startsWith(href) && href !== '/');
 
 // Wrap each letter of the site title in its own span so CSS can stagger
-// the per-letter wave + color cascade on hover. A non-breaking space
-// preserves the gap between "Noah" and "Landesberg".
+// the per-letter wave + color cascade on hover.
 const titleLetters = Array.from('Noah Landesberg');
 ---
 
@@ -28,7 +26,7 @@ const titleLetters = Array.from('Noah Landesberg');
     <title>{title}</title>
     <slot name="head" />
   </head>
-  <body class={bodyClass}>
+  <body>
     <div class="page">
       <header class="site-header">
         <h1 class="site-title"><a href="/" aria-label="Noah Landesberg — home">{titleLetters.map((ch, i) => (
@@ -56,109 +54,16 @@ const titleLetters = Array.from('Noah Landesberg');
       <main>
         <slot />
       </main>
-      <footer class="signoff">
-        <span data-signoff>made with care</span>
-      </footer>
     </div>
 
     <script is:inline>
-      // Delight layer — runs alongside the bundled PostHog init below.
-      // Three things: (1) a friendly console greeting with a hint at the
-      // konami easter egg, (2) the konami listener itself, which fires
-      // a "rhyme rain" overlay tying back to the rhymer project, and
-      // (3) a randomized footer signoff so each visit feels a tiny bit
-      // different.
-
-      (function () {
-        const reduceMotion = window.matchMedia &&
-          window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        // (1) console greeting
-        try {
-          console.log(
-            '%c hello — you found the source. ',
-            'background:#b14545;color:#fdfbf5;font:600 13px/1.6 ui-serif,Georgia,serif;padding:4px 10px;border-radius:2px;'
-          );
-          console.log(
-            '%c try the konami code (↑↑↓↓←→←→ B A) for a small surprise',
-            'color:#888;font:12px ui-monospace,Menlo,monospace;'
-          );
-          console.log(
-            '%c say hi: noah.landesberg@gmail.com',
-            'color:#2d6a6d;font:12px ui-monospace,Menlo,monospace;'
-          );
-        } catch (e) { /* devtools-less environments */ }
-
-        // (3) random footer signoff — picked at runtime so it changes
-        // each visit; falls back to the default if the node is missing.
-        const signoffs = [
-          'made in San Francisco',
-          'sent from a foggy morning',
-          'powered by curiosity (and a little caffeine)',
-          'still tinkering, after all these years',
-          'thanks for stopping by',
-          'this URL has been live since 2017',
-          'built on a quiet weekend',
-          'updated whenever the mood strikes',
-          'with a soft spot for early-internet flavor',
-          'if you read this, you read it'
-        ];
-        const signEl = document.querySelector('[data-signoff]');
-        if (signEl) {
-          signEl.textContent = signoffs[Math.floor(Math.random() * signoffs.length)];
-        }
-
-        // (2) konami listener — ↑↑↓↓←→←→BA
-        const konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
-        let pos = 0;
-        document.addEventListener('keydown', (e) => {
-          // ignore typing inside form fields
-          const tag = (e.target && e.target.tagName) || '';
-          if (tag === 'INPUT' || tag === 'TEXTAREA') return;
-
-          const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-          if (key === konami[pos]) {
-            pos++;
-            if (pos === konami.length) {
-              pos = 0;
-              if (!reduceMotion) rhymeRain();
-            }
-          } else {
-            pos = (key === konami[0]) ? 1 : 0;
-          }
-        });
-
-        function rhymeRain() {
-          // already raining? don't stack
-          if (document.querySelector('.rhyme-rain')) return;
-
-          const words = [
-            'rhyme','chime','dime','lime','time','prime','climb','grime',
-            'mime','sublime','design','aligned','combined','find','mind',
-            'signed','wine','shine','line','divine','behind','outshine',
-            'in time','rewind','refined','assigned','underlined'
-          ];
-          const colors = ['#b14545','#d4a13a','#2d6a6d','#c97b8f','#1a1a1a'];
-
-          const overlay = document.createElement('div');
-          overlay.className = 'rhyme-rain';
-          document.body.appendChild(overlay);
-
-          for (let i = 0; i < 70; i++) {
-            const span = document.createElement('span');
-            span.textContent = words[Math.floor(Math.random() * words.length)];
-            span.style.left = Math.random() * 100 + '%';
-            span.style.color = colors[Math.floor(Math.random() * colors.length)];
-            span.style.animationDuration = (3.2 + Math.random() * 4) + 's';
-            span.style.animationDelay = (Math.random() * 2.4) + 's';
-            span.style.fontSize = (0.9 + Math.random() * 1.6) + 'rem';
-            overlay.appendChild(span);
-          }
-
-          // remove the overlay once the longest-delayed word has fallen
-          setTimeout(() => overlay.remove(), 8500);
-        }
-      })();
+      // Quiet hello in the devtools console for the curious.
+      try {
+        console.log(
+          '%c say hi: noah.landesberg@gmail.com',
+          'color:#2d6a6d;font:12px ui-monospace,Menlo,monospace;'
+        );
+      } catch (e) { /* no console available */ }
     </script>
 
     <script>
