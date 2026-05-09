@@ -184,16 +184,34 @@ body {
   font-weight: 700;
 }
 
-/* On narrow viewports the nav wraps the social cluster onto its own
-   row. The .social block has a left-border separator that's only
-   meaningful when text links sit to its left; stranded at the start
-   of a wrapped row it reads as a leading vertical bar. Drop the
-   separator styling so the icons sit cleanly at the row start. */
+/* On narrow viewports drop the avatar from the header so the title
+   and nav each get the full page width. The avatar reappears at the
+   desktop breakpoint. Slight nav tightening so all six items fit on
+   one row at 375px. */
 @media (max-width: 540px) {
+  .site-header {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "nav";
+  }
+  .site-header .avatar {
+    display: none;
+  }
+  .site-header nav a {
+    margin-right: 2px;
+  }
+  .site-header nav .sep {
+    margin-right: 2px;
+  }
   .site-header nav .social {
-    margin-left: -4px;
-    padding-left: 0;
-    border-left: 0;
+    margin-left: 2px;
+    padding-left: 6px;
+    gap: 0;
+  }
+  .site-header nav .social a {
+    width: 40px;
+    height: 40px;
   }
 }
 
