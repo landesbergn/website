@@ -3,8 +3,14 @@
   --color-text: #1a1a1a;           /* near-black, softer on warm bg */
   --color-muted: #6b6b6b;
   --color-rule: #d8d3c3;
-  --color-accent: #b14545;         /* oxblood — used sparingly */
+  --color-accent: #b14545;         /* oxblood — primary accent */
   --color-code-bg: #f1ede1;
+
+  /* Delight palette — used sparingly for per-project flair, the
+     animated divider, and the title's hover cascade. */
+  --accent-mustard: #d4a13a;
+  --accent-teal:    #2d6a6d;
+  --accent-rose:    #c97b8f;
 
   --content-max: 720px;
   --content-wide: 840px;
@@ -71,11 +77,34 @@ body {
 .site-header h1.site-title a {
   color: var(--color-text);
   text-decoration: none;
+  display: inline-block;
 }
 
 .site-header h1.site-title a:hover {
   text-decoration: none;
 }
+
+/* Letter-level wave + color cascade on hover. Each letter is wrapped
+   in its own span and indexed via the inline `--i` custom property,
+   so we can stagger the transition with a per-letter delay. */
+.site-header h1.site-title a span {
+  display: inline-block;
+  transition:
+    transform 0.45s cubic-bezier(.34, 1.56, .64, 1),
+    color 0.45s ease;
+  transition-delay: calc(var(--i, 0) * 22ms);
+  will-change: transform;
+}
+
+.site-header h1.site-title a:hover span {
+  transform: translateY(-6px);
+}
+
+.site-header h1.site-title a:hover span:nth-child(5n+1) { color: var(--color-accent); }
+.site-header h1.site-title a:hover span:nth-child(5n+2) { color: var(--accent-mustard); }
+.site-header h1.site-title a:hover span:nth-child(5n+3) { color: var(--accent-teal); }
+.site-header h1.site-title a:hover span:nth-child(5n+4) { color: var(--accent-rose); }
+.site-header h1.site-title a:hover span:nth-child(5n+5) { color: var(--color-text); }
 
 .site-header nav {
   display: flex;
@@ -278,10 +307,33 @@ hr::before {
   display: block;
   font-family: var(--font-serif);
   letter-spacing: 0.55em;
-  color: var(--color-muted);
   font-size: 1rem;
   /* Compensate for letter-spacing pushing content right of optical center */
   padding-left: 0.55em;
+  /* Slow, ambient color drift across the delight palette — anchored
+     by --color-muted so it spends most of its cycle near the original
+     muted gray and only briefly tints. */
+  background: linear-gradient(
+    90deg,
+    var(--color-muted) 0%,
+    var(--accent-rose) 18%,
+    var(--color-muted) 36%,
+    var(--accent-mustard) 54%,
+    var(--color-muted) 72%,
+    var(--accent-teal) 90%,
+    var(--color-muted) 100%
+  );
+  background-size: 220% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: hr-shimmer 14s linear infinite;
+}
+
+@keyframes hr-shimmer {
+  0%   { background-position:   0% 50%; }
+  100% { background-position: 220% 50%; }
 }
 
 .divider-ascii {
@@ -501,10 +553,146 @@ a.project-link .arrow {
   font-size: 0.6em;
   font-weight: 400;
   vertical-align: 0.4em;
-  transition: transform 0.12s ease;
+  transition: transform 0.32s cubic-bezier(.34, 1.56, .64, 1), color 0.2s ease;
 }
 
 a.project-link:hover .arrow {
-  transform: translate(1px, -1px);
+  transform: translate(4px, -4px) rotate(12deg) scale(1.15);
+}
+
+/* Per-project color identity on the projects page. The H2 vertical
+   bar and the ↗ arrow each take one of the three secondary accents,
+   giving each row its own personality without changing the layout. */
+.projects-page main h2:nth-of-type(1)::before { background: var(--accent-mustard); }
+.projects-page main h2:nth-of-type(2)::before { background: var(--accent-teal); }
+.projects-page main h2:nth-of-type(3)::before { background: var(--accent-rose); }
+
+.projects-page main h2:nth-of-type(1) .arrow { color: var(--accent-mustard); }
+.projects-page main h2:nth-of-type(2) .arrow { color: var(--accent-teal); }
+.projects-page main h2:nth-of-type(3) .arrow { color: var(--accent-rose); }
+
+/* Footer signoff — picked at random on each visit by inline JS. */
+.signoff {
+  margin-top: 5em;
+  padding-top: 1.5em;
+  border-top: 1px dashed var(--color-rule);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
+.signoff [data-signoff]::before { content: "— "; opacity: 0.6; }
+
+/* "Rhyme rain" easter egg — triggered by the konami code. A fixed
+   overlay above all content; words fall from above and fade out. */
+.rhyme-rain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.rhyme-rain span {
+  position: absolute;
+  top: -10vh;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+  white-space: nowrap;
+  user-select: none;
+  animation: rhyme-fall linear forwards;
+}
+
+@keyframes rhyme-fall {
+  0%   { transform: translateY(0)     rotate(0);    opacity: 0; }
+  10%  {                                            opacity: 1; }
+  90%  {                                            opacity: 1; }
+  100% { transform: translateY(115vh) rotate(20deg); opacity: 0; }
+}
+
+/* 404 page polish */
+.lost {
+  text-align: center;
+  padding: 2em 0 0;
+}
+
+.lost h1 {
+  font-size: 6rem;
+  margin: 0;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  background: linear-gradient(
+    135deg,
+    var(--color-accent),
+    var(--accent-mustard),
+    var(--accent-teal),
+    var(--accent-rose)
+  );
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: lost-drift 12s ease-in-out infinite;
+}
+
+@keyframes lost-drift {
+  0%, 100% { background-position:   0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+.lost-tag {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  margin: 0.5em 0 2.5em;
+  min-height: 1.5em;             /* avoid layout shift while JS fills it */
+}
+
+.lost-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 1.4em;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.lost-links a {
+  border-bottom: 1px solid var(--color-rule);
+  padding-bottom: 2px;
+}
+
+.lost-links a:hover {
+  text-decoration: none;
+  border-bottom-color: var(--color-accent);
+}
+
+/* Respect reduced-motion preferences — kill the title wave, divider
+   shimmer, 404 gradient drift, and rhyme rain animation. */
+@media (prefers-reduced-motion: reduce) {
+  .site-header h1.site-title a span,
+  a.project-link .arrow {
+    transition: none;
+  }
+  hr::before {
+    animation: none;
+    background: none;
+    color: var(--color-muted);
+    -webkit-text-fill-color: var(--color-muted);
+  }
+  .lost h1 {
+    animation: none;
+    background: none;
+    color: var(--color-text);
+    -webkit-text-fill-color: var(--color-text);
+  }
+  .rhyme-rain { display: none; }
 }
 

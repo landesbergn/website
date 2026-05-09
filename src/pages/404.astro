@@ -3,6 +3,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="404 — Noah Landesberg" description="Page not found.">
-  <h1>404 — Not Found</h1>
-  <p>That page doesn't exist (or doesn't exist anymore).</p>
+  <div class="lost">
+    <h1>404</h1>
+    <p class="lost-tag" data-lost>this page is somewhere it shouldn't be.</p>
+    <ul class="lost-links">
+      <li><a href="/">home</a></li>
+      <li><a href="/projects/">projects</a></li>
+      <li><a href="/blog/">writing</a></li>
+    </ul>
+  </div>
+
+  <script is:inline>
+    (function () {
+      const messages = [
+        'this page is at large — last seen heading west.',
+        'the URL you tried is on a coffee break.',
+        "you've reached the edge of the website — turn back.",
+        "page not found, but you are. that's something.",
+        'this corner of the internet is empty (for now).',
+        '404 — the page declined the invitation.',
+        'nothing here. but plenty over there →',
+        'the page is in another castle.'
+      ];
+      const el = document.querySelector('[data-lost]');
+      if (el) el.textContent = messages[Math.floor(Math.random() * messages.length)];
+    })();
+  </script>
 </BaseLayout>
