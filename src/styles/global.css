@@ -143,10 +143,22 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  margin-left: 10px;
-  padding-left: 14px;
-  border-left: 1px solid var(--color-rule);
-  align-self: stretch;
+  margin-left: 12px;
+  padding-left: 13px;          /* 12 + 1px divider for symmetric spacing */
+  position: relative;
+}
+
+/* Short, vertically-centered divider — replaces the full-height
+   border-left that stretched the entire nav row. */
+.site-header nav .social::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1px;
+  height: 16px;
+  background: var(--color-rule);
+  transform: translateY(-50%);
 }
 
 /* Social icon tap targets are 44×44 (icons stay visually 14×14). */
@@ -200,8 +212,8 @@ body {
     margin-right: 2px;
   }
   .site-header nav .social {
-    margin-left: 2px;
-    padding-left: 6px;
+    margin-left: 4px;
+    padding-left: 5px;          /* 4 + 1px divider for symmetric spacing */
     gap: 0;
   }
   .site-header nav .social a {
