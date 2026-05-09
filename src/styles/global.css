@@ -154,18 +154,6 @@ body {
   align-self: stretch;
 }
 
-/* When the nav wraps and the social block lands on its own line, the
-   left border becomes a stray vertical bar at the start of the row.
-   Below the wrap threshold, drop the separator styling so the icons
-   sit cleanly at the row start. */
-@media (max-width: 540px) {
-  .site-header nav .social {
-    margin-left: -4px;          /* match the offset on text link tap targets */
-    padding-left: 0;
-    border-left: 0;
-  }
-}
-
 /* Social icon tap targets are 44×44 (icons stay visually 14×14). */
 .site-header nav .social a {
   display: inline-flex;
@@ -194,6 +182,37 @@ body {
 .site-header nav a[aria-current="page"] {
   color: var(--color-text);
   font-weight: 700;
+}
+
+/* On narrow viewports, pack the nav onto one row: drop the dot
+   separators, tighten link gutters, and shrink the social tap targets
+   to 36×36 (still above Lighthouse's 24px floor; the iOS 44pt
+   guideline gives way for a single-line header). Placed after the base
+   .site-header rules so source order wins on equal specificity. */
+@media (max-width: 540px) {
+  .site-header nav {
+    font-size: 0.78rem;
+    column-gap: 4px;
+    flex-wrap: nowrap;
+  }
+  .site-header nav .sep {
+    display: none;
+  }
+  .site-header nav a {
+    margin-right: 0;
+    margin-left: 0;
+    padding: 0 1px;
+  }
+  .site-header nav .social {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: 0;
+    gap: 0;
+  }
+  .site-header nav .social a {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 main {
