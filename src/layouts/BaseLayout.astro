@@ -82,6 +82,11 @@ const titleLetters = Array.from('Noah Landesberg');
           disable_surveys: true            // we don't run surveys; skip the 27 KiB extension
         });
 
+        // Expose on window so the devtools console can inspect props,
+        // call captures manually, etc. Module-imported posthog is
+        // otherwise scoped to this script and invisible to consumers.
+        window.posthog = posthog;
+
         // Flag non-production traffic (Netlify deploy previews,
         // branch deploys, localhost) as $internal_or_test_user so
         // PostHog's default "Filter internal and test users" toggle
