@@ -51,47 +51,15 @@ body {
 
 .site-header {
   margin-bottom: 20px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-areas:
-    "avatar title"
-    ".      nav";
-  align-items: center;
-  column-gap: 16px;
-  row-gap: 6px;
 }
 
 .site-header h1.site-title {
-  grid-area: title;
   font-family: var(--font-serif);
   font-size: 2.4rem;
   font-weight: 700;
-  margin: 0;
+  margin: 0 0 6px;
   letter-spacing: -0.015em;
   line-height: 1.1;
-}
-
-.site-header .avatar {
-  grid-area: avatar;
-  align-self: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  overflow: hidden;
-  background: var(--color-rule);
-  flex-shrink: 0;
-  display: block;
-}
-
-.site-header a.avatar:hover {
-  text-decoration: none;
-}
-
-.site-header .avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
 }
 
 @media (min-width: 720px) {
@@ -110,8 +78,6 @@ body {
 }
 
 .site-header nav {
-  grid-area: nav;
-  align-self: start;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -191,20 +157,10 @@ body {
   font-weight: 700;
 }
 
-/* On narrow viewports drop the avatar from the header so the title
-   and nav each get the full page width. The avatar reappears at the
-   desktop breakpoint. Slight nav tightening so all six items fit on
-   one row at 375px. */
+/* Pack the nav onto one row at narrow viewports: tighten the link
+   gutters and shrink the social tap targets to 40×40 (above
+   Lighthouse's 24px floor). */
 @media (max-width: 540px) {
-  .site-header {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "title"
-      "nav";
-  }
-  .site-header .avatar {
-    display: none;
-  }
   .site-header nav a {
     margin-right: 2px;
   }

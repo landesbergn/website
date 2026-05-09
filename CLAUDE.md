@@ -108,11 +108,9 @@ PostHog is initialized in `src/layouts/BaseLayout.astro` with `persistence: 'mem
 
 The PostHog project key is read from `import.meta.env.PUBLIC_POSTHOG_KEY` (set in Netlify env vars). The init is guarded by `if (key)` so local builds without the env var don't crash; PostHog is just inert.
 
-### Avatar / images
+### Images
 
-Header avatar uses Astro's `<Image>` component with `densities={[1, 2, 3]}` and `format="webp"` to ship 1.7–7.4 KB depending on device DPI, instead of the 1.6 MB source. Source lives in `src/assets/` (must be `src/`, not `public/`, for the image pipeline to process it). When swapping the avatar, replace the file at `src/assets/avatar.jpg` and rebuild — sizes/formats regenerate automatically.
-
-The legacy book-cover JPEGs in `public/image/` are intentionally NOT run through `<Image>`; they're already small and referenced by Markdown posts that we don't want to transform.
+The legacy book-cover JPEGs in `public/image/` are intentionally NOT run through Astro's `<Image>` component — they're already small and referenced by Markdown posts that we don't want to transform. New typography-first images can be optimized through `<Image>` from `src/assets/` if added later.
 
 ### Aesthetic conventions
 
