@@ -563,13 +563,12 @@ a.project-link:hover .arrow {
 
 /* 404 page polish */
 .lost {
-  text-align: center;
   padding: 2em 0 0;
 }
 
 .lost h1 {
   font-size: 6rem;
-  margin: 0;
+  margin: 0 0 0.2em;
   letter-spacing: -0.04em;
   line-height: 1;
   background: linear-gradient(
@@ -590,28 +589,6 @@ a.project-link:hover .arrow {
 @keyframes lost-drift {
   0%, 100% { background-position:   0% 50%; }
   50%      { background-position: 100% 50%; }
-}
-
-.lost-links {
-  list-style: none;
-  padding: 0;
-  margin: 2.5em 0 0;
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 1.4em;
-  justify-content: center;
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-}
-
-.lost-links a {
-  border-bottom: 1px solid var(--color-rule);
-  padding-bottom: 2px;
-}
-
-.lost-links a:hover {
-  text-decoration: none;
-  border-bottom-color: var(--color-accent);
 }
 
 /* Respect reduced-motion preferences — kill the title wave, divider
