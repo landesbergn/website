@@ -62,7 +62,8 @@ const isActive = (href: string) => pathname === href || (pathname.startsWith(hre
           capture_pageview: true,          // track pageviews
           autocapture: true,               // track clicks, form submits, link clicks
           capture_exceptions: true,        // track unhandled JS errors
-          disable_session_recording: false // session replay (enable in PostHog UI)
+          disable_session_recording: false, // session replay (enable in PostHog UI)
+          disable_surveys: true            // we don't run surveys; skip the 27 KiB extension
         });
       }
     </script>
