@@ -403,6 +403,33 @@ article table td:last-child {
   margin: 1.5em 0;
 }
 
+/* Frozen R-rendered posts: scope mobile fixes to legacy artifacts so
+   the body never overflows the viewport. */
+
+/* Bootstrap-style kable tables ship with inline `width: auto !important`
+   plus long unbreakable URLs in cells. Switching to display:block makes
+   the table its own scroll context instead of pushing the page wider. */
+article table.table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* DiagrammeR / htmlwidgets render at a fixed 672×480 set via inline
+   style. Override so the wrapper fits its column and the SVG scales
+   with it, preserving aspect ratio. */
+article .grViz,
+article .html-widget {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+article .grViz svg,
+article .html-widget svg {
+  max-width: 100%;
+  height: auto;
+}
+
 .post-list {
   list-style: none;
   padding-left: 0;
@@ -434,13 +461,23 @@ article table td:last-child {
 }
 
 .post-list li > a {
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 0;
   max-width: 100%;
 }
 
+/* Below the dotted-leader breakpoint, drop the row layout entirely so
+   long titles wrap under their date instead of pushing the page wider
+   than the viewport. */
 @media (max-width: 540px) {
   .post-list .leader {
     display: none;
+  }
+  .post-list li {
+    flex-wrap: wrap;
+  }
+  .post-list time {
+    flex-basis: 100%;
   }
 }
 
