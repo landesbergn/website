@@ -1,32 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { frozenPosts } from '../../legacy/posts';
 
 const collectionPosts = await getCollection('blog', ({ data }) => !data.draft);
-
-// Frozen R-rendered posts — preserved at their original Hugo URLs.
-// They live as standalone .astro pages under src/pages/blog/post/, not in
-// the content collection, but we list them here so they appear in the index.
-const frozenPosts = [
-  {
-    title: 'Web scraping Reply All transcripts',
-    date: new Date('2019-02-02'),
-    url: '/blog/post/web-scraping-reply-all-transcripts/',
-    description: 'Scraping every Reply All episode transcript with rvest, then exploring the corpus with tidytext.',
-  },
-  {
-    title: 'Introducing rhymer',
-    date: new Date('2017-12-23'),
-    url: '/blog/post/introducing-rhymer/',
-    description: 'Announcing rhymer, an R package that wraps the Datamuse API to find rhyming words.',
-  },
-  {
-    title: 'Thinking in Systems with DiagrammeR',
-    date: new Date('2017-10-17'),
-    url: '/blog/post/thinking-in-systems-with-diagrammer/',
-    description: "Replicating stock-and-flow diagrams from Donella Meadows' Thinking in Systems using DiagrammeR in R.",
-  },
-];
 
 const allPosts = [
   ...collectionPosts.map((p) => ({
@@ -35,7 +12,12 @@ const allPosts = [
     url: `/blog/${p.data.permalink}/`,
     description: p.data.description,
   })),
-  ...frozenPosts,
+  ...frozenPosts.map((p) => ({
+    title: p.title,
+    date: p.date,
+    url: p.url,
+    description: p.description,
+  })),
 ].sort((a, b) => b.date.getTime() - a.date.getTime());
 
 const iso = (d: Date) => d.toISOString().slice(0, 10);

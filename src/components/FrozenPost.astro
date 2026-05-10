@@ -1,0 +1,24 @@
+---
+import PostLayout from '../layouts/PostLayout.astro';
+import { stripHeadAssets, type FrozenPost } from '../legacy/posts';
+
+interface Props {
+  post: FrozenPost;
+}
+
+const { post } = Astro.props;
+const cleanedBody = stripHeadAssets(post.body, post.headAssets);
+---
+
+<PostLayout title={post.title} date={post.date} description={post.description}>
+  {post.headAssets.length > 0 && (
+    <Fragment slot="head">
+      {post.headAssets.map((asset) => (
+        asset.type === 'script'
+          ? <script src={asset.href} is:inline></script>
+          : <link href={asset.href} rel="stylesheet" />
+      ))}
+    </Fragment>
+  )}
+  <Fragment set:html={cleanedBody} />
+</PostLayout>
