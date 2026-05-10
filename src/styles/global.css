@@ -208,10 +208,6 @@ body {
   }
 }
 
-main {
-  display: block;
-}
-
 main > *:first-child {
   margin-top: 0;
 }

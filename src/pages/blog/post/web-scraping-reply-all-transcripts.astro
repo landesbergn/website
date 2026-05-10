@@ -1,21 +1,6 @@
 ---
-import PostLayout from '../../../layouts/PostLayout.astro';
-import body from '../../../legacy/2019-02-02-web-scraping-reply-all-transcripts.html?raw';
-
-// kePrint binding for the kable tables in this post — must be in <head>.
-const cleanedBody = body.replace(
-  /<script src="\/rmarkdown-libs\/kePrint\/kePrint\.js"><\/script>\s*/,
-  ''
-);
+import FrozenPost from '../../../components/FrozenPost.astro';
+import { frozenPostsBySlug } from '../../../legacy/posts';
 ---
 
-<PostLayout
-  title="Web scraping Reply All transcripts"
-  date="2019-02-02"
-  description="Scraping every Reply All episode transcript with rvest, then exploring the corpus with tidytext."
->
-  <Fragment slot="head">
-    <script src="/rmarkdown-libs/kePrint/kePrint.js" is:inline></script>
-  </Fragment>
-  <Fragment set:html={cleanedBody} />
-</PostLayout>
+<FrozenPost post={frozenPostsBySlug['web-scraping-reply-all-transcripts']} />
