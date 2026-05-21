@@ -167,7 +167,7 @@
   <h3>1. Homepage button + embed <span class="tag claude">claude builds</span></h3>
   <ul>
     <li>Add a button to <code>src/pages/index.astro</code> styled in the existing aesthetic (no generic CTA chrome). Hover state uses the oxblood accent.</li>
-    <li>Add a small disclosure line near the button: <em>"Heads up — conversations are transcribed and saved so I can review them."</em></li>
+    <li>Add a small disclosure line near the button: <em>"Heads up — your voice is recorded by ElevenLabs and the transcript is saved to my server so I can review it."</em> Plain English about what's happening; matters for trust and for California two-party consent hygiene (even though the user knows they're talking to an AI).</li>
     <li>Clicking the button reveals the ElevenLabs widget inline below it (not a modal). One way to do this:
 <pre><code>&lt;elevenlabs-convai
   agent-id={import.meta.env.PUBLIC_ELEVENLABS_AGENT_ID}
@@ -175,7 +175,7 @@
 &gt;&lt;/elevenlabs-convai&gt;
 &lt;script src="https://unpkg.com/@elevenlabs/convai-widget-embed"
         async type="text/javascript"&gt;&lt;/script&gt;</code></pre>
-    The agent ID is a public identifier — safe to expose. Auth happens through agent configuration in their dashboard.</li>
+    The agent ID is a public identifier and ships in the page HTML. <strong>This is fine only if the agent has an allowed-origins list configured</strong> (so someone can't paste our agent ID into their own site and burn our monthly minute cap). If ElevenLabs doesn't expose an allowed-origins setting at the agent level, the monthly cap is the only thing protecting the bill — to be verified during impl, see risks below.</li>
     <li>The widget's default chrome ships with ElevenLabs branding and styling. We override what we can via the documented attributes/CSS variables to look closer to the site's aesthetic. <strong>If the widget styling proves too constrained,</strong> fall back to building a custom shell using their React/JS SDK (still no new service — just more frontend code).</li>
   </ul>
 
@@ -265,6 +265,7 @@
     <li><span class="tag you">you</span> In the ElevenLabs dashboard, create an <strong>Agent</strong>: select Claude as the LLM, your cloned voice, paste the system prompt, attach the knowledge base files. (I'll prep the prompt + KB files in the impl phase; you just paste/upload.)</li>
     <li><span class="tag you">you</span> Set the agent's per-session and monthly limits.</li>
     <li><span class="tag you">you</span> Configure the post-call webhook URL + shared secret in ElevenLabs.</li>
+    <li><span class="tag you">you</span> If ElevenLabs offers an allowed-origins (domain allowlist) setting on the agent, set it to <code>noahlandesberg.com</code> and the Netlify deploy-preview pattern. This stops anyone from re-embedding your agent on their own site. If they don't, the monthly minute cap is the backstop.</li>
     <li><span class="tag you">you</span> Add Netlify env vars: <code>PUBLIC_ELEVENLABS_AGENT_ID</code>, <code>ELEVENLABS_WEBHOOK_SECRET</code>, <code>TALK_TO_ME_LOGS_KEY</code>.</li>
     <li><span class="tag you">you</span> Approve the persona doc I draft before it's pasted into ElevenLabs.</li>
   </ol>
@@ -283,6 +284,8 @@
 
   <h2>Known risks &amp; open questions</h2>
   <ul>
+    <li><strong>Agent ID embed abuse.</strong> The agent ID is in the page's HTML. Without an allowed-origins list on the agent, anyone can paste the tag into their own site and consume our minutes. Mitigation order: (1) allowed-origins setting if ElevenLabs supports it, (2) tight monthly cap, (3) if abuse appears, switch to a token-mint pattern where a Netlify Function issues short-lived signed tokens checked against IP/referrer before the widget connects.</li>
+    <li><strong>Audio storage on ElevenLabs side.</strong> Even though we only persist transcripts, ElevenLabs likely retains the raw audio on their servers (per their default retention). Verify their current retention policy during impl and reflect it in the homepage disclosure copy so visitors aren't surprised.</li>
     <li><strong>Widget styling limits.</strong> The embedded widget may not theme into the site's aesthetic cleanly. Plan B is to build our own shell with their JS SDK (still no new backend). v0 is "stock widget, lightly themed."</li>
     <li><strong>Per-IP rate limiting.</strong> If their dashboard doesn't expose this, we add a tiny Netlify Function that issues short-lived signed tokens to mount the widget. To be verified during impl, not blocking the spec.</li>
     <li><strong>Voice quality.</strong> Instant Voice Clone is OK but not amazing. If the result is uncanny in a bad way, upgrade to Professional Voice Clone (~30 min sample).</li>
