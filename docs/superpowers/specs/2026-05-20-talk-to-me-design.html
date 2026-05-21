@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Talk to me — design spec</title>
+  <style>
+    :root {
+      --bg: #fdfbf5;
+      --ink: #1c1c1c;
+      --muted: #6b6b6b;
+      --rule: #e5e0d4;
+      --accent: #b14545;
+      --code-bg: #f3eee0;
+    }
+    html { background: var(--bg); }
+    body {
+      max-width: 760px;
+      margin: 4rem auto;
+      padding: 0 1.25rem 6rem;
+      color: var(--ink);
+      font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+      font-size: 17px;
+      line-height: 1.6;
+    }
+    header { margin-bottom: 2rem; }
+    header .kicker {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    h1 { font-size: 2rem; margin: 0.25rem 0 0; }
+    h2 {
+      font-size: 1.3rem;
+      margin-top: 2.4rem;
+      padding-left: 0.8rem;
+      border-left: 3px solid var(--accent);
+    }
+    h3 { font-size: 1.05rem; margin-top: 1.8rem; }
+    code, pre, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    code { background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+    pre {
+      background: var(--code-bg);
+      padding: 1rem 1.1rem;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-size: 13.5px;
+      line-height: 1.5;
+    }
+    pre code { background: transparent; padding: 0; }
+    .meta {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 0.5rem;
+    }
+    a { color: inherit; text-decoration: none; border-bottom: 1px dotted rgba(0,0,0,.3); }
+    a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+    ul, ol { padding-left: 1.4rem; }
+    li { margin: 0.3rem 0; }
+    hr { border: none; border-top: 1px solid var(--rule); margin: 3rem 0; }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1rem 0;
+      font-size: 14.5px;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.6rem 0.8rem;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+    }
+    th { font-family: ui-monospace, monospace; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+    .callout {
+      border-left: 3px solid var(--accent);
+      background: #faf3e6;
+      padding: 0.8rem 1rem;
+      margin: 1.2rem 0;
+      font-size: 15px;
+    }
+    .callout strong { color: var(--accent); }
+    .tag {
+      display: inline-block;
+      font-family: ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--bg);
+      padding: 0.15em 0.5em;
+      border-radius: 3px;
+      margin-right: 0.4em;
+    }
+    .tag.you { background: var(--accent); }
+    .tag.claude { background: #2a2a2a; }
+    .checklist li { list-style: none; position: relative; padding-left: 1.4rem; }
+    .checklist li::before {
+      content: "☐";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="kicker">Design spec</div>
+    <h1>Talk to me — a voice AI of Noah</h1>
+    <div class="meta">2026-05-20 · branch <code>talk-to-me</code> · scope: play-around, not production-polish</div>
+  </header>
+
+  <h2>Goal</h2>
+  <p>Add a <strong>Talk to me</strong> button to the homepage. Clicking it opens a real-time voice conversation with an AI version of Noah — input via microphone, output in a cloned version of Noah's voice. Every conversation is transcribed and stored so Noah can review what people asked.</p>
+  <p>This is a personal experiment, not a polished product. The bar is "interesting to play with," not "ready for thousands of users."</p>
+
+  <h2>Decisions baked in (from brainstorm)</h2>
+  <table>
+    <tr><th>Question</th><th>Choice</th></tr>
+    <tr><td>Conversation mode</td><td>Voice both ways, real-time</td></tr>
+    <tr><td>Voice cloning</td><td>ElevenLabs, starting with Instant Voice Clone (~1 min sample)</td></tr>
+    <tr><td>"Trained on my data"</td><td>System prompt + injected content (blog posts, bio). No fine-tuning, no RAG.</td></tr>
+    <tr><td>Speech-to-text</td><td>Streaming STT for low latency (Deepgram)</td></tr>
+    <tr><td>Pipeline orchestration</td><td>DIY using <a href="https://github.com/pipecat-ai/pipecat">Pipecat</a> (open-source Python voice-agent framework)</td></tr>
+    <tr><td>Hosting</td><td>Astro site stays on Netlify; voice pipeline is a separate Python service on Fly.io</td></tr>
+    <tr><td>Logs</td><td>Netlify Blobs (no new DB), surfaced via a private admin page</td></tr>
+    <tr><td>Access</td><td>Open to anyone, with hard cost guardrails (session length, daily $ cap, per-IP limit)</td></tr>
+  </table>
+
+  <h2>Architecture</h2>
+<pre><code>┌──────────────────────────┐         ┌──────────────────────────────────┐
+│  Astro homepage          │         │  Voice agent service             │
+│  (Netlify, existing)     │         │  (new, Python/Pipecat, Fly.io)   │
+│                          │         │                                  │
+│  [Talk to me] button     │ WSS     │  ┌──────────────────────────┐    │
+│         │                │◄───────►│  │ Pipecat pipeline          │    │
+│         ▼                │  audio  │  │  Deepgram STT (stream)    │    │
+│  &lt;NoahVoiceAgent /&gt;      │  +      │  │   ↓                       │    │
+│  - mic capture           │  text   │  │  Claude (Anthropic)       │    │
+│  - audio playback        │  events │  │   ↓                       │    │
+│  - live transcript       │         │  │  ElevenLabs TTS (cloned)  │    │
+│  - end button            │         │  └──────────────────────────┘    │
+└──────────────────────────┘         │            │                     │
+            │                        │            ▼                     │
+            │                        │  POST /api/log-conversation      │
+            │                        └────────────┬─────────────────────┘
+            │                                     │
+            │                                     ▼
+            │                        ┌──────────────────────────┐
+            └───────────────────────►│  Netlify Function         │
+       GET /talk-to-me-logs (gated)  │  → Netlify Blobs          │
+                                     └──────────────────────────┘</code></pre>
+
+  <p><strong>Two deploys.</strong> The static site stays on Netlify with no change to its build. The voice pipeline lives in its own folder (<code>voice-agent/</code>) and deploys independently to Fly.io. The website embeds a small JS client that opens a secure WebSocket to the Fly.io service.</p>
+
+  <h2>Components</h2>
+
+  <h3>1. Homepage button + voice UI <span class="tag claude">claude builds</span></h3>
+  <ul>
+    <li>New button on <code>src/pages/index.astro</code> styled in the existing aesthetic (oxblood accent on hover, not a generic CTA).</li>
+    <li>Clicking opens an inline panel (not a modal — keep the page layout calm) with:
+      <ul>
+        <li>A pulsing dot indicating who's speaking (Noah / you / idle).</li>
+        <li>A live, scrolling transcript.</li>
+        <li>An <strong>End</strong> button.</li>
+        <li>A countdown showing remaining session time (gentle reminder that there's a cap).</li>
+      </ul>
+    </li>
+    <li>Client-side JS uses the Pipecat web client SDK to handle mic capture, audio playback, and the WebSocket. No hand-rolled audio plumbing.</li>
+    <li>Posts a <em>session start</em> event to Netlify Function for rate-limit check before connecting.</li>
+  </ul>
+
+  <h3>2. Voice agent service <span class="tag claude">claude builds</span></h3>
+  <p>A small Python app in <code>voice-agent/</code>, deployed to Fly.io. Pipecat pipeline:</p>
+  <pre><code>WebSocketTransport
+  → Deepgram STT (streaming, with VAD/turn detection)
+  → Anthropic Claude (sonnet-4-6 by default; opus-4-7 optional)
+      system_prompt = persona + injected blog posts + bio
+  → ElevenLabs TTS (streaming, voice_id = your cloned voice)
+  → WebSocketTransport (audio back to browser)</code></pre>
+  <p>Side effects on each session:</p>
+  <ul>
+    <li>On <em>turn end</em>: append <code>{role, text, ts}</code> to an in-memory session transcript.</li>
+    <li>On <em>session end</em> (or hard cap timeout): POST the full transcript + duration + cost estimate to the Netlify logging endpoint.</li>
+  </ul>
+  <p>The system prompt is assembled at startup by reading the markdown files in <code>src/content/blog/</code>, the legacy posts, and a hand-written <code>persona.md</code>. Cheap to rebuild on deploy.</p>
+
+  <h3>3. Cost guardrails <span class="tag claude">claude builds</span></h3>
+  <ul>
+    <li><strong>Per-session hard cap:</strong> 5 minutes. Service emits a polite voice line ("we're hitting the time limit, talk to you next time") and disconnects.</li>
+    <li><strong>Per-IP cap:</strong> 2 sessions per day. Counter in an Upstash Redis free tier (or a JSON file on a Fly.io volume — pick at impl time).</li>
+    <li><strong>Site-wide daily budget:</strong> configurable env var (default $5/day). When tripped, the button on the homepage flips to <em>"taking a break, try tomorrow"</em>. Budget is estimated from ElevenLabs chars + Deepgram minutes + Anthropic tokens, summed in the logging endpoint.</li>
+    <li><strong>Profanity / abuse:</strong> out of scope for v0. If it becomes a problem we add an Anthropic content-filter pass.</li>
+  </ul>
+
+  <h3>4. Logging <span class="tag claude">claude builds</span></h3>
+  <ul>
+    <li>New Netlify Function: <code>netlify/functions/log-conversation.ts</code>.</li>
+    <li>Accepts a POST from the voice service (shared-secret header for auth).</li>
+    <li>Writes a JSON blob to Netlify Blobs: <code>conversations/&lt;YYYY-MM-DD&gt;/&lt;session_id&gt;.json</code>.</li>
+    <li>Blob shape:
+<pre><code>{
+  "session_id": "abc123",
+  "started_at": "2026-05-20T18:32:04Z",
+  "duration_s": 142,
+  "ip_hash": "sha256:…",
+  "transcript": [
+    { "role": "user", "ts": 0.0, "text": "what do you do?" },
+    { "role": "noah", "ts": 1.4, "text": "I work on..." }
+  ],
+  "cost_estimate_usd": 0.18,
+  "ended_by": "user" | "time_cap" | "budget_cap" | "error"
+}</code></pre>
+    </li>
+  </ul>
+
+  <h3>5. Private review page <span class="tag claude">claude builds</span></h3>
+  <ul>
+    <li>New Astro page: <code>/talk-to-me-logs</code> (not linked from anywhere).</li>
+    <li>Gated by Netlify Identity or a simple shared-secret in the URL (e.g., <code>?key=…</code> matched against an env var). Identity is overkill for a personal admin page; the shared-secret is fine.</li>
+    <li>Lists conversations newest-first with date, duration, first user line as a preview. Click → full transcript view.</li>
+  </ul>
+
+  <h2>Sequence of one conversation</h2>
+<pre><code>1. User clicks "Talk to me"
+   → browser POSTs /api/check-rate-limit
+   → 200 OK { ok: true, session_token }   (or 429 with a message)
+
+2. Browser opens WSS to voice-agent.fly.dev with session_token
+
+3. Pipecat starts pipeline. First utterance: a short greeting in your voice.
+
+4. Loop:
+   a. user speaks → Deepgram streams interim + final transcripts
+   b. on final → Claude generates streaming response
+   c. tokens stream to ElevenLabs → audio chunks stream back
+   d. transcripts appended to session log
+   Repeat until 5-min cap or user clicks End.
+
+5. On end:
+   - service POSTs the full transcript blob to Netlify
+   - service closes the WebSocket
+   - browser shows "thanks, transcript saved"</code></pre>
+
+  <h2>Repo changes</h2>
+  <pre><code>website/                           (this repo, Astro site)
+├── src/
+│   ├── pages/
+│   │   ├── index.astro            ← add button + agent panel
+│   │   └── talk-to-me-logs.astro  ← new, gated review page
+│   ├── components/
+│   │   └── NoahVoiceAgent.astro   ← new, voice UI shell
+│   └── scripts/
+│       └── voice-agent-client.ts  ← Pipecat client wiring
+├── netlify/
+│   └── functions/
+│       ├── check-rate-limit.ts    ← new
+│       ├── log-conversation.ts    ← new
+│       └── list-conversations.ts  ← new (for admin page)
+└── voice-agent/                   ← NEW SUBDIR, deployed separately
+    ├── pyproject.toml
+    ├── fly.toml
+    ├── Dockerfile
+    ├── app.py                     ← Pipecat pipeline + websocket server
+    ├── persona.md                 ← hand-written first-person bio
+    └── build_system_prompt.py     ← assembles prompt from blog posts</code></pre>
+
+  <h2>What you (Noah) need to do</h2>
+  <ol class="checklist">
+    <li><span class="tag you">you</span> Create accounts and grab API keys for: <strong>ElevenLabs</strong>, <strong>Deepgram</strong>, <strong>Anthropic</strong> (you may already have this), <strong>Fly.io</strong>.</li>
+    <li><span class="tag you">you</span> Record a ~1 minute voice sample (clean audio, quiet room, your normal speaking voice). Upload to ElevenLabs as an Instant Voice Clone. Save the <code>voice_id</code>.</li>
+    <li><span class="tag you">you</span> Write the <code>persona.md</code> first-person bio. (Or let Claude draft a starting version from your blog posts and edit it.)</li>
+    <li><span class="tag you">you</span> Install <code>flyctl</code> locally and run <code>fly auth login</code>.</li>
+    <li><span class="tag you">you</span> Add the API keys as Fly.io secrets (<code>fly secrets set …</code>) once the service exists.</li>
+    <li><span class="tag you">you</span> Add the matching Netlify env vars: shared secret for log POSTs, admin key for the review page, daily budget cap.</li>
+    <li><span class="tag you">you</span> Decide a starting daily $ budget (suggested: $5/day).</li>
+  </ol>
+
+  <h2>Out of scope for v0</h2>
+  <ul>
+    <li>Mobile-optimized UI. Desktop browser only at first.</li>
+    <li>Cross-session memory. Each conversation starts fresh.</li>
+    <li>Content moderation. We're trusting the audience for v0.</li>
+    <li>Multi-language. English only.</li>
+    <li>Replay of audio in the admin page. Transcripts only — we don't store the synthesized audio.</li>
+    <li>RAG / fine-tuning. The corpus is small enough that injecting it into the system prompt is fine.</li>
+  </ul>
+
+  <h2>Known risks &amp; open questions</h2>
+  <ul>
+    <li><strong>Latency.</strong> DIY pipeline gets us ~1–2s between end-of-user-speech and start-of-AI-voice with streaming everywhere. If that feels too slow we revisit (e.g., use a managed platform like Vapi as a swap-in).</li>
+    <li><strong>Voice quality.</strong> Instant Voice Clone is OK but not amazing. If the result is uncanny in a bad way, plan B is recording 30 min for the Professional clone.</li>
+    <li><strong>Fly.io cold starts.</strong> The first session of the day may have a 5–10s delay if the machine has scaled to zero. We can pin it to "always on" (~$2/mo) or accept the cold start.</li>
+    <li><strong>Logs as durable record.</strong> Anything anyone says to it is captured. Add a disclaimer below the button: <em>"Heads up: conversations are transcribed and saved so I can review them."</em></li>
+    <li><strong>Persona drift.</strong> If the system prompt isn't tight, the AI will hallucinate biographical details. Pinning the persona doc and including an explicit "if you don't know, say you don't know" rule is important.</li>
+  </ul>
+
+  <h2>Success criteria for v0</h2>
+  <ul>
+    <li>Click button → speak → hear a reply in your cloned voice, end-to-end, in under 4 seconds of latency on the first reply.</li>
+    <li>End the session → see the full transcript in <code>/talk-to-me-logs?key=…</code> within a few seconds.</li>
+    <li>Trigger the 5-minute cap → service ends gracefully with a voice line.</li>
+    <li>Run for a week without bill surprise.</li>
+  </ul>
+
+  <hr/>
+  <p class="meta">Next step after you approve this: I run the <code>writing-plans</code> skill to turn the design into a step-by-step implementation plan, then we start building.</p>
+</body>
+</html>
