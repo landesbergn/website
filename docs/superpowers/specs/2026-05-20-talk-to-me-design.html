@@ -104,206 +104,200 @@
       color: var(--accent);
       font-size: 1.1em;
     }
+    .strike { color: var(--muted); text-decoration: line-through; }
   </style>
 </head>
 <body>
   <header>
-    <div class="kicker">Design spec</div>
+    <div class="kicker">Design spec · v2 (pivoted)</div>
     <h1>Talk to me — a voice AI of Noah</h1>
     <div class="meta">2026-05-20 · branch <code>talk-to-me</code> · scope: play-around, not production-polish</div>
   </header>
+
+  <div class="callout">
+    <strong>Pivot from v1:</strong> dropped the DIY Pipecat + Fly.io pipeline in favor of <strong>ElevenLabs Conversational AI</strong> (their managed voice-agent product). Reason: it collapses the architecture to a single embed + a single Netlify Function. No second service to operate, no Python, no separate deploy. Trade-off is more vendor lock-in and less pipeline control, both acceptable for play-around scope.
+  </div>
 
   <h2>Goal</h2>
   <p>Add a <strong>Talk to me</strong> button to the homepage. Clicking it opens a real-time voice conversation with an AI version of Noah — input via microphone, output in a cloned version of Noah's voice. Every conversation is transcribed and stored so Noah can review what people asked.</p>
   <p>This is a personal experiment, not a polished product. The bar is "interesting to play with," not "ready for thousands of users."</p>
 
-  <h2>Decisions baked in (from brainstorm)</h2>
+  <h2>Decisions baked in</h2>
   <table>
     <tr><th>Question</th><th>Choice</th></tr>
     <tr><td>Conversation mode</td><td>Voice both ways, real-time</td></tr>
-    <tr><td>Voice cloning</td><td>ElevenLabs, starting with Instant Voice Clone (~1 min sample)</td></tr>
-    <tr><td>"Trained on my data"</td><td>System prompt + injected content (blog posts, bio). No fine-tuning, no RAG.</td></tr>
-    <tr><td>Speech-to-text</td><td>Streaming STT for low latency (Deepgram)</td></tr>
-    <tr><td>Pipeline orchestration</td><td>DIY using <a href="https://github.com/pipecat-ai/pipecat">Pipecat</a> (open-source Python voice-agent framework)</td></tr>
-    <tr><td>Hosting</td><td>Astro site stays on Netlify; voice pipeline is a separate Python service on Fly.io</td></tr>
-    <tr><td>Logs</td><td>Netlify Blobs (no new DB), surfaced via a private admin page</td></tr>
-    <tr><td>Access</td><td>Open to anyone, with hard cost guardrails (session length, daily $ cap, per-IP limit)</td></tr>
+    <tr><td>Voice cloning</td><td>ElevenLabs Instant Voice Clone (~1 min sample)</td></tr>
+    <tr><td>"Trained on my data"</td><td>System prompt + ElevenLabs Knowledge Base (blog posts, bio, projects). No fine-tuning.</td></tr>
+    <tr><td>Conversation pipeline</td><td>ElevenLabs Conversational AI (managed). They run STT + LLM + TTS + turn-taking.</td></tr>
+    <tr><td>LLM behind the agent</td><td>Claude (Anthropic, supported as a built-in option inside ElevenLabs Agents)</td></tr>
+    <tr><td>Hosting</td><td>Astro site on Netlify (unchanged). No new service.</td></tr>
+    <tr><td>Logs</td><td>Netlify Blobs, written by a Netlify Function that receives ElevenLabs post-call webhooks. Reviewed via a gated admin page.</td></tr>
+    <tr><td>Access</td><td>Open to anyone, with cost guardrails configured in the ElevenLabs dashboard (max session length, monthly minute cap)</td></tr>
   </table>
 
   <h2>Architecture</h2>
-<pre><code>┌──────────────────────────┐         ┌──────────────────────────────────┐
-│  Astro homepage          │         │  Voice agent service             │
-│  (Netlify, existing)     │         │  (new, Python/Pipecat, Fly.io)   │
-│                          │         │                                  │
-│  [Talk to me] button     │ WSS     │  ┌──────────────────────────┐    │
-│         │                │◄───────►│  │ Pipecat pipeline          │    │
-│         ▼                │  audio  │  │  Deepgram STT (stream)    │    │
-│  &lt;NoahVoiceAgent /&gt;      │  +      │  │   ↓                       │    │
-│  - mic capture           │  text   │  │  Claude (Anthropic)       │    │
-│  - audio playback        │  events │  │   ↓                       │    │
-│  - live transcript       │         │  │  ElevenLabs TTS (cloned)  │    │
-│  - end button            │         │  └──────────────────────────┘    │
-└──────────────────────────┘         │            │                     │
-            │                        │            ▼                     │
-            │                        │  POST /api/log-conversation      │
-            │                        └────────────┬─────────────────────┘
-            │                                     │
-            │                                     ▼
-            │                        ┌──────────────────────────┐
-            └───────────────────────►│  Netlify Function         │
-       GET /talk-to-me-logs (gated)  │  → Netlify Blobs          │
-                                     └──────────────────────────┘</code></pre>
+<pre><code>┌──────────────────────────┐     ┌──────────────────────────────┐
+│  Astro homepage           │     │  ElevenLabs Agent             │
+│  (Netlify, existing)      │     │  (their infra)                │
+│                           │     │                               │
+│  [Talk to me] button      │ WS  │   STT → Claude → cloned voice │
+│        │                  │◄───►│   turn-taking, interruption,  │
+│        ▼                  │     │   knowledge base over your    │
+│  &lt;elevenlabs-convai       │     │   blog posts + persona doc    │
+│     agent-id="…" /&gt;       │     │                               │
+└──────────────────────────┘     └──────────────┬───────────────┘
+                                                │ post-call webhook
+                                                ▼
+                                 ┌──────────────────────────┐
+                                 │  Netlify Function         │
+                                 │  /api/log-conversation    │
+                                 │  → Netlify Blobs          │
+                                 └──────────────────────────┘
+                                                ▲
+                                                │ read
+                                 ┌──────────────────────────┐
+                                 │ /talk-to-me-logs (gated)  │
+                                 │ admin review page         │
+                                 └──────────────────────────┘</code></pre>
 
-  <p><strong>Two deploys.</strong> The static site stays on Netlify with no change to its build. The voice pipeline lives in its own folder (<code>voice-agent/</code>) and deploys independently to Fly.io. The website embeds a small JS client that opens a secure WebSocket to the Fly.io service.</p>
+  <p>Static site stays on Netlify with no build changes. The agent's UI is a web component that opens its own WebSocket directly to ElevenLabs from the browser. Our only backend involvement is receiving the post-call webhook and a private page to read the logs.</p>
 
   <h2>Components</h2>
 
-  <h3>1. Homepage button + voice UI <span class="tag claude">claude builds</span></h3>
+  <h3>1. Homepage button + embed <span class="tag claude">claude builds</span></h3>
   <ul>
-    <li>New button on <code>src/pages/index.astro</code> styled in the existing aesthetic (oxblood accent on hover, not a generic CTA).</li>
-    <li>Clicking opens an inline panel (not a modal — keep the page layout calm) with:
-      <ul>
-        <li>A pulsing dot indicating who's speaking (Noah / you / idle).</li>
-        <li>A live, scrolling transcript.</li>
-        <li>An <strong>End</strong> button.</li>
-        <li>A countdown showing remaining session time (gentle reminder that there's a cap).</li>
-      </ul>
-    </li>
-    <li>Client-side JS uses the Pipecat web client SDK to handle mic capture, audio playback, and the WebSocket. No hand-rolled audio plumbing.</li>
-    <li>Posts a <em>session start</em> event to Netlify Function for rate-limit check before connecting.</li>
+    <li>Add a button to <code>src/pages/index.astro</code> styled in the existing aesthetic (no generic CTA chrome). Hover state uses the oxblood accent.</li>
+    <li>Add a small disclosure line near the button: <em>"Heads up — conversations are transcribed and saved so I can review them."</em></li>
+    <li>Clicking the button reveals the ElevenLabs widget inline below it (not a modal). One way to do this:
+<pre><code>&lt;elevenlabs-convai
+  agent-id={import.meta.env.PUBLIC_ELEVENLABS_AGENT_ID}
+  variant="full"
+&gt;&lt;/elevenlabs-convai&gt;
+&lt;script src="https://unpkg.com/@elevenlabs/convai-widget-embed"
+        async type="text/javascript"&gt;&lt;/script&gt;</code></pre>
+    The agent ID is a public identifier — safe to expose. Auth happens through agent configuration in their dashboard.</li>
+    <li>The widget's default chrome ships with ElevenLabs branding and styling. We override what we can via the documented attributes/CSS variables to look closer to the site's aesthetic. <strong>If the widget styling proves too constrained,</strong> fall back to building a custom shell using their React/JS SDK (still no new service — just more frontend code).</li>
   </ul>
 
-  <h3>2. Voice agent service <span class="tag claude">claude builds</span></h3>
-  <p>A small Python app in <code>voice-agent/</code>, deployed to Fly.io. Pipecat pipeline:</p>
-  <pre><code>WebSocketTransport
-  → Deepgram STT (streaming, with VAD/turn detection)
-  → Anthropic Claude (sonnet-4-6 by default; opus-4-7 optional)
-      system_prompt = persona + injected blog posts + bio
-  → ElevenLabs TTS (streaming, voice_id = your cloned voice)
-  → WebSocketTransport (audio back to browser)</code></pre>
-  <p>Side effects on each session:</p>
+  <h3>2. The agent itself (configured in ElevenLabs dashboard) <span class="tag you">you configure</span></h3>
+  <p>One-time setup in the ElevenLabs web UI:</p>
   <ul>
-    <li>On <em>turn end</em>: append <code>{role, text, ts}</code> to an in-memory session transcript.</li>
-    <li>On <em>session end</em> (or hard cap timeout): POST the full transcript + duration + cost estimate to the Netlify logging endpoint.</li>
-  </ul>
-  <p>The system prompt is assembled at startup by reading the markdown files in <code>src/content/blog/</code>, the legacy posts, and a hand-written <code>persona.md</code>. Cheap to rebuild on deploy.</p>
-
-  <h3>3. Cost guardrails <span class="tag claude">claude builds</span></h3>
-  <ul>
-    <li><strong>Per-session hard cap:</strong> 5 minutes. Service emits a polite voice line ("we're hitting the time limit, talk to you next time") and disconnects.</li>
-    <li><strong>Per-IP cap:</strong> 2 sessions per day. Counter in an Upstash Redis free tier (or a JSON file on a Fly.io volume — pick at impl time).</li>
-    <li><strong>Site-wide daily budget:</strong> configurable env var (default $5/day). When tripped, the button on the homepage flips to <em>"taking a break, try tomorrow"</em>. Budget is estimated from ElevenLabs chars + Deepgram minutes + Anthropic tokens, summed in the logging endpoint.</li>
-    <li><strong>Profanity / abuse:</strong> out of scope for v0. If it becomes a problem we add an Anthropic content-filter pass.</li>
+    <li><strong>Voice:</strong> the voice ID of your Instant Voice Clone.</li>
+    <li><strong>LLM:</strong> Anthropic Claude (their dropdown). You can either use ElevenLabs' bundled LLM key (simpler; rolled into their per-minute price) or supply your own Anthropic key (more granular billing). Recommend bundled for v0.</li>
+    <li><strong>System prompt:</strong> first-person persona doc — written by you, with optional first-draft help from me using your blog posts.</li>
+    <li><strong>Knowledge base:</strong> upload the markdown bodies of your blog posts (Markdown + legacy posts) plus a short bio file. ElevenLabs runs its own RAG over these on each turn.</li>
+    <li><strong>Limits:</strong> set max session duration (e.g., 5 min) and a monthly minute cap. Both configurable in their dashboard.</li>
+    <li><strong>Post-call webhook:</strong> point at <code>https://noahlandesberg.com/api/log-conversation</code> with a shared secret header.</li>
   </ul>
 
-  <h3>4. Logging <span class="tag claude">claude builds</span></h3>
+  <h3>3. Log-ingest Netlify Function <span class="tag claude">claude builds</span></h3>
   <ul>
-    <li>New Netlify Function: <code>netlify/functions/log-conversation.ts</code>.</li>
-    <li>Accepts a POST from the voice service (shared-secret header for auth).</li>
-    <li>Writes a JSON blob to Netlify Blobs: <code>conversations/&lt;YYYY-MM-DD&gt;/&lt;session_id&gt;.json</code>.</li>
-    <li>Blob shape:
+    <li>New file: <code>netlify/functions/log-conversation.ts</code>.</li>
+    <li>Verifies the shared-secret header (env var <code>ELEVENLABS_WEBHOOK_SECRET</code>). Drops anything else with 401.</li>
+    <li>Parses the ElevenLabs post-call payload. Their webhook delivers the full transcript, metadata, and duration when a conversation ends.</li>
+    <li>Writes a normalized JSON blob to Netlify Blobs at
+      <code>conversations/&lt;YYYY-MM-DD&gt;/&lt;conversation_id&gt;.json</code>:
 <pre><code>{
-  "session_id": "abc123",
+  "conversation_id": "elabs_abc123",
   "started_at": "2026-05-20T18:32:04Z",
   "duration_s": 142,
-  "ip_hash": "sha256:…",
   "transcript": [
     { "role": "user", "ts": 0.0, "text": "what do you do?" },
     { "role": "noah", "ts": 1.4, "text": "I work on..." }
   ],
-  "cost_estimate_usd": 0.18,
-  "ended_by": "user" | "time_cap" | "budget_cap" | "error"
+  "ended_by": "user" | "time_cap" | "error",
+  "raw": { /* full original payload, in case we want fields later */ }
 }</code></pre>
     </li>
+    <li>Returns 204. No business logic. If the write fails we 500 and let ElevenLabs retry per their webhook policy.</li>
   </ul>
 
-  <h3>5. Private review page <span class="tag claude">claude builds</span></h3>
+  <h3>4. Admin review page <span class="tag claude">claude builds</span></h3>
   <ul>
-    <li>New Astro page: <code>/talk-to-me-logs</code> (not linked from anywhere).</li>
-    <li>Gated by Netlify Identity or a simple shared-secret in the URL (e.g., <code>?key=…</code> matched against an env var). Identity is overkill for a personal admin page; the shared-secret is fine.</li>
-    <li>Lists conversations newest-first with date, duration, first user line as a preview. Click → full transcript view.</li>
+    <li>New Astro page: <code>/talk-to-me-logs</code>. Not linked from anywhere.</li>
+    <li>Gated by a shared-secret query param (<code>?key=…</code>) matched against an env var. Identity / OAuth is overkill for a private personal page.</li>
+    <li>Page reads from Netlify Blobs via a small Netlify Function (<code>list-conversations.ts</code>) that returns the index + transcripts on demand.</li>
+    <li>Newest-first list with date, duration, first user line as preview. Click → full transcript view styled like a chat log.</li>
+  </ul>
+
+  <h3>5. Cost guardrails</h3>
+  <p>All in the ElevenLabs dashboard, not in our code:</p>
+  <ul>
+    <li>Max session duration (per call). Their pipeline ends the call when hit.</li>
+    <li>Monthly minute cap on the agent. Their pipeline refuses new sessions when hit.</li>
+    <li>Per-IP / abuse limits are not first-class in their dashboard at this writing — to be verified during impl. If absent and it matters, we add a thin Netlify Function in front of the widget mount that mints short-lived signed agent tokens and rate-limits by IP.</li>
   </ul>
 
   <h2>Sequence of one conversation</h2>
 <pre><code>1. User clicks "Talk to me"
-   → browser POSTs /api/check-rate-limit
-   → 200 OK { ok: true, session_token }   (or 429 with a message)
-
-2. Browser opens WSS to voice-agent.fly.dev with session_token
-
-3. Pipecat starts pipeline. First utterance: a short greeting in your voice.
-
-4. Loop:
-   a. user speaks → Deepgram streams interim + final transcripts
-   b. on final → Claude generates streaming response
-   c. tokens stream to ElevenLabs → audio chunks stream back
-   d. transcripts appended to session log
-   Repeat until 5-min cap or user clicks End.
-
-5. On end:
-   - service POSTs the full transcript blob to Netlify
-   - service closes the WebSocket
-   - browser shows "thanks, transcript saved"</code></pre>
+   → widget mounts, opens WSS to ElevenLabs with the public agent-id
+2. ElevenLabs streams a greeting in your cloned voice
+3. Loop:
+   - user speaks → ElevenLabs STT
+   - transcript → Claude (with your knowledge base in context)
+   - response → cloned-voice TTS streamed back
+4. User clicks End OR session timer expires
+5. ElevenLabs POSTs the full conversation payload to
+   /api/log-conversation with shared-secret header
+6. Function writes the JSON blob; review at /talk-to-me-logs?key=…</code></pre>
 
   <h2>Repo changes</h2>
-  <pre><code>website/                           (this repo, Astro site)
+<pre><code>website/
 ├── src/
 │   ├── pages/
-│   │   ├── index.astro            ← add button + agent panel
-│   │   └── talk-to-me-logs.astro  ← new, gated review page
-│   ├── components/
-│   │   └── NoahVoiceAgent.astro   ← new, voice UI shell
-│   └── scripts/
-│       └── voice-agent-client.ts  ← Pipecat client wiring
+│   │   ├── index.astro             ← add button + widget mount
+│   │   └── talk-to-me-logs.astro   ← new, gated review page
+│   └── components/
+│       └── TalkToMe.astro          ← new, button + widget wrapper
 ├── netlify/
 │   └── functions/
-│       ├── check-rate-limit.ts    ← new
-│       ├── log-conversation.ts    ← new
-│       └── list-conversations.ts  ← new (for admin page)
-└── voice-agent/                   ← NEW SUBDIR, deployed separately
-    ├── pyproject.toml
-    ├── fly.toml
-    ├── Dockerfile
-    ├── app.py                     ← Pipecat pipeline + websocket server
-    ├── persona.md                 ← hand-written first-person bio
-    └── build_system_prompt.py     ← assembles prompt from blog posts</code></pre>
+│       ├── log-conversation.ts     ← new, receives webhook
+│       └── list-conversations.ts   ← new, feeds admin page
+└── docs/superpowers/specs/
+    └── 2026-05-20-talk-to-me-design.html  ← this file</code></pre>
+
+  <p>No <code>voice-agent/</code> subdir. No Python. No Fly.io. No Docker.</p>
 
   <h2>What you (Noah) need to do</h2>
   <ol class="checklist">
-    <li><span class="tag you">you</span> Create accounts and grab API keys for: <strong>ElevenLabs</strong>, <strong>Deepgram</strong>, <strong>Anthropic</strong> (you may already have this), <strong>Fly.io</strong>.</li>
-    <li><span class="tag you">you</span> Record a ~1 minute voice sample (clean audio, quiet room, your normal speaking voice). Upload to ElevenLabs as an Instant Voice Clone. Save the <code>voice_id</code>.</li>
-    <li><span class="tag you">you</span> Write the <code>persona.md</code> first-person bio. (Or let Claude draft a starting version from your blog posts and edit it.)</li>
-    <li><span class="tag you">you</span> Install <code>flyctl</code> locally and run <code>fly auth login</code>.</li>
-    <li><span class="tag you">you</span> Add the API keys as Fly.io secrets (<code>fly secrets set …</code>) once the service exists.</li>
-    <li><span class="tag you">you</span> Add the matching Netlify env vars: shared secret for log POSTs, admin key for the review page, daily budget cap.</li>
-    <li><span class="tag you">you</span> Decide a starting daily $ budget (suggested: $5/day).</li>
+    <li><span class="tag you">you</span> Create an <strong>ElevenLabs</strong> account if you don't have one. Pick a tier that includes Conversational AI minutes (Starter usually does, but verify current pricing).</li>
+    <li><span class="tag you">you</span> Record a ~1-minute clean voice sample. Upload to ElevenLabs as an <strong>Instant Voice Clone</strong>. Save the voice ID.</li>
+    <li><span class="tag you">you</span> In the ElevenLabs dashboard, create an <strong>Agent</strong>: select Claude as the LLM, your cloned voice, paste the system prompt, attach the knowledge base files. (I'll prep the prompt + KB files in the impl phase; you just paste/upload.)</li>
+    <li><span class="tag you">you</span> Set the agent's per-session and monthly limits.</li>
+    <li><span class="tag you">you</span> Configure the post-call webhook URL + shared secret in ElevenLabs.</li>
+    <li><span class="tag you">you</span> Add Netlify env vars: <code>PUBLIC_ELEVENLABS_AGENT_ID</code>, <code>ELEVENLABS_WEBHOOK_SECRET</code>, <code>TALK_TO_ME_LOGS_KEY</code>.</li>
+    <li><span class="tag you">you</span> Approve the persona doc I draft before it's pasted into ElevenLabs.</li>
   </ol>
+
+  <p>That's it. No Fly.io, no Anthropic key on your side (ElevenLabs covers it via the bundled LLM tier — unless you want to bring your own).</p>
 
   <h2>Out of scope for v0</h2>
   <ul>
-    <li>Mobile-optimized UI. Desktop browser only at first.</li>
+    <li>Mobile-optimized UI. Desktop browser first; widget should work on mobile but layout polish is later.</li>
     <li>Cross-session memory. Each conversation starts fresh.</li>
-    <li>Content moderation. We're trusting the audience for v0.</li>
+    <li>Custom moderation pass. We rely on Claude's default refusal behavior plus the persona doc to handle scope.</li>
     <li>Multi-language. English only.</li>
-    <li>Replay of audio in the admin page. Transcripts only — we don't store the synthesized audio.</li>
-    <li>RAG / fine-tuning. The corpus is small enough that injecting it into the system prompt is fine.</li>
+    <li>Replay of audio in the admin page. Transcripts only — ElevenLabs may or may not include audio URLs in the webhook payload; we won't store it either way.</li>
+    <li>Custom-built widget UI. v0 uses their stock widget; we restyle if their CSS hooks allow it.</li>
   </ul>
 
   <h2>Known risks &amp; open questions</h2>
   <ul>
-    <li><strong>Latency.</strong> DIY pipeline gets us ~1–2s between end-of-user-speech and start-of-AI-voice with streaming everywhere. If that feels too slow we revisit (e.g., use a managed platform like Vapi as a swap-in).</li>
-    <li><strong>Voice quality.</strong> Instant Voice Clone is OK but not amazing. If the result is uncanny in a bad way, plan B is recording 30 min for the Professional clone.</li>
-    <li><strong>Fly.io cold starts.</strong> The first session of the day may have a 5–10s delay if the machine has scaled to zero. We can pin it to "always on" (~$2/mo) or accept the cold start.</li>
-    <li><strong>Logs as durable record.</strong> Anything anyone says to it is captured. Add a disclaimer below the button: <em>"Heads up: conversations are transcribed and saved so I can review them."</em></li>
-    <li><strong>Persona drift.</strong> If the system prompt isn't tight, the AI will hallucinate biographical details. Pinning the persona doc and including an explicit "if you don't know, say you don't know" rule is important.</li>
+    <li><strong>Widget styling limits.</strong> The embedded widget may not theme into the site's aesthetic cleanly. Plan B is to build our own shell with their JS SDK (still no new backend). v0 is "stock widget, lightly themed."</li>
+    <li><strong>Per-IP rate limiting.</strong> If their dashboard doesn't expose this, we add a tiny Netlify Function that issues short-lived signed tokens to mount the widget. To be verified during impl, not blocking the spec.</li>
+    <li><strong>Voice quality.</strong> Instant Voice Clone is OK but not amazing. If the result is uncanny in a bad way, upgrade to Professional Voice Clone (~30 min sample).</li>
+    <li><strong>Persona drift.</strong> Claude will happily make up biographical details if asked. The system prompt must include "if you don't know a specific fact, say so" and the knowledge base must include factual anchors (resume, project list, recent posts).</li>
+    <li><strong>Webhook reliability.</strong> If ElevenLabs fails to deliver the post-call webhook, that conversation isn't logged. Mitigation for v0: rely on their retries; if we see gaps we can also poll their conversations API as a backup.</li>
+    <li><strong>Vendor lock-in.</strong> The whole conversation lives inside ElevenLabs. Migration cost later = nontrivial. Accepted for play-around scope.</li>
+    <li><strong>Public disclosure of recording.</strong> The disclosure copy next to the button must make recording obvious, both for trust and for legal hygiene.</li>
   </ul>
 
   <h2>Success criteria for v0</h2>
   <ul>
-    <li>Click button → speak → hear a reply in your cloned voice, end-to-end, in under 4 seconds of latency on the first reply.</li>
-    <li>End the session → see the full transcript in <code>/talk-to-me-logs?key=…</code> within a few seconds.</li>
-    <li>Trigger the 5-minute cap → service ends gracefully with a voice line.</li>
-    <li>Run for a week without bill surprise.</li>
+    <li>Click button → speak → hear a reply in your cloned voice end-to-end, with the latency ElevenLabs delivers out of the box (typically ~1s).</li>
+    <li>End the session → full transcript appears in <code>/talk-to-me-logs?key=…</code> within a few seconds.</li>
+    <li>Hit the 5-minute cap → session ends gracefully via ElevenLabs.</li>
+    <li>Run for a week without bill surprise — usage stays within the monthly minute cap.</li>
   </ul>
 
   <hr/>
