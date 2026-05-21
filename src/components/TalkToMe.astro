@@ -1,0 +1,79 @@
+---
+const agentId = import.meta.env.PUBLIC_ELEVENLABS_AGENT_ID;
+---
+
+{agentId && (
+  <section class="talk-to-me" aria-labelledby="talk-to-me-heading">
+    <button id="talk-to-me-btn" type="button">
+      <span class="dot" aria-hidden="true"></span>
+      Talk to me
+    </button>
+    <p class="disclosure">
+      Heads up — your voice is recorded by ElevenLabs and the transcript is
+      saved on my server so I can review it.
+    </p>
+    <div id="talk-to-me-widget-wrap" hidden>
+      <elevenlabs-convai agent-id={agentId} variant="full"></elevenlabs-convai>
+    </div>
+  </section>
+)}
+
+<script is:inline define:vars={{ agentId }}>
+  if (agentId) {
+    const btn = document.getElementById("talk-to-me-btn");
+    const wrap = document.getElementById("talk-to-me-widget-wrap");
+    let loaded = false;
+    btn?.addEventListener("click", () => {
+      if (!loaded) {
+        const s = document.createElement("script");
+        s.src = "https://unpkg.com/@elevenlabs/convai-widget-embed";
+        s.async = true;
+        s.type = "text/javascript";
+        document.body.appendChild(s);
+        loaded = true;
+      }
+      wrap.hidden = false;
+      btn.hidden = true;
+    });
+  }
+</script>
+
+<style>
+  .talk-to-me {
+    margin: 2rem 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule, #e5e0d4);
+  }
+  #talk-to-me-btn {
+    font-family: inherit;
+    font-size: 1rem;
+    background: transparent;
+    color: #1c1c1c;
+    border: 1px solid #1c1c1c;
+    padding: 0.55rem 1.1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+  #talk-to-me-btn:hover {
+    color: #b14545;
+    border-color: #b14545;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    background: #b14545;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .disclosure {
+    font-size: 14px;
+    color: #6b6b6b;
+    margin-top: 0.6rem;
+    max-width: 56ch;
+  }
+  #talk-to-me-widget-wrap {
+    margin-top: 1.25rem;
+  }
+</style>
