@@ -21,7 +21,8 @@ export const handler: Handler = async (event) => {
   const store = getStore("conversations");
   const items: StoredConversation[] = [];
 
-  for await (const entry of store.list()) {
+  const { blobs } = await store.list();
+  for (const entry of blobs) {
     const data = await store.get(entry.key, { type: "json" });
     if (data) items.push(data as StoredConversation);
   }
