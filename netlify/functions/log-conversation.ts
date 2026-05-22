@@ -1,6 +1,6 @@
 import type { Handler } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
-import { createHash } from "node:crypto";
+import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 
 type Turn = { role: "user" | "noah"; ts: number; text: string };
 
@@ -14,14 +14,64 @@ type StoredConversation = {
   raw: unknown;
 };
 
+const MAX_AGE_SECONDS = 5 * 60;
+
+function header(event: { headers: Record<string, string | undefined> }, name: string): string | undefined {
+  return event.headers[name] ?? event.headers[name.toLowerCase()];
+}
+
+function verifySvixSignature(
+  rawBody: string,
+  headers: { id?: string; timestamp?: string; signature?: string },
+  secret: string,
+): { ok: boolean; reason?: string } {
+  const { id, timestamp, signature } = headers;
+  if (!id || !timestamp || !signature) {
+    return { ok: false, reason: "missing svix headers" };
+  }
+
+  const ts = Number(timestamp);
+  if (!Number.isFinite(ts)) return { ok: false, reason: "bad timestamp" };
+  const ageSec = Math.abs(Date.now() / 1000 - ts);
+  if (ageSec > MAX_AGE_SECONDS) return { ok: false, reason: `stale (age=${ageSec}s)` };
+
+  const keyB64 = secret.replace(/^wsec_/, "");
+  const key = Buffer.from(keyB64, "base64");
+
+  const signedPayload = `${id}.${timestamp}.${rawBody}`;
+  const expected = createHmac("sha256", key).update(signedPayload).digest("base64");
+
+  for (const part of signature.split(" ")) {
+    const [, sig] = part.split(",");
+    if (!sig) continue;
+    if (sig.length !== expected.length) continue;
+    if (timingSafeEqual(Buffer.from(sig), Buffer.from(expected))) {
+      return { ok: true };
+    }
+  }
+  return { ok: false, reason: "no signature matched" };
+}
+
 export const handler: Handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "method not allowed" };
   }
 
-  const expected = process.env.ELEVENLABS_WEBHOOK_SECRET;
-  const got = event.headers["x-webhook-secret"];
-  if (!expected || got !== expected) {
+  const secret = process.env.ELEVENLABS_WEBHOOK_SECRET;
+  if (!secret) {
+    return { statusCode: 500, body: "server misconfigured" };
+  }
+
+  const rawBody = event.body ?? "";
+  const sigHeaders = {
+    id: header(event, "svix-id") ?? header(event, "webhook-id"),
+    timestamp: header(event, "svix-timestamp") ?? header(event, "webhook-timestamp"),
+    signature: header(event, "svix-signature") ?? header(event, "webhook-signature"),
+  };
+
+  const verified = verifySvixSignature(rawBody, sigHeaders, secret);
+  if (!verified.ok) {
+    console.warn("webhook verification failed:", verified.reason, "headers:", Object.keys(event.headers));
     return { statusCode: 401, body: "unauthorized" };
   }
 
