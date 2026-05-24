@@ -1,4 +1,3 @@
-import type { Handler } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 
@@ -16,13 +15,9 @@ type StoredConversation = {
 
 const MAX_AGE_SECONDS = 5 * 60;
 
-function header(event: { headers: Record<string, string | undefined> }, name: string): string | undefined {
-  return event.headers[name] ?? event.headers[name.toLowerCase()];
-}
-
 function verifySvixSignature(
   rawBody: string,
-  headers: { id?: string; timestamp?: string; signature?: string },
+  headers: { id: string | null; timestamp: string | null; signature: string | null },
   secret: string,
 ): { ok: boolean; reason?: string } {
   const { id, timestamp, signature } = headers;
@@ -52,34 +47,32 @@ function verifySvixSignature(
   return { ok: false, reason: "no signature matched" };
 }
 
-export const handler: Handler = async (event) => {
-  if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "method not allowed" };
+export default async (req: Request): Promise<Response> => {
+  if (req.method !== "POST") {
+    return new Response("method not allowed", { status: 405 });
   }
 
   const secret = process.env.ELEVENLABS_WEBHOOK_SECRET;
-  if (!secret) {
-    return { statusCode: 500, body: "server misconfigured" };
-  }
+  if (!secret) return new Response("server misconfigured", { status: 500 });
 
-  const rawBody = event.body ?? "";
+  const rawBody = await req.text();
   const sigHeaders = {
-    id: header(event, "svix-id") ?? header(event, "webhook-id"),
-    timestamp: header(event, "svix-timestamp") ?? header(event, "webhook-timestamp"),
-    signature: header(event, "svix-signature") ?? header(event, "webhook-signature"),
+    id: req.headers.get("svix-id") ?? req.headers.get("webhook-id"),
+    timestamp: req.headers.get("svix-timestamp") ?? req.headers.get("webhook-timestamp"),
+    signature: req.headers.get("svix-signature") ?? req.headers.get("webhook-signature"),
   };
 
   const verified = verifySvixSignature(rawBody, sigHeaders, secret);
   if (!verified.ok) {
-    console.warn("webhook verification failed:", verified.reason, "headers:", Object.keys(event.headers));
-    return { statusCode: 401, body: "unauthorized" };
+    console.warn("webhook verification failed:", verified.reason);
+    return new Response("unauthorized", { status: 401 });
   }
 
   let payload: any;
   try {
-    payload = JSON.parse(event.body ?? "{}");
+    payload = JSON.parse(rawBody);
   } catch {
-    return { statusCode: 400, body: "invalid json" };
+    return new Response("invalid json", { status: 400 });
   }
 
   const conversation_id: string =
@@ -105,8 +98,8 @@ export const handler: Handler = async (event) => {
   }));
 
   const ip =
-    event.headers["x-nf-client-connection-ip"] ??
-    event.headers["x-forwarded-for"]?.split(",")[0] ??
+    req.headers.get("x-nf-client-connection-ip") ??
+    req.headers.get("x-forwarded-for")?.split(",")[0] ??
     null;
   const ip_hash = ip
     ? createHash("sha256").update(ip).digest("hex").slice(0, 16)
@@ -128,5 +121,7 @@ export const handler: Handler = async (event) => {
   const store = getStore("conversations");
   await store.setJSON(key, stored);
 
-  return { statusCode: 204, body: "" };
+  return new Response(null, { status: 204 });
 };
+
+export const config = { path: "/api/log-conversation" };

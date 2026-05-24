@@ -1,4 +1,3 @@
-import type { Handler } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
 
 type Turn = { role: "user" | "noah"; ts: number; text: string };
@@ -11,17 +10,17 @@ type StoredConversation = {
   ip_hash: string | null;
 };
 
-export const handler: Handler = async (event) => {
+export default async (req: Request): Promise<Response> => {
   const expected = process.env.TALK_TO_ME_LOGS_KEY;
-  const got = event.queryStringParameters?.key;
+  const url = new URL(req.url);
+  const got = url.searchParams.get("key");
   if (!expected || got !== expected) {
-    return { statusCode: 401, body: "unauthorized" };
+    return new Response("unauthorized", { status: 401 });
   }
 
   const store = getStore("conversations");
-  const items: StoredConversation[] = [];
-
   const { blobs } = await store.list();
+  const items: StoredConversation[] = [];
   for (const entry of blobs) {
     const data = await store.get(entry.key, { type: "json" });
     if (data) items.push(data as StoredConversation);
@@ -29,9 +28,10 @@ export const handler: Handler = async (event) => {
 
   items.sort((a, b) => (a.started_at < b.started_at ? 1 : -1));
 
-  return {
-    statusCode: 200,
+  return new Response(JSON.stringify({ conversations: items }), {
+    status: 200,
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ conversations: items }),
-  };
+  });
 };
+
+export const config = { path: "/api/list-conversations" };
