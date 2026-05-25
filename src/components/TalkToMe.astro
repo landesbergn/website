@@ -5,7 +5,11 @@ const agentId = import.meta.env.PUBLIC_ELEVENLABS_AGENT_ID;
 {agentId && (
   <section class="talk-to-me" aria-label="Voice chat with Noah">
     <button id="ttm-btn" type="button" data-state="idle">
-      <span class="dot" aria-hidden="true"></span>
+      <span class="bars" aria-hidden="true">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </span>
       <span class="label">Talk to me</span>
     </button>
     <p class="disclosure">Heads up, you will be recorded.</p>
@@ -124,42 +128,94 @@ const agentId = import.meta.env.PUBLIC_ELEVENLABS_AGENT_ID;
     opacity: 0.7;
   }
 
-  .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    display: inline-block;
-    background: #b14545;
+  .bars {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    height: 14px;
     flex-shrink: 0;
   }
 
-  /* state-driven dot styling */
-  #ttm-btn[data-state="idle"] .dot {
+  .bar {
+    display: inline-block;
+    width: 3px;
+    height: 14px;
     background: #b14545;
+    transform-origin: center;
+    transform: scaleY(0.3);
+    transition: background 200ms ease;
   }
 
-  #ttm-btn[data-state="connecting"] .dot {
+  /* state: idle — short static bars */
+  #ttm-btn[data-state="idle"] .bar {
+    transform: scaleY(0.3);
+  }
+
+  /* state: connecting — soft synchronized pulse */
+  #ttm-btn[data-state="connecting"] .bar {
     background: #c69a3f;
     animation: ttm-pulse 1s ease-in-out infinite;
   }
 
-  #ttm-btn[data-state="listening"] .dot {
+  /* state: listening — synchronized wave */
+  #ttm-btn[data-state="listening"] .bar {
     background: #5a8a55;
-    animation: ttm-pulse 1.6s ease-in-out infinite;
+    animation: ttm-wave 1.3s ease-in-out infinite;
   }
+  #ttm-btn[data-state="listening"] .bar:nth-child(1) { animation-delay: 0s; }
+  #ttm-btn[data-state="listening"] .bar:nth-child(2) { animation-delay: 0.18s; }
+  #ttm-btn[data-state="listening"] .bar:nth-child(3) { animation-delay: 0.36s; }
 
-  #ttm-btn[data-state="speaking"] .dot {
+  /* state: speaking — bars dance independently like an EQ */
+  #ttm-btn[data-state="speaking"] .bar {
     background: #b14545;
-    animation: ttm-pulse 0.7s ease-in-out infinite;
+  }
+  #ttm-btn[data-state="speaking"] .bar:nth-child(1) {
+    animation: ttm-dance-a 0.6s ease-in-out infinite;
+  }
+  #ttm-btn[data-state="speaking"] .bar:nth-child(2) {
+    animation: ttm-dance-b 0.45s ease-in-out infinite;
+  }
+  #ttm-btn[data-state="speaking"] .bar:nth-child(3) {
+    animation: ttm-dance-c 0.75s ease-in-out infinite;
   }
 
-  #ttm-btn[data-state="ending"] .dot {
+  /* state: ending — fade to grey */
+  #ttm-btn[data-state="ending"] .bar {
     background: #6b6b6b;
+    transform: scaleY(0.3);
   }
 
   @keyframes ttm-pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%      { opacity: 0.4; transform: scale(0.7); }
+    0%, 100% { transform: scaleY(0.35); opacity: 1; }
+    50%      { transform: scaleY(0.6);  opacity: 0.5; }
+  }
+
+  @keyframes ttm-wave {
+    0%, 100% { transform: scaleY(0.3); }
+    50%      { transform: scaleY(0.85); }
+  }
+
+  @keyframes ttm-dance-a {
+    0%, 100% { transform: scaleY(0.3); }
+    50%      { transform: scaleY(1);   }
+  }
+  @keyframes ttm-dance-b {
+    0%, 100% { transform: scaleY(0.5); }
+    30%      { transform: scaleY(0.2); }
+    70%      { transform: scaleY(0.95); }
+  }
+  @keyframes ttm-dance-c {
+    0%, 100% { transform: scaleY(0.4); }
+    40%      { transform: scaleY(1);   }
+    80%      { transform: scaleY(0.6); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bar {
+      animation: none !important;
+      transform: scaleY(0.5);
+    }
   }
 
   .disclosure {
