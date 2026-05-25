@@ -22,25 +22,46 @@ Total corpus is small (under ~20k tokens), well within free-tier KB limits.
 | System prompt | Paste from `docs/agent/persona.md` "System prompt" section |
 | Max session duration | 5 minutes |
 | Monthly minute cap | 100 minutes (raise later if usage justifies) |
-| Allowed origins (if available) | `noahlandesberg.com`, `*.netlify.app` |
+| Allowed origins | `noahlandesberg.com`, `www.noahlandesberg.com`, `*.netlify.app` |
 
-## Webhook
+## Data Collection (interview message-taking)
 
-In the agent's webhook settings:
+In the agent's **Analysis** tab → **Data collection**, add these three
+data points so the agent can extract caller info during the conversation
+and we can surface it on `/talk-to-me-logs`:
 
-- Type: post-call
-- URL: `https://www.noahlandesberg.com/api/log-conversation`
-- Custom header: `X-Webhook-Secret: <random string, save it>`
+| Identifier | Type | Description |
+|---|---|---|
+| `caller_name` | String | The name the caller gave when introducing themselves or when leaving a message. Leave empty if they did not share it. |
+| `caller_email` | String | The email address the caller provided so Noah can follow up. Should look like a valid email (something@something.tld). Leave empty if not shared. |
+| `caller_reason` | String | A one-sentence summary of why the caller wants Noah to reach out (recruiting, project, journalism, intro, etc.). Leave empty if no reason was given. |
+
+These come back in the conversation's `analysis.data_collection_results`
+field via the conversations API and are read by `list-conversations.ts`.
+
+## (Optional) Evaluation criteria
+
+You can also add evaluation criteria under the same Analysis tab if you
+want the agent to self-score calls (e.g. "Did the caller leave their
+contact info?"). Not required.
 
 ## Save these values for the Netlify env vars
 
-After setup, add three secrets in Netlify → Site settings →
-Build & deploy → Environment:
+After setup, add these secrets in Netlify → Site settings →
+Build & deploy → Environment, scoped to **Production** AND
+**Deploy Previews**:
 
 | Netlify env var | Value | Public? |
 |---|---|---|
 | `PUBLIC_ELEVENLABS_AGENT_ID` | agent ID | yes (shipped in HTML) |
-| `ELEVENLABS_WEBHOOK_SECRET` | random string above | no |
+| `ELEVENLABS_API_KEY` | ElevenLabs API key with ElevenAgents Read scope | no |
 | `TALK_TO_ME_LOGS_KEY` | random string of your choice | no |
+| `ELEVENLABS_WEBHOOK_SECRET` | (unused, leave for now) | no |
 
-`PUBLIC_*` is exposed to the client. The other two are server-only.
+`PUBLIC_*` is exposed to the client. The others are server-only.
+
+## Webhook note
+
+The post-call webhook is currently unused — we poll the conversations
+API on every admin-page load instead. The webhook config in ElevenLabs
+can stay in place harmlessly, or be deleted.

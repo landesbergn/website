@@ -1,4 +1,9 @@
 type Turn = { role: "user" | "noah"; ts: number; text: string };
+type Extracted = {
+  caller_name?: string;
+  caller_email?: string;
+  caller_reason?: string;
+};
 type StoredConversation = {
   conversation_id: string;
   started_at: string;
@@ -6,6 +11,7 @@ type StoredConversation = {
   transcript: Turn[];
   ended_by: string;
   ip_hash: string | null;
+  extracted: Extracted;
 };
 
 const ELEVENLABS_BASE = "https://api.elevenlabs.io/v1/convai/conversations";
@@ -69,11 +75,33 @@ type ConvSummary = {
   call_successful?: string;
 };
 
+type DataCollectionResult = { value?: unknown; rationale?: string } | string | null;
+
 type ConvDetail = {
   transcript?: { role?: string; message?: string; time_in_call_secs?: number }[];
   metadata?: { start_time_unix_secs?: number; call_duration_secs?: number };
   status?: string;
+  analysis?: {
+    data_collection_results?: Record<string, DataCollectionResult>;
+  };
+  data_collection_results?: Record<string, DataCollectionResult>;
 };
+
+function readDataPoint(
+  results: Record<string, DataCollectionResult> | undefined,
+  key: string,
+): string | undefined {
+  if (!results) return undefined;
+  const raw = results[key];
+  if (raw == null) return undefined;
+  if (typeof raw === "string") return raw.trim() || undefined;
+  if (typeof raw === "object" && "value" in raw) {
+    const v = raw.value;
+    if (typeof v === "string") return v.trim() || undefined;
+    if (v != null) return String(v);
+  }
+  return undefined;
+}
 
 function toStored(meta: ConvSummary, det: ConvDetail): StoredConversation {
   const start = meta.start_time_unix_secs ?? det.metadata?.start_time_unix_secs ?? 0;
@@ -83,6 +111,12 @@ function toStored(meta: ConvSummary, det: ConvDetail): StoredConversation {
     ts: t.time_in_call_secs ?? 0,
     text: t.message ?? "",
   }));
+  const results = det.analysis?.data_collection_results ?? det.data_collection_results;
+  const extracted: Extracted = {
+    caller_name: readDataPoint(results, "caller_name"),
+    caller_email: readDataPoint(results, "caller_email"),
+    caller_reason: readDataPoint(results, "caller_reason"),
+  };
   return {
     conversation_id: meta.conversation_id,
     started_at: new Date(start * 1000).toISOString(),
@@ -90,5 +124,6 @@ function toStored(meta: ConvSummary, det: ConvDetail): StoredConversation {
     transcript,
     ended_by: meta.call_successful === "success" ? "user" : (meta.status ?? "unknown"),
     ip_hash: null,
+    extracted,
   };
 }

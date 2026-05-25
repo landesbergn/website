@@ -21,12 +21,18 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 <script>
   type Turn = { role: "user" | "noah"; ts: number; text: string };
+  type Extracted = {
+    caller_name?: string;
+    caller_email?: string;
+    caller_reason?: string;
+  };
   type Conv = {
     conversation_id: string;
     started_at: string;
     duration_s: number;
     transcript: Turn[];
     ended_by: string;
+    extracted?: Extracted;
   };
 
   const $ = (id: string) => document.getElementById(id)!;
@@ -62,11 +68,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     for (const c of cache) {
       const li = document.createElement("li");
       const firstUser = c.transcript.find((t) => t.role === "user")?.text ?? "(no user turn)";
+      const who = c.extracted?.caller_name ?? c.extracted?.caller_email ?? "";
+      const preview = who ? `${who} — ${firstUser}` : firstUser;
       li.innerHTML = `
         <button class="row" data-id="${c.conversation_id}">
           <span class="row-date">${c.started_at.slice(0, 16).replace("T", " ")}</span>
           <span class="row-dur">${Math.round(c.duration_s)}s</span>
-          <span class="row-preview">${firstUser.slice(0, 80)}</span>
+          <span class="row-preview">${escapeHtml(preview).slice(0, 100)}</span>
         </button>
       `;
       list.appendChild(li);
@@ -80,9 +88,18 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     const c = cache.find((x) => x.conversation_id === id);
     if (!c) return;
     detail.hidden = false;
+    const e = c.extracted ?? {};
+    const extractedHtml = (e.caller_name || e.caller_email || e.caller_reason)
+      ? `<div class="extracted">
+           ${e.caller_name ? `<p><span class="field">Name</span> ${escapeHtml(e.caller_name)}</p>` : ""}
+           ${e.caller_email ? `<p><span class="field">Email</span> <a href="mailto:${encodeURIComponent(e.caller_email)}">${escapeHtml(e.caller_email)}</a></p>` : ""}
+           ${e.caller_reason ? `<p><span class="field">Reason</span> ${escapeHtml(e.caller_reason)}</p>` : ""}
+         </div>`
+      : "";
     detail.innerHTML = `
       <h2>${c.started_at}</h2>
-      <p class="meta">${Math.round(c.duration_s)}s · ended by ${c.ended_by}</p>
+      <p class="meta">${Math.round(c.duration_s)}s · ended by ${escapeHtml(c.ended_by)}</p>
+      ${extractedHtml}
       ${c.transcript
         .map(
           (t) => `<p class="turn ${t.role}"><strong>${t.role}:</strong> ${escapeHtml(t.text)}</p>`
@@ -131,4 +148,20 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   .row-preview { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .turn { margin: 0.5rem 0; }
   .turn.noah strong { color: #b14545; }
+  .extracted {
+    background: #f7f0db;
+    border-left: 3px solid #b14545;
+    padding: 0.7rem 1rem;
+    margin: 0.8rem 0 1.2rem;
+    font-size: 14px;
+  }
+  .extracted p { margin: 0.2rem 0; }
+  .extracted .field {
+    font-family: ui-monospace, monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b6b6b;
+    margin-right: 0.5em;
+  }
 </style>
