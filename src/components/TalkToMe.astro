@@ -1,0 +1,187 @@
+---
+const agentId = import.meta.env.PUBLIC_ELEVENLABS_AGENT_ID;
+---
+
+{agentId && (
+  <section class="talk-to-me" aria-label="Voice chat with Noah">
+    <button id="ttm-btn" type="button" data-state="idle">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="label">Talk to me</span>
+    </button>
+    <p class="disclosure">Heads up, you will be recorded.</p>
+    <p id="ttm-status" class="status" hidden></p>
+  </section>
+)}
+
+<script>
+  import { Conversation } from "@elevenlabs/client";
+
+  const agentId = import.meta.env.PUBLIC_ELEVENLABS_AGENT_ID;
+  if (agentId) {
+    const btn = document.getElementById("ttm-btn") as HTMLButtonElement | null;
+    const label = btn?.querySelector(".label") as HTMLSpanElement | null;
+    const statusEl = document.getElementById("ttm-status") as HTMLParagraphElement | null;
+
+    type SessionRef = { current: Awaited<ReturnType<typeof Conversation.startSession>> | null };
+    const session: SessionRef = { current: null };
+
+    function setState(state: "idle" | "connecting" | "listening" | "speaking" | "ending", text: string) {
+      if (btn) btn.dataset.state = state;
+      if (label) label.textContent = text;
+    }
+
+    function setStatus(text: string | null) {
+      if (!statusEl) return;
+      if (!text) {
+        statusEl.hidden = true;
+        statusEl.textContent = "";
+      } else {
+        statusEl.textContent = text;
+        statusEl.hidden = false;
+      }
+    }
+
+    async function start() {
+      setState("connecting", "Connecting…");
+      setStatus(null);
+      try {
+        session.current = await Conversation.startSession({
+          agentId,
+          onConnect: () => setState("listening", "End conversation"),
+          onDisconnect: () => {
+            session.current = null;
+            setState("idle", "Talk to me");
+          },
+          onError: (err: unknown) => {
+            console.error("ElevenLabs error:", err);
+            const msg = err instanceof Error ? err.message : String(err);
+            setStatus(`Couldn't connect: ${msg}`);
+            session.current = null;
+            setState("idle", "Talk to me");
+          },
+          onModeChange: ({ mode }: { mode: "speaking" | "listening" }) => {
+            setState(mode, "End conversation");
+          },
+        });
+      } catch (err: unknown) {
+        console.error("Start failed:", err);
+        const msg = err instanceof Error ? err.message : String(err);
+        setStatus(`Couldn't connect: ${msg}`);
+        setState("idle", "Talk to me");
+      }
+    }
+
+    async function stop() {
+      setState("ending", "Ending…");
+      try {
+        await session.current?.endSession();
+      } catch (err) {
+        console.error("End failed:", err);
+      }
+      session.current = null;
+      setState("idle", "Talk to me");
+    }
+
+    btn?.addEventListener("click", () => {
+      if (session.current) stop();
+      else start();
+    });
+
+    window.addEventListener("beforeunload", () => {
+      session.current?.endSession().catch(() => {});
+    });
+  }
+</script>
+
+<style>
+  .talk-to-me {
+    margin: 2rem 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule, #e5e0d4);
+  }
+
+  #ttm-btn {
+    font-family: inherit;
+    font-size: 1rem;
+    background: transparent;
+    color: #1c1c1c;
+    border: 1px solid #1c1c1c;
+    padding: 0.55rem 1.1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    transition: color 120ms ease, border-color 120ms ease;
+  }
+
+  #ttm-btn:hover {
+    color: #b14545;
+    border-color: #b14545;
+  }
+
+  #ttm-btn:disabled {
+    cursor: progress;
+    opacity: 0.7;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    background: #b14545;
+    flex-shrink: 0;
+    transition: background 200ms ease;
+  }
+
+  /* state: idle — solid oxblood */
+  #ttm-btn[data-state="idle"] .dot {
+    background: #b14545;
+  }
+
+  /* state: connecting — soft yellow pulse */
+  #ttm-btn[data-state="connecting"] .dot {
+    background: #c69a3f;
+    animation: ttm-pulse 1s ease-in-out infinite;
+  }
+
+  /* state: listening — green, slow pulse */
+  #ttm-btn[data-state="listening"] .dot {
+    background: #5a8a55;
+    animation: ttm-pulse 1.6s ease-in-out infinite;
+  }
+
+  /* state: speaking — oxblood, fast pulse */
+  #ttm-btn[data-state="speaking"] .dot {
+    background: #b14545;
+    animation: ttm-pulse 0.7s ease-in-out infinite;
+  }
+
+  /* state: ending — grey, no animation */
+  #ttm-btn[data-state="ending"] .dot {
+    background: #6b6b6b;
+  }
+
+  @keyframes ttm-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dot { animation: none !important; transform: scale(1); opacity: 1; }
+  }
+
+  .disclosure {
+    font-size: 14px;
+    color: #6b6b6b;
+    margin-top: 0.6rem;
+    max-width: 56ch;
+  }
+
+  .status {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px;
+    color: #b14545;
+    margin-top: 0.6rem;
+  }
+</style>
