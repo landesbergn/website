@@ -41,23 +41,32 @@ const agentId = import.meta.env.PUBLIC_ELEVENLABS_AGENT_ID;
       }
     }
 
+    // Server-side close with no useful message (the common case for quota
+    // exhaustion: LiveKit signaling drops with an empty WS reason). We can't
+    // tell quota apart from agent-config / network rejection from the SDK
+    // surface, so we show one friendly default that mentions the likely cause.
+    const CONNECT_FAILED = "Couldn't connect — daily call limit may be reached. Try again later.";
+
     async function start() {
       setState("connecting", "Connecting…");
       setStatus(null);
+      let hasConnected = false;
       try {
         session.current = await Conversation.startSession({
           agentId,
-          onConnect: () => setState("listening", "End conversation"),
-          onDisconnect: () => {
+          onConnect: () => {
+            hasConnected = true;
+            setState("listening", "End conversation");
+          },
+          onDisconnect: (details: { reason: "error" | "agent" | "user" }) => {
             session.current = null;
+            if (details.reason === "error" && !hasConnected) {
+              setStatus(CONNECT_FAILED);
+            }
             setState("idle", "Talk to me");
           },
-          onError: (err: unknown) => {
-            console.error("ElevenLabs error:", err);
-            const msg = err instanceof Error ? err.message : String(err);
-            setStatus(`Couldn't connect: ${msg}`);
-            session.current = null;
-            setState("idle", "Talk to me");
+          onError: (message: string, context?: unknown) => {
+            console.error("ElevenLabs error:", message, context);
           },
           onModeChange: ({ mode }: { mode: "speaking" | "listening" }) => {
             setState(mode, "End conversation");
@@ -65,8 +74,10 @@ const agentId = import.meta.env.PUBLIC_ELEVENLABS_AGENT_ID;
         });
       } catch (err: unknown) {
         console.error("Start failed:", err);
-        const msg = err instanceof Error ? err.message : String(err);
-        setStatus(`Couldn't connect: ${msg}`);
+        const micDenied = err instanceof DOMException && err.name === "NotAllowedError";
+        setStatus(micDenied
+          ? "Microphone access denied. Allow mic in your browser and try again."
+          : CONNECT_FAILED);
         setState("idle", "Talk to me");
       }
     }
