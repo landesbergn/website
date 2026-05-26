@@ -5,7 +5,20 @@ const agentId = import.meta.env.PUBLIC_ELEVENLABS_AGENT_ID;
 {agentId && (
   <section class="talk-to-me" aria-label="Voice chat with Noah">
     <button id="ttm-btn" type="button" data-state="idle">
-      <span class="asterisk" aria-hidden="true">∗</span>
+      <svg
+        class="asterisk"
+        viewBox="-10 -10 20 20"
+        width="14"
+        height="14"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <g stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <line x1="0" y1="-8.5" x2="0" y2="8.5" />
+          <line x1="-7.36" y1="-4.25" x2="7.36" y2="4.25" />
+          <line x1="-7.36" y1="4.25" x2="7.36" y2="-4.25" />
+        </g>
+      </svg>
       <span class="label">Talk to me</span>
     </button>
     <p class="disclosure">Heads up, you will be recorded.</p>
@@ -126,13 +139,11 @@ const agentId = import.meta.env.PUBLIC_ELEVENLABS_AGENT_ID;
 
   .asterisk {
     display: inline-block;
-    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
-    font-size: 1.35em;
-    line-height: 1;
     color: #b14545;
-    transform-origin: center;
     flex-shrink: 0;
+    transform-origin: 50% 50%;
     transition: color 200ms ease;
+    overflow: visible;
   }
 
   /* state: idle — static asterisk */
