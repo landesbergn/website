@@ -117,22 +117,16 @@ The legacy book-cover JPEGs in `public/image/` are intentionally NOT run through
 The "Talk to me" button on the homepage opens a voice conversation with an AI version of Noah (cloned voice, Claude as LLM). It's a play-around feature, not production-grade. Lives in:
 
 - `src/components/TalkToMe.astro` — button + state machine (uses `@elevenlabs/client` SDK, no floating widget chrome)
-- `src/pages/talk-to-me-logs.astro` — private admin page at `/talk-to-me-logs/?key=…` for reviewing transcripts
-- `netlify/functions/list-conversations.ts` — Netlify Function (v2 API) that polls ElevenLabs' `/v1/convai/conversations` API, returns recent calls + extracted caller info (name/email/reason)
-- `netlify/functions/log-conversation.ts` — HMAC-verified post-call webhook receiver, **currently unused** (see "Dead webhook" below)
 - `docs/agent/persona.md` — source of truth for the agent's first message + system prompt (kept in repo for review/version control; **must be re-pasted into the ElevenLabs dashboard** when changed — nothing auto-syncs)
-- `docs/agent/setup.md` — checklist for re-configuring the ElevenLabs agent (KB files, limits, webhook, data-collection fields)
+- `docs/agent/setup.md` — checklist for re-configuring the ElevenLabs agent (KB files, limits, data-collection fields)
 
-**Env vars** (all set on Netlify, Production + Deploy Preview scopes):
+**Env vars** (set on Netlify, Production + Deploy Preview scopes):
 
 - `PUBLIC_ELEVENLABS_AGENT_ID` — the agent's public ID, shipped in HTML
-- `ELEVENLABS_API_KEY` — server-only, ElevenAgents Read scope
-- `TALK_TO_ME_LOGS_KEY` — shared secret guarding `/talk-to-me-logs`
-- `ELEVENLABS_WEBHOOK_SECRET` — Svix HMAC secret, unused but kept for future
 
-**Dead webhook.** Original design was webhook-driven (ElevenLabs posts to `log-conversation` on call end → Netlify Blobs → admin page reads). ElevenLabs' delivery system silently dropped every webhook for this account despite correct config; we pivoted to direct API polling (`list-conversations` hits ElevenLabs on each admin-page load). The `log-conversation.ts` function and `ELEVENLABS_WEBHOOK_SECRET` env var are kept intact — if their webhook ever starts working we can switch back without code changes.
+**Reviewing calls.** Conversation history and transcripts live in the ElevenLabs dashboard under the agent's Conversations tab. There is no in-site logs UI. An earlier `/talk-to-me-logs/` admin page backed by a polling Netlify Function existed and was removed on 2026-05-26 — the dashboard covers the need. If you want call summaries surfaced elsewhere (email, sheet, etc.), that would be a new integration; nothing currently writes call data into this repo's domain.
 
-**No test suite.** Verification happens via deploy previews. Functions are exercised by curling the live endpoint; the conversational flow is verified by actually talking to it.
+**No test suite.** Verification happens via deploy previews. The conversational flow is verified by actually talking to it.
 
 ### Aesthetic conventions
 

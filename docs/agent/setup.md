@@ -28,7 +28,7 @@ Total corpus is small (under ~20k tokens), well within free-tier KB limits.
 
 In the agent's **Analysis** tab → **Data collection**, add these three
 data points so the agent can extract caller info during the conversation
-and we can surface it on `/talk-to-me-logs`:
+(visible in the ElevenLabs dashboard under the conversation's Analysis):
 
 | Identifier | Type | Description |
 |---|---|---|
@@ -37,7 +37,8 @@ and we can surface it on `/talk-to-me-logs`:
 | `caller_reason` | String | A one-sentence summary of why the caller wants Noah to reach out (recruiting, project, journalism, intro, etc.). Leave empty if no reason was given. |
 
 These come back in the conversation's `analysis.data_collection_results`
-field via the conversations API and are read by `list-conversations.ts`.
+field via the conversations API and are shown alongside the transcript in
+the ElevenLabs dashboard.
 
 ## (Optional) Evaluation criteria
 
@@ -47,21 +48,19 @@ contact info?"). Not required.
 
 ## Save these values for the Netlify env vars
 
-After setup, add these secrets in Netlify → Site settings →
+After setup, add this secret in Netlify → Site settings →
 Build & deploy → Environment, scoped to **Production** AND
 **Deploy Previews**:
 
 | Netlify env var | Value | Public? |
 |---|---|---|
 | `PUBLIC_ELEVENLABS_AGENT_ID` | agent ID | yes (shipped in HTML) |
-| `ELEVENLABS_API_KEY` | ElevenLabs API key with ElevenAgents Read scope | no |
-| `TALK_TO_ME_LOGS_KEY` | random string of your choice | no |
-| `ELEVENLABS_WEBHOOK_SECRET` | (unused, leave for now) | no |
 
-`PUBLIC_*` is exposed to the client. The others are server-only.
+`PUBLIC_*` is exposed to the client.
 
-## Webhook note
+## Reviewing calls
 
-The post-call webhook is currently unused — we poll the conversations
-API on every admin-page load instead. The webhook config in ElevenLabs
-can stay in place harmlessly, or be deleted.
+Transcripts, durations, and extracted data-collection fields all live in
+the ElevenLabs dashboard under the agent's Conversations tab. There is
+no in-site logs page or webhook receiver — review happens directly in
+ElevenLabs.
