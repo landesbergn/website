@@ -5,20 +5,7 @@ const agentId = import.meta.env.PUBLIC_ELEVENLABS_AGENT_ID;
 {agentId && (
   <section class="talk-to-me" aria-label="Voice chat with Noah">
     <button id="ttm-btn" type="button" data-state="idle">
-      <svg
-        class="asterisk"
-        viewBox="-10 -10 20 20"
-        width="14"
-        height="14"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <g stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-          <line x1="0" y1="-8.5" x2="0" y2="8.5" />
-          <line x1="-7.36" y1="-4.25" x2="7.36" y2="4.25" />
-          <line x1="-7.36" y1="4.25" x2="7.36" y2="-4.25" />
-        </g>
-      </svg>
+      <span class="dot" aria-hidden="true"></span>
       <span class="label">Talk to me</span>
     </button>
     <p class="disclosure">Heads up, you will be recorded.</p>
@@ -137,53 +124,51 @@ const agentId = import.meta.env.PUBLIC_ELEVENLABS_AGENT_ID;
     opacity: 0.7;
   }
 
-  .asterisk {
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
     display: inline-block;
-    color: #b14545;
+    background: #b14545;
     flex-shrink: 0;
-    transform-origin: 50% 50%;
-    transition: color 200ms ease;
-    overflow: visible;
+    transition: background 200ms ease;
   }
 
-  /* state: idle — static asterisk */
-  #ttm-btn[data-state="idle"] .asterisk {
-    color: #b14545;
+  /* state: idle — solid oxblood */
+  #ttm-btn[data-state="idle"] .dot {
+    background: #b14545;
   }
 
-  /* state: connecting — gentle fade */
-  #ttm-btn[data-state="connecting"] .asterisk {
-    color: #c69a3f;
-    animation: ttm-fade 1s ease-in-out infinite;
+  /* state: connecting — soft yellow pulse */
+  #ttm-btn[data-state="connecting"] .dot {
+    background: #c69a3f;
+    animation: ttm-pulse 1s ease-in-out infinite;
   }
 
-  /* state: listening — slow rotation */
-  #ttm-btn[data-state="listening"] .asterisk {
-    color: #5a8a55;
-    animation: ttm-spin 4s linear infinite;
+  /* state: listening — green, slow pulse */
+  #ttm-btn[data-state="listening"] .dot {
+    background: #5a8a55;
+    animation: ttm-pulse 1.6s ease-in-out infinite;
   }
 
-  /* state: speaking — fast rotation */
-  #ttm-btn[data-state="speaking"] .asterisk {
-    color: #b14545;
-    animation: ttm-spin 1.1s linear infinite;
+  /* state: speaking — oxblood, fast pulse */
+  #ttm-btn[data-state="speaking"] .dot {
+    background: #b14545;
+    animation: ttm-pulse 0.7s ease-in-out infinite;
   }
 
-  /* state: ending — grey, frozen */
-  #ttm-btn[data-state="ending"] .asterisk {
-    color: #6b6b6b;
+  /* state: ending — grey, no animation */
+  #ttm-btn[data-state="ending"] .dot {
+    background: #6b6b6b;
   }
 
-  @keyframes ttm-spin {
-    to { transform: rotate(360deg); }
-  }
-  @keyframes ttm-fade {
-    0%, 100% { opacity: 1;   }
-    50%      { opacity: 0.35; }
+  @keyframes ttm-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.4; transform: scale(0.7); }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .asterisk { animation: none !important; }
+    .dot { animation: none !important; transform: scale(1); opacity: 1; }
   }
 
   .disclosure {
