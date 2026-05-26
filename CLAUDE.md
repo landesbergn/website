@@ -112,6 +112,28 @@ The PostHog project key is read from `import.meta.env.PUBLIC_POSTHOG_KEY` (set i
 
 The legacy book-cover JPEGs in `public/image/` are intentionally NOT run through Astro's `<Image>` component — they're already small and referenced by Markdown posts that we don't want to transform. New typography-first images can be optimized through `<Image>` from `src/assets/` if added later.
 
+### Talk-to-me voice agent
+
+The "Talk to me" button on the homepage opens a voice conversation with an AI version of Noah (cloned voice, Claude as LLM). It's a play-around feature, not production-grade. Lives in:
+
+- `src/components/TalkToMe.astro` — button + state machine (uses `@elevenlabs/client` SDK, no floating widget chrome)
+- `src/pages/talk-to-me-logs.astro` — private admin page at `/talk-to-me-logs/?key=…` for reviewing transcripts
+- `netlify/functions/list-conversations.ts` — Netlify Function (v2 API) that polls ElevenLabs' `/v1/convai/conversations` API, returns recent calls + extracted caller info (name/email/reason)
+- `netlify/functions/log-conversation.ts` — HMAC-verified post-call webhook receiver, **currently unused** (see "Dead webhook" below)
+- `docs/agent/persona.md` — source of truth for the agent's first message + system prompt (kept in repo for review/version control; **must be re-pasted into the ElevenLabs dashboard** when changed — nothing auto-syncs)
+- `docs/agent/setup.md` — checklist for re-configuring the ElevenLabs agent (KB files, limits, webhook, data-collection fields)
+
+**Env vars** (all set on Netlify, Production + Deploy Preview scopes):
+
+- `PUBLIC_ELEVENLABS_AGENT_ID` — the agent's public ID, shipped in HTML
+- `ELEVENLABS_API_KEY` — server-only, ElevenAgents Read scope
+- `TALK_TO_ME_LOGS_KEY` — shared secret guarding `/talk-to-me-logs`
+- `ELEVENLABS_WEBHOOK_SECRET` — Svix HMAC secret, unused but kept for future
+
+**Dead webhook.** Original design was webhook-driven (ElevenLabs posts to `log-conversation` on call end → Netlify Blobs → admin page reads). ElevenLabs' delivery system silently dropped every webhook for this account despite correct config; we pivoted to direct API polling (`list-conversations` hits ElevenLabs on each admin-page load). The `log-conversation.ts` function and `ELEVENLABS_WEBHOOK_SECRET` env var are kept intact — if their webhook ever starts working we can switch back without code changes.
+
+**No test suite.** Verification happens via deploy previews. Functions are exercised by curling the live endpoint; the conversational flow is verified by actually talking to it.
+
 ### Aesthetic conventions
 
 The design is intentionally early-internet-flavored: system serif body, monospace metadata, oxblood `#b14545` accent used in three places only (link hover underline, project `↗`, `::selection`), warm off-white `#fdfbf5` background. Don't reach for default-browser blue/purple links — links inherit body color and use a font-weight bump in prose for affordance, with a faded oxblood underline appearing on hover. CSS variables for these live at the top of `src/styles/global.css`.
