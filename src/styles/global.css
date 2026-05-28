@@ -193,24 +193,29 @@ body {
   font-weight: 700;
 }
 
-/* Pack the nav onto one row at narrow viewports: tighten the link
-   gutters and shrink the social tap targets to 40×40 (above
-   Lighthouse's 24px floor). */
+/* Pack the nav onto one row at narrow viewports. With Lately added,
+   the row needs more savings: shrink type, drop the `·` separators
+   (link padding carries the spacing), and trim social tap targets
+   to 32×32 (above Lighthouse's 24px floor). */
 @media (max-width: 540px) {
+  .site-header nav {
+    font-size: 0.78rem;
+  }
   .site-header nav a {
-    margin-right: 2px;
+    padding: 0 4px;
+    margin-right: 0;
   }
   .site-header nav .sep {
-    margin-right: 2px;
+    display: none;
   }
   .site-header nav .social {
-    margin-left: 4px;
-    padding-left: 5px;          /* 4 + 1px divider for symmetric spacing */
+    margin-left: 6px;
+    padding-left: 7px;          /* 6 + 1px divider for symmetric spacing */
     gap: 0;
   }
   .site-header nav .social a {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
   }
 }
 

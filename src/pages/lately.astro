@@ -74,10 +74,11 @@ const renderInline = (s: string): string => {
             <button
               class="mobile-toggle"
               type="button"
+              aria-label="Show photo"
               aria-expanded="false"
               aria-controls={`lately-photo-${i}`}
             >
-              <span class="toggle-arrow" aria-hidden="true">▸</span> photo
+              <span class="toggle-arrow" aria-hidden="true">▸</span>
             </button>
           )}
           {e.photo && (
@@ -128,6 +129,7 @@ const renderInline = (s: string): string => {
         e.stopPropagation();
         const expanded = btn.getAttribute('aria-expanded') === 'true';
         btn.setAttribute('aria-expanded', String(!expanded));
+        btn.setAttribute('aria-label', expanded ? 'Show photo' : 'Hide photo');
         const arrow = btn.querySelector('.toggle-arrow');
         if (arrow) arrow.textContent = expanded ? '▸' : '▾';
         const targetId = btn.getAttribute('aria-controls');
