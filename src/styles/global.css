@@ -55,6 +55,12 @@ body {
   }
 }
 
+/* Lately page uses a wider container so the two-column 50/50 split
+   gives the photo enough presence at half-width. */
+.page--lately {
+  max-width: 1040px;
+}
+
 .site-header {
   margin-bottom: 20px;
 }
