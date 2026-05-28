@@ -193,29 +193,41 @@ body {
   font-weight: 700;
 }
 
-/* Pack the nav onto one row at narrow viewports. With Lately added,
-   the row needs more savings: shrink type, drop the `·` separators
-   (link padding carries the spacing), and trim social tap targets
-   to 32×32 (above Lighthouse's 24px floor). */
+/* Mobile: split the nav into two intentional rows — text links on
+   row 1, social icons on row 2. Keeps everything at full size
+   instead of squishing into a single cramped row now that Lately
+   was added. */
 @media (max-width: 540px) {
   .site-header nav {
-    font-size: 0.78rem;
+    row-gap: 6px;
   }
   .site-header nav a {
-    padding: 0 4px;
-    margin-right: 0;
+    margin-right: 4px;
   }
   .site-header nav .sep {
-    display: none;
+    margin-right: 4px;
   }
   .site-header nav .social {
-    margin-left: 6px;
-    padding-left: 7px;          /* 6 + 1px divider for symmetric spacing */
+    flex-basis: 100%;
+    margin-left: 0;
+    padding-left: 0;
     gap: 0;
   }
+  .site-header nav .social::before {
+    /* Hide the inline divider when social moves to its own row. */
+    display: none;
+  }
   .site-header nav .social a {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Narrowest phones (iPhone SE etc.): drop the `·` separators so the
+   text-links row still fits in one line. */
+@media (max-width: 380px) {
+  .site-header nav .sep {
+    display: none;
   }
 }
 
