@@ -2,27 +2,26 @@
 # Required: date (YYYY-MM-DD), text (inline markdown — *em*, [link](url))
 # Optional: photo (filename in public/image/lately/), caption (required if photo set)
 
-- date: 2026-05-26
-  text: "[placeholder — replace] Finished a book I'd been meaning to get to."
+- date: 2026-05-23
+  text: Finished *The Power Broker*.
 
-- date: 2026-05-24
-  text: "[placeholder — replace] Caught a show at the Fox in Oakland."
-  photo: placeholder-1.svg
-  caption: "[placeholder caption — replace with the real one]"
+- date: 2026-05-23
+  text: Ran my first 10k trail run.
 
-- date: 2026-05-20
-  text: "[placeholder — replace] Hiked the Dipsea end-to-end with friends."
-  photo: placeholder-2.svg
-  caption: "[placeholder caption — replace]"
+- date: 2026-05-19
+  text: Went to the Bay Area Model.
 
-- date: 2026-05-18
-  text: "[placeholder — replace] Tried making fresh pasta from scratch. Mixed results."
+- date: 2026-05-15
+  text: Hiked to the top of Bear Peak in Boulder, CO.
 
-- date: 2026-05-14
-  text: "[placeholder — replace] Spent a weekend in Mendocino. Read more than I expected to."
+- date: 2026-05-08
+  text: Planted a flower garden.
 
-- date: 2026-05-10
-  text: "[placeholder — replace] Heard a song that I haven't been able to stop replaying."
+- date: 2026-05-06
+  text: Attended the Musk v. OpenAI trial.
 
-- date: 2026-05-04
-  text: "[placeholder — replace] Rebuilt this site from Hugo to Astro."
+- date: 2026-05-03
+  text: Volunteered as a crisis actor for a Berkeley Reserve Medical Corps training exercise.
+
+- date: 2026-04-24
+  text: Went on a walk with the Berkeley Pathfinders Association.
