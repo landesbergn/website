@@ -382,8 +382,8 @@ const iso = (d: Date | string) => new Date(d).toISOString().slice(0, 10);
       display: block;
       flex-basis: 100%;
       margin-top: 10px;
-      margin-left: calc(0.5rem + 4.5em + 14px);
-      max-width: calc(100% - 4.5em - 14px - 0.5rem);
+      margin-left: 0;
+      max-width: 100%;
     }
     .mobile-photo img {
       width: 100%;
@@ -395,6 +395,7 @@ const iso = (d: Date | string) => new Date(d).toISOString().slice(0, 10);
       font-size: 0.78rem;
       color: var(--color-muted);
       margin-top: 4px;
+      margin-left: 0;
     }
   }
 </style>
