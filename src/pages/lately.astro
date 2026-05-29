@@ -1,7 +1,9 @@
 ---
 import yaml from 'js-yaml';
+import { getCollection } from 'astro:content';
 import latelyYaml from '../data/lately.yaml?raw';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { frozenPosts } from '../legacy/posts';
 
 interface Entry {
   date: string;
@@ -48,6 +50,24 @@ const renderInline = (s: string): string => {
   out = out.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
   return out;
 };
+
+// Writing section — combines markdown posts with the frozen R/blogdown
+// posts, sorted newest-first. Mirrors the merge logic in /blog/index.
+const collectionPosts = await getCollection('blog', ({ data }) => !data.draft);
+const allWriting = [
+  ...collectionPosts.map((p) => ({
+    title: p.data.title,
+    date: p.data.date,
+    url: `/blog/${p.data.permalink}/`,
+  })),
+  ...frozenPosts.map((p) => ({
+    title: p.title,
+    date: p.date,
+    url: p.url,
+  })),
+].sort((a, b) => b.date.getTime() - a.date.getTime());
+
+const iso = (d: Date) => d.toISOString().slice(0, 10);
 ---
 
 <BaseLayout
@@ -98,6 +118,19 @@ const renderInline = (s: string): string => {
       </div>
     </aside>
   </div>
+
+  <hr />
+
+  <h2 class="lately-h2"><a href="/blog/" class="writing-link">Writing</a></h2>
+  <ul class="post-list lately-writing-list">
+    {allWriting.map((post) => (
+      <li>
+        <time datetime={iso(post.date)}>{iso(post.date)}</time>
+        <span class="leader" aria-hidden="true"></span>
+        <a href={post.url}>{post.title}</a>
+      </li>
+    ))}
+  </ul>
 </BaseLayout>
 
 <script>
@@ -222,11 +255,15 @@ const renderInline = (s: string): string => {
     top: 24px;
     min-height: 240px;
   }
+  /* Photo fits within the viewport (minus header/caption breathing
+     room) and scales proportionally — portrait shots are height-
+     constrained, landscape shots are width-constrained, both stay
+     fully visible alongside the caption without scrolling. */
   .pane-photo {
-    width: 100%;
+    max-width: 100%;
+    max-height: calc(100vh - 8rem);
+    width: auto;
     height: auto;
-    max-height: 80vh;
-    object-fit: contain;
     display: block;
     margin-bottom: 10px;
   }
