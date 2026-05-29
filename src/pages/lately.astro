@@ -247,27 +247,32 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     background: rgba(177, 69, 69, 0.13);
   }
 
+  /* Pane has a fixed viewport-relative height so it occupies the
+     same vertical space whether or not a photo is currently
+     hovered. That keeps the grid row constant — hovering an entry
+     doesn't push the Writing section (and the rest of the page)
+     down. */
   .lately-pane {
     position: sticky;
     top: 24px;
-    min-height: 240px;
+    height: 60vh;
+    align-self: start;
+    display: flex;
+    flex-direction: column;
   }
-  /* Photo fits within the viewport on initial load — accounting for
-     the site header, nav, h2, intro, and caption that share the
-     same viewport space — so the full image and caption are both
-     visible without scrolling. Portrait shots are height-constrained
-     (and centered horizontally in the column to avoid a lopsided
-     gap on the right); landscape shots are width-constrained as
-     before. */
   .pane-photo {
-    max-width: 100%;
-    max-height: calc(100vh - 22rem);
-    width: auto;
-    height: auto;
+    flex: 1 1 0;
+    min-height: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center top;
     display: block;
-    margin: 0 auto 10px;
+    margin: 0;
   }
   .pane-caption {
+    flex-shrink: 0;
+    margin-top: 10px;
     font-family: var(--font-mono);
     font-size: 0.8rem;
     color: var(--color-muted);
