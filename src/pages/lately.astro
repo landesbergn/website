@@ -171,6 +171,17 @@ const iso = (d: Date | string) => new Date(d).toISOString().slice(0, 10);
         if (target) target.hidden = expanded;
       });
     });
+
+  // Mobile: tapping anywhere on a has-photo row toggles the photo
+  // too (delegates to the carrot button). Clicks on links inside
+  // the row still navigate.
+  items.forEach((entry) => {
+    entry.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) return;
+      const btn = entry.querySelector<HTMLButtonElement>('.mobile-toggle');
+      if (btn) btn.click();
+    });
+  });
 </script>
 
 <style>
