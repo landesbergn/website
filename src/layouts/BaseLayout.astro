@@ -28,7 +28,7 @@ const titleLetters = Array.from('Noah Landesberg');
     <slot name="head" />
   </head>
   <body>
-    <div class:list={["page", pageClass]}>
+    <div class:list={["page", pageClass, pathname === '/' && 'home']}>
       <header class="site-header">
         <h1 class="site-title"><a href="/" aria-label="Noah Landesberg — home">{titleLetters.map((ch, i) => (
           <span style={`--i: ${i}`} aria-hidden="true">{ch === ' ' ? ' ' : ch}</span>

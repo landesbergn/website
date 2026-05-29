@@ -31,9 +31,11 @@ not add a new mobile vocabulary. See "Non-goals" below.
 Two product decisions confirmed with the user:
 
 - **Scope: mobile / touch only.** Desktop already has the hover wave and stays untouched.
-- **Cadence: every page load.** Pure CSS, no storage, consistent with the site's cookieless
-  / no-persistence ethos. The name re-drops on each navigation (Home → Projects, etc.); this
-  is accepted.
+- **Cadence: home page only** (revised 2026-05-29 after first review — originally "every page
+  load"). The reveal fires when `/` loads but not on subsequent navigations to Projects /
+  Lately / blog, so it reads as a landing-page welcome rather than a repeating tic. Achieved by
+  scoping the CSS to a `.home` class (no JS, no storage — still consistent with the cookieless
+  ethos).
 
 ## Behavior
 
@@ -56,8 +58,14 @@ what we need: `BaseLayout.astro` wraps each title letter in its own `<span style
 aria-hidden="true">`, and the `<a>` carries an `aria-label`, so the animation is invisible to
 assistive tech and adds no DOM.
 
+- Mark the home page: `BaseLayout.astro` adds a `home` class to the `.page` wrapper when
+  `Astro.url.pathname === '/'`. The reveal selectors descend from `.home`.
 - Add a new rule **inside `@media (hover: none)`** so it only affects touch devices. Desktop
   (`hover: hover`) is unchanged.
+- **Specificity caveat:** adding the `.home` ancestor raises the rule to (0,3,3), above the
+  reduced-motion `animation: none` override. So that override is also scoped to
+  `.home .site-header h1.site-title a span` (equal specificity, later in source → it still
+  wins). Forgetting this would silently re-enable the animation for reduced-motion users.
   - Define a `title-reveal` `@keyframes`: `0%` = `opacity:0`, `translateY(8–10px)`, color ink;
     ~`55%` = `color: var(--c)` (the per-letter palette color); `100%` = `opacity:1`,
     `transform:none`, color ink.
