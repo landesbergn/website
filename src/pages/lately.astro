@@ -36,6 +36,22 @@ const fmtDate = (d: string | Date) =>
     timeZone: 'UTC',
   });
 
+// Used by the lately timeline so we can drop the year on mobile
+// (where the year is redundant — everything is current) while
+// keeping the full date on desktop.
+const fmtMonthDay = (d: string | Date) =>
+  new Date(d).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    timeZone: 'UTC',
+  });
+
+const fmtYear = (d: string | Date) =>
+  new Date(d).toLocaleDateString('en-US', {
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
+
 // Inline-only Markdown: links and italics. HTML is escaped first.
 const escapeHtml = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -89,7 +105,7 @@ const iso = (d: Date | string) => new Date(d).toISOString().slice(0, 10);
           data-caption={e.caption || ''}
         >
           <span class="dot" aria-hidden="true">●</span>
-          <time datetime={e.date}>{fmtDate(e.date)}</time>
+          <time datetime={e.date}>{fmtMonthDay(e.date)}<span class="date-year">, {fmtYear(e.date)}</span></time>
           <span class="text" set:html={renderInline(e.text)} />
           {e.photo && (
             <button
@@ -356,6 +372,15 @@ const iso = (d: Date | string) => new Date(d).toISOString().slice(0, 10);
     }
     .lately-pane {
       display: none;
+    }
+    /* Mobile: drop the year suffix from the lately dates to give
+       the entry text more room. Year is always the current year
+       at posting time so the savings are essentially context-free. */
+    .lately-entry .date-year {
+      display: none;
+    }
+    .lately-entry time {
+      min-width: 4.5em;
     }
     .lately-entry {
       flex-wrap: wrap;
