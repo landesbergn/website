@@ -124,7 +124,9 @@ body {
   flex-wrap: wrap;
   min-height: 44px;            /* tap-target row height */
   font-family: var(--font-ui);
-  font-size: 0.85rem;
+  /* Jost has a smaller x-height than the old monospace, so it reads small
+     at the same size — bump the nav up a notch to compensate. */
+  font-size: 0.95rem;
   color: var(--color-muted);
   row-gap: 4px;
 }
@@ -219,7 +221,7 @@ body {
    step down further and drop the separators. */
 @media (max-width: 540px) {
   .site-header nav {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
   .site-header nav a {
     padding: 0 4px;
@@ -241,7 +243,7 @@ body {
 
 @media (max-width: 380px) {
   .site-header nav {
-    font-size: 0.72rem;
+    font-size: 0.8rem;
   }
   .site-header nav .sep {
     display: none;
