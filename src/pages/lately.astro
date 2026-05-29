@@ -255,17 +255,20 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     top: 24px;
     min-height: 240px;
   }
-  /* Photo fits within the viewport (minus header/caption breathing
-     room) and scales proportionally — portrait shots are height-
-     constrained, landscape shots are width-constrained, both stay
-     fully visible alongside the caption without scrolling. */
+  /* Photo fits within the viewport on initial load — accounting for
+     the site header, nav, h2, intro, and caption that share the
+     same viewport space — so the full image and caption are both
+     visible without scrolling. Portrait shots are height-constrained
+     (and centered horizontally in the column to avoid a lopsided
+     gap on the right); landscape shots are width-constrained as
+     before. */
   .pane-photo {
     max-width: 100%;
-    max-height: calc(100vh - 8rem);
+    max-height: calc(100vh - 22rem);
     width: auto;
     height: auto;
     display: block;
-    margin-bottom: 10px;
+    margin: 0 auto 10px;
   }
   .pane-caption {
     font-family: var(--font-mono);
