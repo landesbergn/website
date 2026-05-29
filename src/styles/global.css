@@ -214,7 +214,7 @@ body {
    step down further and drop the separators. */
 @media (max-width: 540px) {
   .site-header nav {
-    font-size: 0.82rem;
+    font-size: 0.85rem;
   }
   .site-header nav a {
     padding: 0 4px;
