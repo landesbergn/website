@@ -276,6 +276,13 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     color: var(--color-muted);
     line-height: 1.5;
   }
+  /* Restore `hidden` attribute semantics — our explicit `display`
+     values above would otherwise win and Chrome would render an
+     empty broken-image box on initial load. */
+  .pane-photo[hidden],
+  .pane-caption[hidden] {
+    display: none;
+  }
 
   /* Mobile elements hidden on desktop */
   .mobile-toggle,
