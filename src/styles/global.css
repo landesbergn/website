@@ -55,6 +55,12 @@ body {
   }
 }
 
+/* Lately page uses a wider container so the two-column 50/50 split
+   gives the photo enough presence at half-width. */
+.page--lately {
+  max-width: 1800px;
+}
+
 .site-header {
   margin-bottom: 20px;
 }
@@ -157,7 +163,11 @@ body {
   transform: translateY(-50%);
 }
 
-/* Social icon tap targets are 44×44 (icons stay visually 14×14). */
+/* Social icon tap targets are 44×44 (icons stay visually 14×14).
+   Icon color is set on the SVG fill/stroke attributes directly
+   (rather than via currentColor + inherited link color) so the
+   icons paint at the muted color from the first frame — no flash
+   of the browser-default link blue while CSS settles. */
 .site-header nav .social a {
   display: inline-flex;
   align-items: center;
@@ -168,11 +178,21 @@ body {
   padding: 0;
   color: var(--color-muted);
   text-decoration: none;
-  transition: color 0.12s ease;
 }
 
+.site-header nav .social svg {
+  transition: fill 0.12s ease, stroke 0.12s ease;
+}
+
+/* Filled icons (GitHub, LinkedIn) get fill swap on hover; outlined
+   icons (Email, which carries fill="none") get stroke swap. */
+.site-header nav .social a:hover svg:not([fill="none"]) {
+  fill: var(--color-text);
+}
+.site-header nav .social a:hover svg[fill="none"] {
+  stroke: var(--color-text);
+}
 .site-header nav .social a:hover {
-  color: var(--color-text);
   text-decoration: none;
 }
 
@@ -187,24 +207,47 @@ body {
   font-weight: 700;
 }
 
-/* Pack the nav onto one row at narrow viewports: tighten the link
-   gutters and shrink the social tap targets to 40×40 (above
-   Lighthouse's 24px floor). */
+/* Mobile: fit the whole nav on a single row. Shrink the type a
+   notch and trim social icons to 36×36 (above Lighthouse's 24px
+   floor). Keep the `·` separators (now that there are only three
+   text links there's room for them). At the narrowest viewports
+   step down further and drop the separators. */
 @media (max-width: 540px) {
+  .site-header nav {
+    font-size: 0.85rem;
+  }
   .site-header nav a {
-    margin-right: 2px;
+    padding: 0 4px;
+    margin-right: 0;
   }
   .site-header nav .sep {
-    margin-right: 2px;
+    margin: 0 2px;
   }
   .site-header nav .social {
-    margin-left: 4px;
-    padding-left: 5px;          /* 4 + 1px divider for symmetric spacing */
+    margin-left: 8px;
+    padding-left: 9px;          /* 8 + 1px divider for symmetric spacing */
     gap: 0;
   }
   .site-header nav .social a {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 380px) {
+  .site-header nav {
+    font-size: 0.72rem;
+  }
+  .site-header nav .sep {
+    display: none;
+  }
+  .site-header nav .social {
+    margin-left: 4px;
+    padding-left: 5px;
+  }
+  .site-header nav .social a {
+    width: 32px;
+    height: 32px;
   }
 }
 

@@ -1,0 +1,437 @@
+---
+import yaml from 'js-yaml';
+import { getCollection } from 'astro:content';
+import latelyYaml from '../data/lately.yaml?raw';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { frozenPosts } from '../legacy/posts';
+
+interface Entry {
+  date: string;
+  text: string;
+  photo?: string;
+  caption?: string;
+}
+
+const parsed = yaml.load(latelyYaml) as Entry[] | null;
+const entries: Entry[] = Array.isArray(parsed) ? parsed : [];
+
+for (const e of entries) {
+  if (!e.date || !e.text) {
+    throw new Error(`Lately entry missing date or text: ${JSON.stringify(e)}`);
+  }
+  if (e.photo && !e.caption) {
+    throw new Error(`Lately entry has photo but no caption: ${JSON.stringify(e)}`);
+  }
+}
+
+const sorted = entries.slice().sort(
+  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+);
+
+const fmtDate = (d: string | Date) =>
+  new Date(d).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
+
+// Used by the lately timeline so we can drop the year on mobile
+// (where the year is redundant — everything is current) while
+// keeping the full date on desktop.
+const fmtMonthDay = (d: string | Date) =>
+  new Date(d).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    timeZone: 'UTC',
+  });
+
+const fmtYear = (d: string | Date) =>
+  new Date(d).toLocaleDateString('en-US', {
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
+
+// Inline-only Markdown: links and italics. HTML is escaped first.
+const escapeHtml = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+const renderInline = (s: string): string => {
+  let out = escapeHtml(s);
+  // Links [text](url) — url restricted to chars that don't need escaping
+  out = out.replace(
+    /\[([^\]]+)\]\(([a-zA-Z][^)\s]*)\)/g,
+    (_m, text, url) => `<a href="${url}" target="_blank" rel="noopener">${text}</a>`,
+  );
+  // Italics *text*
+  out = out.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
+  return out;
+};
+
+// Writing section — combines markdown posts with the frozen R/blogdown
+// posts, sorted newest-first. Mirrors the merge logic in /blog/index.
+const collectionPosts = await getCollection('blog', ({ data }) => !data.draft);
+const allWriting = [
+  ...collectionPosts.map((p) => ({
+    title: p.data.title,
+    date: p.data.date,
+    url: `/blog/${p.data.permalink}/`,
+  })),
+  ...frozenPosts.map((p) => ({
+    title: p.title,
+    date: p.date,
+    url: p.url,
+  })),
+].sort((a, b) => b.date.getTime() - a.date.getTime());
+
+const iso = (d: Date | string) => new Date(d).toISOString().slice(0, 10);
+---
+
+<BaseLayout
+  title="Lately — Noah Landesberg"
+  description="A running log of things I've been up to."
+  pageClass="page--lately"
+>
+  <h2 class="lately-h2">Lately</h2>
+  <p class="lately-intro">A running log of what I've been up to.</p>
+
+  <div class="lately-grid">
+    <ul class="lately-entries" role="list">
+      {sorted.map((e, i) => (
+        <li
+          class:list={["lately-entry", e.photo && "has-photo"]}
+          tabindex={e.photo ? 0 : undefined}
+          data-photo={e.photo ? `/image/lately/${e.photo}` : undefined}
+          data-caption={e.caption || ''}
+        >
+          <span class="dot" aria-hidden="true">●</span>
+          <time datetime={e.date}>{fmtMonthDay(e.date)}<span class="date-year">, {fmtYear(e.date)}</span></time>
+          <span class="text" set:html={renderInline(e.text)} />
+          {e.photo && (
+            <button
+              class="mobile-toggle"
+              type="button"
+              aria-label="Show photo"
+              aria-expanded="false"
+              aria-controls={`lately-photo-${i}`}
+            >
+              <span class="toggle-arrow" aria-hidden="true">▸</span>
+            </button>
+          )}
+          {e.photo && (
+            <div class="mobile-photo" id={`lately-photo-${i}`} hidden>
+              <img src={`/image/lately/${e.photo}`} alt={e.caption} loading="lazy" />
+              <div class="mobile-caption">{e.caption}</div>
+            </div>
+          )}
+        </li>
+      ))}
+    </ul>
+
+    <aside class="lately-pane" aria-live="polite">
+      <img class="pane-photo" alt="" hidden />
+      <div class="pane-caption" hidden></div>
+    </aside>
+  </div>
+
+  <section class="lately-writing">
+    <h2 class="lately-h2">Older writing</h2>
+    <p class="lately-intro">Blog posts I wrote a while ago.</p>
+    <ul class="lately-writing-list" role="list">
+      {allWriting.map((post) => (
+        <li>
+          <span class="dot" aria-hidden="true">●</span>
+          <time datetime={iso(post.date)}>{fmtDate(post.date)}</time>
+          <a href={post.url}>{post.title}</a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<script>
+  const items = document.querySelectorAll<HTMLLIElement>('.lately-entry.has-photo');
+  const paneImg = document.querySelector<HTMLImageElement>('.pane-photo');
+  const paneCap = document.querySelector<HTMLDivElement>('.pane-caption');
+
+  const showInPane = (entry: HTMLElement) => {
+    const photo = entry.dataset.photo;
+    const caption = entry.dataset.caption ?? '';
+    if (!photo || !paneImg || !paneCap) return;
+    paneImg.src = photo;
+    paneImg.alt = caption;
+    paneImg.hidden = false;
+    paneCap.textContent = caption;
+    paneCap.hidden = false;
+  };
+
+  items.forEach((entry) => {
+    entry.addEventListener('mouseenter', () => showInPane(entry));
+    entry.addEventListener('focus', () => showInPane(entry));
+  });
+
+  // Mobile: toggle inline photo
+  document
+    .querySelectorAll<HTMLButtonElement>('.lately-entry .mobile-toggle')
+    .forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        btn.setAttribute('aria-label', expanded ? 'Show photo' : 'Hide photo');
+        const arrow = btn.querySelector('.toggle-arrow');
+        if (arrow) arrow.textContent = expanded ? '▸' : '▾';
+        const targetId = btn.getAttribute('aria-controls');
+        if (!targetId) return;
+        const target = document.getElementById(targetId);
+        if (target) target.hidden = expanded;
+      });
+    });
+
+  // Mobile: tapping anywhere on a has-photo row toggles the photo
+  // too (delegates to the carrot button). Clicks on links inside
+  // the row still navigate.
+  items.forEach((entry) => {
+    entry.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) return;
+      const btn = entry.querySelector<HTMLButtonElement>('.mobile-toggle');
+      if (btn) btn.click();
+    });
+  });
+</script>
+
+<style>
+  .lately-h2 {
+    font-size: 1.3rem;
+    position: relative;
+    padding-left: 14px;
+    font-weight: 700;
+    margin: 0 0 0.5em;
+  }
+  .lately-h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.25em;
+    bottom: 0.2em;
+    width: 3px;
+    background: var(--color-accent);
+  }
+  .lately-intro {
+    color: var(--color-muted);
+    margin: 0 0 1em;
+    max-width: 50ch;
+  }
+
+  .lately-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .lately-entries {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+  }
+  .lately-entry {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    padding: 8px 6px;
+    margin: 0 -6px;
+    border-radius: 2px;
+    outline: none;
+    transition: background-color 0.08s ease-out;
+  }
+  .lately-entry.has-photo {
+    cursor: default;
+  }
+  .lately-entry .dot {
+    color: var(--color-accent);
+    font-size: 0.5rem;
+    flex-shrink: 0;
+    opacity: 0.35;
+    line-height: 1;
+    position: relative;
+    top: -0.15em;
+  }
+  .lately-entry.has-photo .dot {
+    opacity: 1;
+  }
+  .lately-entry time {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+    min-width: 7em;
+  }
+  .lately-entry .text {
+    flex: 1;
+    min-width: 0;
+  }
+  .lately-entry.has-photo:hover,
+  .lately-entry.has-photo:focus-visible {
+    background: rgba(177, 69, 69, 0.13);
+  }
+
+  /* Writing section — visually mirrors the lately timeline (dot +
+     date + text row) so it reads as a continuation rather than
+     a foreign block, but capped at the regular content column
+     width so it doesn't stretch the dotted leader across the
+     lately page's wide layout. */
+  .lately-writing {
+    margin-top: 3.5em;
+  }
+  .lately-writing-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-width: 720px;
+  }
+  .lately-writing-list li {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    padding: 8px 6px;
+    margin: 0 -6px;
+  }
+  .lately-writing-list .dot {
+    color: var(--color-accent);
+    font-size: 0.5rem;
+    flex-shrink: 0;
+    opacity: 0.35;
+    line-height: 1;
+    position: relative;
+    top: -0.15em;
+  }
+  .lately-writing-list time {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+    min-width: 7em;
+  }
+  .lately-writing-list a {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Pane has a fixed viewport-relative height so it occupies the
+     same vertical space whether or not a photo is currently
+     hovered. That keeps the grid row constant — hovering an entry
+     doesn't push the Writing section (and the rest of the page)
+     down. */
+  .lately-pane {
+    position: sticky;
+    top: 24px;
+    height: 50vh;
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+  }
+  .pane-photo {
+    flex: 1 1 0;
+    min-height: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: left top;
+    display: block;
+    margin: 0;
+  }
+  .pane-caption {
+    flex-shrink: 0;
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+  /* Restore `hidden` attribute semantics — our explicit `display`
+     values above would otherwise win and Chrome would render an
+     empty broken-image box on initial load. */
+  .pane-photo[hidden],
+  .pane-caption[hidden] {
+    display: none;
+  }
+
+  /* Mobile elements hidden on desktop */
+  .mobile-toggle,
+  .mobile-photo {
+    display: none;
+  }
+
+  @media (max-width: 720px) {
+    .lately-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .lately-pane {
+      display: none;
+    }
+    /* Mobile: drop the year suffix from the lately dates to give
+       the entry text more room. Year is always the current year
+       at posting time so the savings are essentially context-free. */
+    .lately-entry .date-year {
+      display: none;
+    }
+    .lately-entry time {
+      min-width: 4.5em;
+    }
+    .lately-entry {
+      flex-wrap: wrap;
+      padding: 12px 0;
+      margin: 0;
+      border-radius: 0;
+      border-bottom: 1px dotted var(--color-rule);
+      transition: none;
+    }
+    .lately-entry:last-child {
+      border-bottom: none;
+    }
+    .lately-entry.has-photo:hover,
+    .lately-entry.has-photo:focus-visible {
+      background: transparent;
+    }
+    .mobile-toggle {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+      background: none;
+      border: none;
+      padding: 4px 2px;
+      margin-left: 4px;
+      color: var(--color-accent);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      cursor: pointer;
+      min-height: 32px;
+    }
+    .mobile-toggle .toggle-arrow {
+      font-size: 0.9rem;
+    }
+    .mobile-photo:not([hidden]) {
+      display: block;
+      flex-basis: 100%;
+      margin-top: 10px;
+      margin-left: 0;
+      max-width: 100%;
+    }
+    .mobile-photo img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .mobile-caption {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--color-muted);
+      margin-top: 4px;
+      margin-left: 0;
+    }
+  }
+</style>
