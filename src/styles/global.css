@@ -163,7 +163,11 @@ body {
   transform: translateY(-50%);
 }
 
-/* Social icon tap targets are 44×44 (icons stay visually 14×14). */
+/* Social icon tap targets are 44×44 (icons stay visually 14×14).
+   Icon color is set on the SVG fill/stroke attributes directly
+   (rather than via currentColor + inherited link color) so the
+   icons paint at the muted color from the first frame — no flash
+   of the browser-default link blue while CSS settles. */
 .site-header nav .social a {
   display: inline-flex;
   align-items: center;
@@ -174,11 +178,21 @@ body {
   padding: 0;
   color: var(--color-muted);
   text-decoration: none;
-  transition: color 0.12s ease;
 }
 
+.site-header nav .social svg {
+  transition: fill 0.12s ease, stroke 0.12s ease;
+}
+
+/* Filled icons (GitHub, LinkedIn) get fill swap on hover; outlined
+   icons (Email, which carries fill="none") get stroke swap. */
+.site-header nav .social a:hover svg:not([fill="none"]) {
+  fill: var(--color-text);
+}
+.site-header nav .social a:hover svg[fill="none"] {
+  stroke: var(--color-text);
+}
 .site-header nav .social a:hover {
-  color: var(--color-text);
   text-decoration: none;
 }
 
