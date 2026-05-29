@@ -28,10 +28,11 @@ const sorted = entries.slice().sort(
   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
 );
 
-const fmtDate = (d: string) =>
+const fmtDate = (d: string | Date) =>
   new Date(d).toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
+    year: 'numeric',
     timeZone: 'UTC',
   });
 
@@ -67,7 +68,7 @@ const allWriting = [
   })),
 ].sort((a, b) => b.date.getTime() - a.date.getTime());
 
-const iso = (d: Date) => d.toISOString().slice(0, 10);
+const iso = (d: Date | string) => new Date(d).toISOString().slice(0, 10);
 ---
 
 <BaseLayout
@@ -118,13 +119,13 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
   </div>
 
   <section class="lately-writing">
-    <h2 class="lately-h2">Writing</h2>
-    <p class="lately-intro">Longer-form posts, oldest of which are pre-rebuild.</p>
+    <h2 class="lately-h2">Older writing</h2>
+    <p class="lately-intro">Blog posts I wrote a while ago.</p>
     <ul class="lately-writing-list" role="list">
       {allWriting.map((post) => (
         <li>
           <span class="dot" aria-hidden="true">●</span>
-          <time datetime={iso(post.date)}>{iso(post.date)}</time>
+          <time datetime={iso(post.date)}>{fmtDate(post.date)}</time>
           <a href={post.url}>{post.title}</a>
         </li>
       ))}
@@ -238,7 +239,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     color: var(--color-muted);
     font-variant-numeric: tabular-nums;
     flex-shrink: 0;
-    min-width: 4.5em;
+    min-width: 7em;
   }
   .lately-entry .text {
     flex: 1;
@@ -285,7 +286,7 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     color: var(--color-muted);
     font-variant-numeric: tabular-nums;
     flex-shrink: 0;
-    min-width: 6em;
+    min-width: 7em;
   }
   .lately-writing-list a {
     flex: 1;
