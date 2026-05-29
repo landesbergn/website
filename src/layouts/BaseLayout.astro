@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { Font } from 'astro:assets';
 
 interface Props {
   title: string;
@@ -25,6 +26,7 @@ const titleLetters = Array.from('Noah Landesberg');
     <link rel="icon" type="image/png" href="/image/favicon.png" />
     <link rel="canonical" href={new URL(pathname, Astro.site).toString()} />
     <title>{title}</title>
+    <Font cssVariable="--font-jost" preload />
     <slot name="head" />
   </head>
   <body>

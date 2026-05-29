@@ -17,6 +17,11 @@
 
   --font-serif: 'Iowan Old Style', 'Charter', 'Source Serif 4', Georgia, 'Times New Roman', Times, serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, Monaco, 'Cascadia Mono', Consolas, 'Courier New', Courier, monospace;
+
+  /* UI chrome (nav, dates, post-meta, back-link). Jost is a libre Futura
+     clone, self-hosted via Astro's Fonts API (--font-jost). Falls back to
+     a geometric sans so labels stay on-brand before/if the font loads. */
+  --font-ui: var(--font-jost, 'Jost'), 'Avenir Next', 'Avenir', 'Century Gothic', system-ui, sans-serif;
 }
 
 * {
@@ -118,7 +123,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
   min-height: 44px;            /* tap-target row height */
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
   font-size: 0.85rem;
   color: var(--color-muted);
   row-gap: 4px;
@@ -531,7 +536,7 @@ article .html-widget svg {
 
 .post-list time {
   color: var(--color-muted);
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
   font-size: 0.85rem;
   font-variant-numeric: tabular-nums;
   flex-shrink: 0;
