@@ -194,19 +194,20 @@ body {
 }
 
 /* Mobile: fit the whole nav on a single row. Shrink the type a
-   notch, drop the `·` separators (link padding carries the gap),
-   and trim social icons to 36×36 (above Lighthouse's 24px floor).
-   At the narrowest viewports go a step further. */
+   notch and trim social icons to 36×36 (above Lighthouse's 24px
+   floor). Keep the `·` separators (now that there are only three
+   text links there's room for them). At the narrowest viewports
+   step down further and drop the separators. */
 @media (max-width: 540px) {
   .site-header nav {
     font-size: 0.78rem;
   }
   .site-header nav a {
-    padding: 0 6px;
+    padding: 0 4px;
     margin-right: 0;
   }
   .site-header nav .sep {
-    display: none;
+    margin: 0 2px;
   }
   .site-header nav .social {
     margin-left: 8px;
@@ -223,8 +224,8 @@ body {
   .site-header nav {
     font-size: 0.72rem;
   }
-  .site-header nav a {
-    padding: 0 4px;
+  .site-header nav .sep {
+    display: none;
   }
   .site-header nav .social {
     margin-left: 4px;
