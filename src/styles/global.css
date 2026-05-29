@@ -113,6 +113,43 @@ body {
 .site-header h1.site-title a:hover span:nth-child(4n+3) { color: var(--accent-teal); }
 .site-header h1.site-title a:hover span:nth-child(4n+4) { color: var(--accent-rose); }
 
+/* Mobile load-reveal: the title's color cascade is hover-gated, so touch
+   visitors never see it. On touch devices (no hover) replay it automatically
+   when the home page loads — letters drop in staggered, each flashing a
+   palette color before settling to ink. Scoped to `.home` (set on the .page
+   wrapper in BaseLayout for `/`) so it fires on the landing page only, not on
+   every subsequent navigation. Reuses the per-letter spans + --i index.
+   Pure CSS; `backwards` fill (never `forwards`) keeps the start frame only
+   during the stagger delay and reverts cleanly after — no flash, no layout
+   shift, and it never locks the spans out of the cascade. */
+@keyframes title-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(9px);
+    color: var(--color-text);
+  }
+  55% {
+    color: var(--c, var(--color-text));
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    color: var(--color-text);
+  }
+}
+
+@media (hover: none) {
+  .home .site-header h1.site-title a span {
+    animation: title-reveal 0.55s cubic-bezier(.34, 1.56, .64, 1) backwards;
+    animation-delay: calc(var(--i, 0) * 40ms);
+  }
+  /* Per-letter palette target, same 4-color cycle as the hover cascade. */
+  .home .site-header h1.site-title a span:nth-child(4n+1) { --c: var(--color-accent); }
+  .home .site-header h1.site-title a span:nth-child(4n+2) { --c: var(--accent-mustard); }
+  .home .site-header h1.site-title a span:nth-child(4n+3) { --c: var(--accent-teal); }
+  .home .site-header h1.site-title a span:nth-child(4n+4) { --c: var(--accent-rose); }
+}
+
 .site-header nav {
   display: flex;
   align-items: center;
@@ -636,6 +673,12 @@ a.project-link:hover .arrow {
   .site-header h1.site-title a span,
   a.project-link .arrow {
     transition: none;
+  }
+  /* Match the .home specificity of the load-reveal rule above so this
+     override still wins (equal specificity, later in source) for a touch
+     visitor who also prefers reduced motion. */
+  .home .site-header h1.site-title a span {
+    animation: none;
   }
   hr::before {
     animation: none;
