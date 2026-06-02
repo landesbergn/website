@@ -31,21 +31,25 @@ Astro requires Node ≥ 22.12 (per `engines` in `astro/package.json`). Netlify i
 src/
 ├── content/blog/          Markdown blog posts (4 currently)
 ├── content.config.ts      Content collection schema (Astro 6 loader API)
+├── data/lately.yaml       Entries for the /lately/ running log (see "Adding a Lately entry")
 ├── layouts/               BaseLayout (shell), PostLayout (post chrome)
-├── legacy/                Frozen pre-rendered HTML from the R/blogdown era (3 posts)
+├── components/            TalkToMe.astro (voice agent), FrozenPost.astro (renders a legacy post)
+├── legacy/                Frozen R/blogdown posts: posts.ts (registry + head-asset data) + 3 raw HTML fragments
 ├── assets/                Build-time-optimized images (e.g. avatar.jpg)
 ├── pages/
 │   ├── index.astro
 │   ├── projects.astro
+│   ├── lately.astro               /lately/ — running log + "Older writing" list
 │   ├── 404.astro
 │   └── blog/
 │       ├── index.astro            /blog/ — combined post listing
 │       ├── [...path].astro        /blog/<permalink>/ — Markdown posts via collection
-│       └── post/<slug>.astro      /blog/post/<slug>/ — frozen R-rendered HTML, one file per post
+│       └── post/<slug>.astro      /blog/post/<slug>/ — frozen R-rendered HTML, one shim per post
 └── styles/global.css      All site styles (no framework, no Tailwind)
 
 public/
 ├── image/                 Static images referenced by posts (book covers, etc.)
+├── image/lately/          Photos for /lately/ entries (plain JPGs)
 └── rmarkdown-libs/        Required JS/CSS runtime for the frozen DiagrammeR post
 ```
 
@@ -66,6 +70,22 @@ Body in Markdown.
 
 The `permalink` field controls the URL relative to `/blog/`. Conventionally `post/<slug>`. For one-off posts that need a non-`/post/` URL (the 2021-in-review post is an example), set `permalink` to the desired path.
 
+### Adding a Lately entry
+
+`/lately/` is a running log driven by `src/data/lately.yaml`. Prepend a new entry (newest-first by convention; the page sorts by `date` regardless):
+
+```yaml
+- date: 2026-06-01
+  text: Got certified in [Wilderness First Aid](https://example.com).
+  photo: wilderness-first-aid.jpg   # optional; plain JPG in public/image/lately/
+  caption: Via a 2-day course.      # REQUIRED if photo is set
+```
+
+- `text` supports inline Markdown — **links and *italics* only** (hand-rolled `renderInline` in `lately.astro`, not a full Markdown parser).
+- `caption` renders as **plain text** — no Markdown, no links. Any link must go in `text`.
+- The build **throws** if an entry is missing `date`/`text`, or has a `photo` without a `caption`.
+- Photos are plain JPGs in `public/image/lately/` (not run through Astro's `<Image>`).
+
 ## Architectural quirks worth knowing
 
 These are the parts that don't make sense from reading any one file alone.
@@ -74,19 +94,19 @@ These are the parts that don't make sense from reading any one file alone.
 
 Markdown posts (4) live in the content collection and render through the dynamic route `src/pages/blog/[...path].astro`, which calls `getStaticPaths` based on each post's `permalink` frontmatter field.
 
-The three R-rendered posts from the blogdown era — DiagrammeR, rhymer intro, Reply All scraping — are NOT in the content collection. They live as raw HTML fragments in `src/legacy/` and are rendered through dedicated `.astro` files at `src/pages/blog/post/<slug>.astro`. Each such page imports its HTML body via `?raw`, wraps it in `PostLayout`, and renders the body with `<Fragment set:html={body} />`.
+The three R-rendered posts from the blogdown era — DiagrammeR, rhymer intro, Reply All scraping — are NOT in the content collection. Their raw HTML fragments live in `src/legacy/`, and `src/legacy/posts.ts` is the registry: it imports each body via `?raw` and exports a `frozenPosts` array (title, date, description, body, `headAssets`) plus a `frozenPostsBySlug` lookup. Each page at `src/pages/blog/post/<slug>.astro` is a one-line shim that passes `frozenPostsBySlug['<slug>']` to the shared `src/components/FrozenPost.astro`, which wraps it in `PostLayout` and renders the body with `<Fragment set:html={...} />`.
 
-The blog listing in `src/pages/blog/index.astro` and the home page combine both sources by hardcoding the three frozen posts into an array next to `getCollection('blog')` results.
+The blog listing (`src/pages/blog/index.astro`) and the `/lately/` "Older writing" list combine both sources by importing `frozenPosts` and merging it with `getCollection('blog')` results, sorted newest-first. (The home page no longer lists posts — it's bio + Talk-to-me only.)
 
 **Why**: re-running the original R code at build time would require maintaining R + blogdown forever. The pre-rendered HTML is the canonical artifact for those posts; we serve it as-is.
 
 ### DiagrammeR widget script handling
 
-The DiagrammeR post's HTML body contains `<script>` tags for `htmlwidgets.js`, `viz.js`, `grViz.js`, plus inline `<script type="application/json">` data blocks per widget. Browsers don't execute `<script>` tags inserted via `set:html`, so the four loader scripts and the DiagrammeR stylesheet are stripped from the body and re-emitted in the page `<head>` via the `head` slot in `BaseLayout` / `PostLayout`. The inline JSON data blocks are non-executing, so they ride along in the body and the htmlwidgets framework finds them via DOM queries.
+The DiagrammeR post's HTML body contains `<script>` tags for `htmlwidgets.js`, `viz.js`, `grViz.js`, plus inline `<script type="application/json">` data blocks per widget. Browsers don't execute `<script>` tags inserted via `set:html`, so each frozen post declares its loader scripts and stylesheet as a `headAssets` array in `src/legacy/posts.ts`; `stripHeadAssets()` removes those tags from the body and `FrozenPost.astro` re-emits them via the `head` slot (→ `PostLayout` → `BaseLayout`). The inline JSON data blocks are non-executing, so they ride along in the body and the htmlwidgets framework finds them via DOM queries.
 
 Same pattern for the Reply All post's `kePrint.js` (kable tables).
 
-If you regenerate the legacy fragments or change scripts they reference, mirror the head-hoisting in the corresponding `src/pages/blog/post/<slug>.astro`.
+If you regenerate the legacy fragments or change scripts they reference, update that post's `headAssets` in `src/legacy/posts.ts` — not the per-slug page.
 
 ### URL parity with the legacy Hugo site
 
