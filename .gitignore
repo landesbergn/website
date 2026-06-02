@@ -20,6 +20,7 @@ dist/
 # Claude Code session-local config
 .claude/settings.local*.json
 .claude/worktrees/
+.claude/skills/
 .superpowers/
 
 # Logs
