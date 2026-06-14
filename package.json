@@ -19,5 +19,8 @@
   },
   "devDependencies": {
     "@netlify/functions": "^5.2.2"
+  },
+  "overrides": {
+    "esbuild": "^0.28.1"
   }
 }
