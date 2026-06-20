@@ -2,6 +2,16 @@
 # Required: date (YYYY-MM-DD), text (inline markdown — *em*, [link](url))
 # Optional: photo (filename in public/image/lately/), caption (required if photo set)
 
+- date: 2026-06-19
+  text: Embarked on a 1-month trip to Indonesia, Singapore, and Malaysia.
+  photo: southeast-asia-trip.jpg
+  caption: Claude made this visual, it's pretty bad.
+
+- date: 2026-06-17
+  text: Starting to beta test [Tailspot](https://tailspot.app).
+  photo: tailspot-beta.jpg
+  caption: Hit me up if you want to help test!
+
 - date: 2026-06-02
   text: Shipped [Feed Me](https://feed-me.xyz).
   photo: feed-me.jpg
