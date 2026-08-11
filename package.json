@@ -14,7 +14,7 @@
     "@elevenlabs/client": "^1.8.1",
     "@netlify/blobs": "^9.1.6",
     "astro": "^7.1.0",
-    "js-yaml": "^4.3.0",
+    "js-yaml": "^4.3.1",
     "posthog-js": "^1.388.1"
   },
   "devDependencies": {
