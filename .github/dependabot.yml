@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    # Required field, but version-update PRs are disabled via the limit below.
+    # This file exists to batch security fixes into a single grouped PR.
+    schedule:
+      interval: "weekly"
+    # 0 disables version-update PRs (routine new-release bumps).
+    # Security-update PRs are not affected by this limit.
+    open-pull-requests-limit: 0
+    groups:
+      security-fixes:
+        applies-to: security-updates
+        patterns:
+          - "*"
