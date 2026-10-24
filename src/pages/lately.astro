@@ -63,6 +63,8 @@ const renderInline = (s: string): string => {
     /\[([^\]]+)\]\(([a-zA-Z][^)\s]*)\)/g,
     (_m, text, url) => `<a href="${url}" target="_blank" rel="noopener">${text}</a>`,
   );
+  // Bold **text** — before italics so the inner *s aren't consumed
+  out = out.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
   // Italics *text*
   out = out.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
   return out;

@@ -1,27 +1,29 @@
 # Entries for /lately/. Newest first by convention; the page sorts by date.
-# Required: date (YYYY-MM-DD), text (inline markdown — *em*, [link](url))
+# Required: date (YYYY-MM-DD), text (inline markdown — **bold**, *em*, [link](url))
 # Optional: photo (filename in public/image/lately/), caption (required if photo set)
 
 - date: 2026-10-17
-  text: Surfed a massive wave in Hawaii.
+  text: Surfed a massive wave in **Hawaii**.
   photo: hawaii-surf.jpg
-  caption: Massive is relative.
+  caption: At least it felt that way.
 
 - date: 2026-10-11
   text: Experienced [SF Fleet Week](https://fleetweeksf.org) up close.
   photo: sf-fleet-week.jpg
-  caption: Jets over the Golden Gate.
+  caption: Blue Angels over the Golden Gate Bridge.
 
 - date: 2026-08-31
   text: Started at [Sprinter Health](https://www.sprinterhealth.com).
+  photo: sprinter-health.jpg
+  caption: Building clinical products.
 
 - date: 2026-08-22
   text: Met a bear cub in [Glacier National Park](https://www.nps.gov/glac/).
   photo: glacier-bear-cub.jpg
-  caption: It was running right at me.
+  caption: "New friend #2."
 
 - date: 2026-08-10
-  text: Met a cat in Albania.
+  text: Met a cat in **Albania**.
   photo: albania-cat.jpg
   caption: New friend.
 
