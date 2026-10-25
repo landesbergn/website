@@ -81,7 +81,7 @@ The `permalink` field controls the URL relative to `/blog/`. Conventionally `pos
   caption: Via a 2-day course.      # REQUIRED if photo is set
 ```
 
-- `text` supports inline Markdown — **links and *italics* only** (hand-rolled `renderInline` in `lately.astro`, not a full Markdown parser).
+- `text` supports inline Markdown — **links, `**bold**`, and *italics* only** (hand-rolled `renderInline` in `lately.astro`, not a full Markdown parser).
 - `caption` renders as **plain text** — no Markdown, no links. Any link must go in `text`.
 - The build **throws** if an entry is missing `date`/`text`, or has a `photo` without a `caption`.
 - Photos are plain JPGs in `public/image/lately/` (not run through Astro's `<Image>`).
